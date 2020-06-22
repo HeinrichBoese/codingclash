@@ -9,8 +9,20 @@ require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
 export default function CodeEditAndRun(props) {
-  const [code, setCode] = useState(`//Your code goes here: \n`);
+  const [code, setCode] = useState(`//Your code goes here: \nconsole.log(5*5)`);
   const iframeRef = useRef(null);
+
+  const calculate = () => {
+    iframeRef.current.contentDocument.open();
+    iframeRef.current.contentDocument.write(`
+      <script>try {
+        ${code}
+      } catch(error) {
+        parent.alert(error);
+      }
+      </script>`);
+    iframeRef.current.contentDocument.close();
+  };
 
   return (
     <div style={{ width: 500, height: 300 }}>
@@ -26,6 +38,7 @@ export default function CodeEditAndRun(props) {
         onBeforeChange={(editor, data, value) => setCode(value)}
       />
       <Button
+        onClick={calculate}
         variant="contained"
         color="primary"
         style={{ marginTop: 5, float: "right" }}
@@ -36,6 +49,7 @@ export default function CodeEditAndRun(props) {
         ref={iframeRef}
         title="hidden iframe"
         style={{ display: "none" }}
+        sandbox="allow-same-origin allow-scripts"
       />
     </div>
   );
