@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
@@ -8,9 +8,8 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
-
 export default function CodeEditAndRun(props) {
-  const [code, setCode] = useState(`Your code goes here!`);
+  const [code, setCode] = useState(`//Your code goes here: \n`);
   const iframeRef = useRef(null);
 
   return (
@@ -26,7 +25,11 @@ export default function CodeEditAndRun(props) {
         }}
         onBeforeChange={(editor, data, value) => setCode(value)}
       />
-      <Button variant="contained" color="primary" style={{marginTop: 5, float: 'right'}}>
+      <Button
+        variant="contained"
+        color="primary"
+        style={{ marginTop: 5, float: "right" }}
+      >
         Run
       </Button>
       <iframe
