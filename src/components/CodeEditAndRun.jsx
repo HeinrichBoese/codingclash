@@ -13,15 +13,13 @@ export default function CodeEditAndRun(props) {
   const iframeRef = useRef(null);
 
   const calculate = () => {
-    iframeRef.current.contentDocument.open();
-    iframeRef.current.contentDocument.write(`
+      iframeRef.current.srcdoc = `
       <script>try {
         ${code}
       } catch(error) {
         parent.alert(error);
       }
-      </script>`);
-    iframeRef.current.contentDocument.close();
+      </script>`
   };
 
   return (
