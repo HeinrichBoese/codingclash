@@ -1,3 +1,4 @@
+import firebase from './firebase';
 import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
@@ -19,10 +20,17 @@ const styles = {
     }
 };
 
+const getChallenge = () => {
+    const db = firebase.firestore();
+    const docRef = db.collection("challenges").doc("1Qn45l95U57HRj5aoOF8");
+    docRef.get().then((doc) => console.log(doc.data()));
+  }
+
 const Home = () => {
     const [redirect, setRedirect] = useState(false)
 
     const clickHandle = () => {
+        getChallenge();
         setRedirect(true)
     }
     if (redirect) {
