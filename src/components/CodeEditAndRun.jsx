@@ -10,8 +10,9 @@ require("codemirror/mode/javascript/javascript");
 
 
 export default function CodeEditAndRun(props) {
-  const [code, setCode] = useState(`Your code goes here!`);
+  const [code, setCode] = useState(`const myFunc = (arr) => {}`);
   const iframeRef = useRef(null);
+  
 
   return (
     <div style={{ width: 500, height: 300 }}>
