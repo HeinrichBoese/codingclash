@@ -8,8 +8,8 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
-export default function CodeEditAndRun(props) {
-  const [code, setCode] = useState('');
+export default function CodeEditAndRun({challenge}) {
+  const [code, setCode] = useState((challenge && challenge.template) || '');
 
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
