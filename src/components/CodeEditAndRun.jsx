@@ -23,11 +23,12 @@ export default function CodeEditAndRun(props) {
   }, []);
 
   const calculate = () => {
+    const codeEscaped = encodeURIComponent(code);
     iframeRef.current.srcdoc = `
       <script>
       let webworker = new Worker('webworker.js');
       let timecap = setTimeout(() => webworker.terminate(), 1000);
-      webworker.postMessage(\`${code}\`);
+      webworker.postMessage(\`${codeEscaped}\`);
       webworker.onmessage = (e) => window.parent.postMessage(e.data);
       </script>`;
   };

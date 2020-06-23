@@ -30,7 +30,7 @@ var runHidden = function(code) {
 
 onmessage = function(e) {
     try {
-        var workerResult = runHidden(e.data);
+        var workerResult = runHidden(decodeURIComponent(e.data));
     }
     catch {
         console.log('syntax error');
