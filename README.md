@@ -1,3 +1,28 @@
+
+test = {
+  id: 1,
+  title: 'Sort an array',
+  description: 'Sort an incoming array in alphabetical order',
+  example: '[c,b,a] => [a,b,c]',
+  template: `const sortArray = (arr) => {
+    //your code goes here
+  }`,
+  tests: [
+    {
+    test: 'sortArray([c,b,a])',
+    expected: '[a,b,c]',
+    description: 'should work with an empty array'
+    }
+  ]
+}
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
