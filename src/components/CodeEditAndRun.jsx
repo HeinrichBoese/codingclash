@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import Button from "@material-ui/core/Button";
 
@@ -9,18 +9,28 @@ require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
 export default function CodeEditAndRun(props) {
-  const [code, setCode] = useState(`//Your code goes here: \nconsole.log(5*5)`);
+  const [code, setCode] = useState('');
+
+  const [result, setResult] = useState(null);
   const iframeRef = useRef(null);
   
 
+  const handleMessage = (msg) => {
+    msg.data.source === "iframe" && setResult(msg.data.payload);
+  };
+  useEffect(() => {
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
   const calculate = () => {
-      iframeRef.current.srcdoc = `
-      <script>try {
-        ${code}
-      } catch(error) {
-        parent.alert(error);
-      }
-      </script>`
+    iframeRef.current.srcdoc = `
+      <script>
+      let webworker = new Worker('webworker.js');
+      let timecap = setTimeout(() => webworker.terminate(), 1000);
+      webworker.postMessage(\`${code}\`);
+      webworker.onmessage = (e) => window.parent.postMessage(e.data);
+      </script>`;
   };
 
   return (
@@ -44,11 +54,13 @@ export default function CodeEditAndRun(props) {
       >
         Run
       </Button>
+      <br />
+      <span>Result: {JSON.stringify(result)}</span>
       <iframe
         ref={iframeRef}
         title="hidden iframe"
         style={{ display: "none" }}
-        sandbox="allow-same-origin allow-scripts"
+        sandbox="allow-scripts allow-same-origin"
       />
     </div>
   );
