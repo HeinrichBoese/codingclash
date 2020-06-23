@@ -13,7 +13,8 @@ test = {
     expected: '[a,b,c]',
     description: 'should work with an empty array'
     }
-  ]
+  ],
+  tags: ['array', 'easy']
 }
 
 
