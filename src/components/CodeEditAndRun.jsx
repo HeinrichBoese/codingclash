@@ -12,10 +12,14 @@ export default function CodeEditAndRun(props) {
   const [code, setCode] = useState('');
 
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
   const iframeRef = useRef(null);
 
   const handleMessage = (msg) => {
-    msg.data.source === "iframe" && setResult(msg.data.payload);
+    if (msg.data.source === "iframe") {
+      setResult(msg.data.payload);
+      setError(msg.data.errortext);
+    }
   };
   useEffect(() => {
     window.addEventListener("message", handleMessage);
@@ -55,7 +59,9 @@ export default function CodeEditAndRun(props) {
         Run
       </Button>
       <br />
-      <span>Result: {JSON.stringify(result)}</span>
+      <span>Result: {result && JSON.stringify(result)}</span>
+      <br />
+      <span>Error: {error && JSON.stringify(error)}</span>
       <iframe
         ref={iframeRef}
         title="hidden iframe"

@@ -29,11 +29,12 @@ var runHidden = function(code) {
 }
 
 onmessage = function(e) {
+    const message = {source: 'iframe', payload: null, errortext: null};
     try {
-        var workerResult = runHidden(decodeURIComponent(e.data));
+        message.payload = runHidden(decodeURIComponent(e.data));
     }
-    catch {
-        console.log('syntax error');
+    catch (error) {
+        message.errortext = error.message;
     }
-    postMessage({source: 'iframe', payload: workerResult});
+    postMessage(message);
   }
