@@ -12,11 +12,13 @@ const getRandomChallenge = async () => {
 
 export default function SoloMode(props) {
   const [challenge, setChallenge] = useState(null);
-  useEffect(() => setChallenge(getRandomChallenge()), []);
+  useEffect(() => {
+    getRandomChallenge().then(res => setChallenge(res));
+  }, []);
 
   return (
     <div>
-      <CodeEditAndRun challenge={challenge} />
+        {challenge ? <CodeEditAndRun challenge={challenge} /> : "loading..."}
     </div>
   );
 }
