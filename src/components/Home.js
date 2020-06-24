@@ -47,11 +47,11 @@ const Home = () => {
 
     switch (gameMode) {
         case 'yourself':
-            return <Redirect to = '/challange/yourself' />;
+            return <Redirect to = '/challenge/yourself' />;
         case 'friend':
-            return <Redirect to = '/challange/friend' />;  
+            return <Redirect to = '/challenge/friend' />;  
         case 'class':
-           return <Redirect to = '/challange/class' />;        
+           return <Redirect to = '/challenge/class' />;        
     }
     return (
         <div style={styles.container}>
