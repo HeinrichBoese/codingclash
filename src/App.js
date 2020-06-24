@@ -29,6 +29,12 @@ function App() {
         <Route exact path="/classroom">
           <ClassroomMode />
         </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
       </Switch>
     </Router>
     </AuthProvider>
