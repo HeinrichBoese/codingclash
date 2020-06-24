@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { AuthContext } from "../Auth";
 
 import ChallengeDescription from "./ChallengeDescription";
 import TestResults from "./TestResults";
@@ -16,6 +17,7 @@ export default function CodeEditAndRun({challenge}) {
 
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const {currentUser} = useContext(AuthContext);
   const iframeRef = useRef(null);
   
 

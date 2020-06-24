@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import firebase from './firebase';
 import { withRouter, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,6 +12,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { grey } from "@material-ui/core/colors";
+import { AuthContext } from "../Auth";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,10 +31,11 @@ const useStyles = makeStyles((theme) => ({
 
 function ButtonAppBar(props) {
     const classes = useStyles();
+    const {currentUser} = useContext(AuthContext);
 
     return (
         <div className={classes.root}>
-            <Toolbar />
+             <Toolbar /> {/*Komponenten platzhalter */}
             <AppBar>
                 <Toolbar>
                     <Button component={Link} to={"/"} startIcon={<HomeIcon />} edge="start" variant="contained" className={classes.button}>Home</Button>
@@ -40,9 +43,9 @@ function ButtonAppBar(props) {
                     <Typography variant="h6" className={classes.title}>
                         Hallo {props.loggedIn ? props.name : "Gast"}! Willkommen bei Code Clash 
                     </Typography>
-                    {props.loggedIn && <Button component={Link} to={"/"} className={classes.button} startIcon={<LockIcon />} variant="contained" onClick={props.logout} >LOG OUT</Button>}
-                    {!props.loggedIn && <Button component={Link} to={"/login"} className={classes.button} startIcon={<LockOpenIcon />} variant="contained" >LOG IN</Button>}
-                    {!props.loggedIn && <Button component={Link} to={"/register"} className={classes.button} startIcon={<AssignmentIcon />} variant="contained" >SIGN UP</Button>}
+                    {currentUser && <Button component={Link} to={"/"} className={classes.button} startIcon={<LockIcon />} variant="contained" onClick={firebase.auth().signOut()} >LOG OUT</Button>}
+                    {!currentUser && <Button component={Link} to={"/login"} className={classes.button} startIcon={<LockOpenIcon />} variant="contained" >LOG IN</Button>}
+                    {!currentUser && <Button component={Link} to={"/register"} className={classes.button} startIcon={<AssignmentIcon />} variant="contained" >SIGN UP</Button>}
                 </Toolbar>
             </AppBar>
         </div >
