@@ -5,12 +5,13 @@ import CodeEditAndRun from './components/CodeEditAndRun';
 import Home from './components/Home';
 import Header from "./components/Header";
 
+
 function App() {
   return (
     <Router>
       <Header />
       <Route exact path='/' render={(props) => <Home {...props} />} />
-      <Route exact path='/challenge' render={(props) => <CodeEditAndRun {...props} />} />
+      <Route exact path='/challenge/yourself' render={(props) => <CodeEditAndRun {...props} />} />
     </Router>
 
   );

@@ -1,4 +1,16 @@
 
+component hierarchy:
+
+HOME
+SOLO                    RACE                  CLASSROOM
+CODEEDITANDRUN          ...                   ...
+CHALLENGEDESCRIPTION
+TESTRESULTS
+
+
+==============================================
+challenge sample:
+
 test = {
   id: 1,
   title: 'Sort an array',

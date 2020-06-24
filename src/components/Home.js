@@ -2,6 +2,9 @@ import firebase from './firebase';
 import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import SoloMode from './SoloMode';
+import RaceMode from './RaceMode';
+import ClassroomMode from './ClassroomMode';
 
 const styles = {
     root: {
@@ -20,25 +23,47 @@ const styles = {
     }
 };
 
+// JUST EXAMPLE CODE SHOWING HOW TO GET DATA FROM DATABASE
+// NEEDS TO ME MOVED INTO GAMEMODE COMPONENTS
 const getChallenge = () => {
     const db = firebase.firestore();
     const docRef = db.collection("challenges").doc("1Qn45l95U57HRj5aoOF8");
     docRef.get().then((doc) => console.log(doc.data()));
   }
+// -------------------------------------------------------
 
 const Home = () => {
-    const [redirect, setRedirect] = useState(false)
+    const [gameMode, setGamemode] = useState(false)
 
-    const clickHandle = () => {
+
+    const clickHandle = (mode) => {
         getChallenge();
-        setRedirect(true)
+        switch (mode) {
+            case 'yourself':
+                setGamemode('yourself');
+                return
+            case 'friend':
+                setGamemode('friend');
+                return    
+            case 'class':
+                setGamemode('class');
+                return        
+        }
     }
-    if (redirect) {
-        return <Redirect to='/challenge' />
+
+    switch (gameMode) {
+        case 'yourself':
+            return <Redirect to = '/challenge/yourself' />;
+        case 'friend':
+            return <Redirect to = '/challenge/friend' />;  
+        case 'class':
+           return <Redirect to = '/challenge/class' />;        
     }
     return (
         <div style={styles.container}>
-            <Button style={styles.root} onClick={() => clickHandle()}>Start Challenge</Button>
+            <Button style={styles.root} onClick={() => clickHandle('yourself')}>Challenge yourself</Button>
+            <Button style={styles.root} onClick={() => clickHandle('friend')}>Challenge a friend</Button>
+            <Button style={styles.root} onClick={() => clickHandle('class')}>Challenge your Class</Button>
         </div>
     )
 }
