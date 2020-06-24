@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 
+import ChallengeDescription from "./ChallengeDescription";
+import TestResults from "./TestResults";
+
 import Button from "@material-ui/core/Button";
 
 import "codemirror/lib/codemirror.css";
