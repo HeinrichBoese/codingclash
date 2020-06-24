@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import firebase from "./firebase";
+import firebase from "../firebase";
 import CodeEditAndRun from "./CodeEditAndRun";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Lobby from "./Lobby";
-import useWindowDimensions from '../componentsunderconstruction/getWindowDimensions'
 const getRandomChallenge = async () => {
   const db = firebase.firestore();
   const collectionRef = db.collection("challenges");
@@ -22,7 +21,7 @@ const getRandomChallenge = async () => {
     };
   
 export default function RaceMode(props) {
-  const { height, width } = useWindowDimensions();
+
   const [challenge, setChallenge] = useState(null);
   const [initializer, setInitializer] = useState(false);
   const [started, setStarted] = useState(false);
@@ -38,5 +37,6 @@ export default function RaceMode(props) {
     </div>
   );
 }
+
 
 

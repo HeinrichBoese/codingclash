@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import firebase from "./firebase";
+import firebase from "../firebase";
 import CodeEditAndRun from "./CodeEditAndRun";
 import CircularProgress from '@material-ui/core/CircularProgress';
 const getRandomChallenge = async () => {
@@ -10,7 +10,7 @@ const getRandomChallenge = async () => {
   return snapshot.docs[randomIndex].data();
 };
 
-const pad = window.innerHeight/2
+const pad = window.innerHeight / 2
 const styles = {
   loading: {
     paddingTop: pad
@@ -25,12 +25,12 @@ const styles = {
 export default function SoloMode(props) {
   const [challenge, setChallenge] = useState(null);
   useEffect(() => {
-    getRandomChallenge().then(res => setChallenge(res));
+    getRandomChallenge().then((res) => setChallenge(res));
   }, []);
 
   return (
-    <div style = {styles.container}>
-        {challenge ? <CodeEditAndRun challenge={challenge} /> : <div style = {styles.loading}><CircularProgress /></div>}
+    <div style={styles.container}>
+      {challenge ? <CodeEditAndRun challenge={challenge} /> : <div style={styles.loading}><CircularProgress /></div>}
     </div>
   );
 }

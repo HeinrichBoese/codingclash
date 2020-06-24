@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
-import { AuthContext } from "../Auth";
+import React, { useState, useRef, useEffect } from "react";
+//import { AuthContext } from "../Auth";
 
-import ChallengeDescription from "./ChallengeDescription";
-import TestResults from "./TestResults";
+//import ChallengeDescription from "./ChallengeDescription";
+//import TestResults from "./TestResults";
 
 import Button from "@material-ui/core/Button";
 
@@ -12,14 +12,15 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
-export default function CodeEditAndRun({challenge}) {
-  const [code, setCode] = useState((challenge && challenge.template) || '');
+export default function CodeEditAndRun({ challenge }) {
+  const [code, setCode] = useState(
+    (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
+  );
 
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-  const {currentUser} = useContext(AuthContext);
+  //const {currentUser} = useContext(AuthContext);
   const iframeRef = useRef(null);
-  
 
   const handleMessage = (msg) => {
     if (msg.data.source === "iframe") {

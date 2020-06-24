@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useContext } from "react";
+import firebase from "../firebase";
+import { useHistory, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import { AuthContext } from "../Auth";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -33,8 +35,9 @@ const validate = (values) => {
   return errors;
 };
 
-export default function Login(props) {
-  const [success, setSuccess] = useState(false);
+export default function Login() {
+  const { currentUser } = useContext(AuthContext);
+  let history = useHistory();
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -43,24 +46,13 @@ export default function Login(props) {
     },
     validate,
     onSubmit: async (values) => {
-      let response = await fetch(
-        "https://awacademy-kleinanzeigen.azurewebsites.net/user/login",
-        {
-          method: "post",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
-      if (response.status !== 200) {
-        alert("access denied");
-      } else {
-        let data = await response.json();
-        sessionStorage.setItem("jwt", data.token);
-        props.setRefreshUserToggle(!props.refreshUserToggle);
-        setSuccess(true);
+      try {
+        await firebase
+          .auth()
+          .signInWithEmailAndPassword(values.email, values.password);
+        history.push("/");
+      } catch (error) {
+        alert(error);
       }
     },
   });
@@ -77,7 +69,7 @@ export default function Login(props) {
 
   return (
     <div>
-      {success && <Redirect to="/" />}
+      {currentUser && <Redirect to="/" />}
       <Container maxWidth="xs">
         <Paper>
           <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
