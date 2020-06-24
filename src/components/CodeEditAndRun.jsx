@@ -13,7 +13,7 @@ require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
 export default function CodeEditAndRun({challenge}) {
-  const [code, setCode] = useState((challenge && challenge.template) || '');
+  const [code, setCode] = useState((challenge && challenge.template.replace(/\\n/g, '\n')) || '');
 
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
