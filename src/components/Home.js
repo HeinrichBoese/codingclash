@@ -1,6 +1,6 @@
 import firebase from './firebase';
 import React, { useState } from 'react';
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import SoloMode from './SoloMode';
 import RaceMode from './RaceMode';
@@ -33,37 +33,12 @@ const getChallenge = () => {
 // -------------------------------------------------------
 
 const Home = () => {
-    const [gameMode, setGamemode] = useState(false)
 
-
-    const clickHandle = (mode) => {
-        getChallenge();
-        switch (mode) {
-            case 'yourself':
-                setGamemode('yourself');
-                return
-            case 'friend':
-                setGamemode('friend');
-                return    
-            case 'class':
-                setGamemode('class');
-                return        
-        }
-    }
-
-    switch (gameMode) {
-        case 'yourself':
-            return <Redirect to = '/challenge/yourself' />;
-        case 'friend':
-            return <Redirect to = '/challenge/friend' />;  
-        case 'class':
-           return <Redirect to = '/challenge/class' />;        
-    }
     return (
         <div style={styles.container}>
-            <Button style={styles.root} onClick={() => clickHandle('yourself')}>Challenge yourself</Button>
-            <Button style={styles.root} onClick={() => clickHandle('friend')}>Challenge a friend</Button>
-            <Button style={styles.root} onClick={() => clickHandle('class')}>Challenge your Class</Button>
+            <Button style={styles.root} component={Link} to={"/challenge/yourself"}>Challenge yourself</Button>
+            <Button style={styles.root} component={Link} to={"/challenge/friend"}>Challenge a friend</Button>
+            <Button style={styles.root} component={Link} to={"/challenge/class"}>Challenge your Class</Button>
         </div>
     )
 }
