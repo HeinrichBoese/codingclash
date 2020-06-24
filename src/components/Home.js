@@ -49,7 +49,7 @@ const Home = () => {
         case 'yourself':
             return <Redirect to = '/challange/yourself' />;
         case 'friend':
-            return <Redirect to = '/challange/friend' />;;    
+            return <Redirect to = '/challange/friend' />;  
         case 'class':
            return <Redirect to = '/challange/class' />;        
     }
