@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ButtonAppBar(props) {
     const classes = useStyles();
-    const {currentUser} = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
 
     return (
         <div className={classes.root}>
@@ -41,7 +41,7 @@ function ButtonAppBar(props) {
                     <Button component={Link} to={"/"} startIcon={<HomeIcon />} edge="start" variant="contained" className={classes.button}>Home</Button>
                     <Button component={Link} to={"/InputForm"} startIcon={<CreateIcon />} edge="start" variant="contained" className={classes.button}>New</Button>
                     <Typography variant="h6" className={classes.title}>
-                        Hallo {props.loggedIn ? props.name : "Gast"}! Willkommen bei Code Clash 
+                        Hallo {currentUser ? "currentUser" : "Gast"}! Willkommen bei Code Clash 
                     </Typography>
                     {currentUser && <Button component={Link} to={"/"} className={classes.button} startIcon={<LockIcon />} variant="contained" onClick={firebase.auth().signOut()} >LOG OUT</Button>}
                     {!currentUser && <Button component={Link} to={"/login"} className={classes.button} startIcon={<LockOpenIcon />} variant="contained" >LOG IN</Button>}

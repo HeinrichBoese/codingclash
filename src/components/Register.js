@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import firebase from './firebase';
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory,  Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import { AuthContext } from "../Auth";
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -37,6 +38,7 @@ const validate = (values) => {
 export default function Register(props) {
     let history = useHistory();
 
+    const { currentUser } = useContext(AuthContext);
     const classes = useStyles();
     const formik = useFormik({
         initialValues: {
@@ -68,7 +70,7 @@ export default function Register(props) {
 
     return (
         <div>
-            {props.loggedIn && <Redirect to="/" />}
+            {currentUser && <Redirect to="/" />}
             <Container maxWidth="xs">
                 <Paper>
                     <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
