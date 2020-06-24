@@ -2,6 +2,9 @@ import firebase from './firebase';
 import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import SoloMode from './SoloMode';
+import RaceMode from './RaceMode';
+import ClassroomMode from './ClassroomMode';
 
 const styles = {
     root: {
@@ -20,11 +23,14 @@ const styles = {
     }
 };
 
+// JUST EXAMPLE CODE SHOWING HOW TO GET DATA FROM DATABASE
+// NEEDS TO ME MOVED INTO GAMEMODE COMPONENTS
 const getChallenge = () => {
     const db = firebase.firestore();
     const docRef = db.collection("challenges").doc("1Qn45l95U57HRj5aoOF8");
     docRef.get().then((doc) => console.log(doc.data()));
   }
+// -------------------------------------------------------
 
 const Home = () => {
     const [gameMode, setGamemode] = useState(false)
