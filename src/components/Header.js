@@ -1,0 +1,52 @@
+import React from "react";
+import { withRouter, Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import HomeIcon from "@material-ui/icons/Home";
+import CreateIcon from '@material-ui/icons/Create';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LockIcon from '@material-ui/icons/Lock';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { grey } from "@material-ui/core/colors";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    button: {
+        marginRight: theme.spacing(2),
+        backgroundColor: grey[50],
+    },
+    title: {
+        flexGrow: 1,
+        textAlign: "center"
+    },
+
+}));
+
+function ButtonAppBar(props) {
+    const classes = useStyles();
+
+    return (
+        <div className={classes.root}>
+            <Toolbar />
+            <AppBar>
+                <Toolbar>
+                    <Button component={Link} to={"/"} startIcon={<HomeIcon />} edge="start" variant="contained" className={classes.button}>Home</Button>
+                    <Button component={Link} to={"/InputForm"} startIcon={<CreateIcon />} edge="start" variant="contained" className={classes.button}>New</Button>
+                    <Typography variant="h6" className={classes.title}>
+                        Hallo {props.loggedIn ? props.name : "Gast"}! Willkommen bei Code Clash 
+                    </Typography>
+                    {props.loggedIn && <Button component={Link} to={"/"} className={classes.button} startIcon={<LockIcon />} variant="contained" onClick={props.logout} >LOG OUT</Button>}
+                    {!props.loggedIn && <Button component={Link} to={"/login"} className={classes.button} startIcon={<LockOpenIcon />} variant="contained" >LOG IN</Button>}
+                    {!props.loggedIn && <Button component={Link} to={"/register"} className={classes.button} startIcon={<AssignmentIcon />} variant="contained" >SIGN UP</Button>}
+                </Toolbar>
+            </AppBar>
+        </div >
+    );
+}
+
+export default withRouter(ButtonAppBar);
