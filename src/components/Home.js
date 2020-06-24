@@ -23,22 +23,13 @@ const styles = {
     }
 };
 
-// JUST EXAMPLE CODE SHOWING HOW TO GET DATA FROM DATABASE
-// NEEDS TO ME MOVED INTO GAMEMODE COMPONENTS
-const getChallenge = () => {
-    const db = firebase.firestore();
-    const docRef = db.collection("challenges").doc("1Qn45l95U57HRj5aoOF8");
-    docRef.get().then((doc) => console.log(doc.data()));
-  }
-// -------------------------------------------------------
-
 const Home = () => {
 
     return (
         <div style={styles.container}>
-            <Button style={styles.root} component={Link} to={"/challenge/yourself"}>Challenge yourself</Button>
-            <Button style={styles.root} component={Link} to={"/challenge/friend"}>Challenge a friend</Button>
-            <Button style={styles.root} component={Link} to={"/challenge/class"}>Challenge your Class</Button>
+            <Button style={styles.root} component={Link} to={"/solo"}>Challenge yourself</Button>
+            <Button style={styles.root} component={Link} to={"/race"}>Challenge a friend</Button>
+            <Button style={styles.root} component={Link} to={"/classroom"}>Challenge your Class</Button>
         </div>
     )
 }
