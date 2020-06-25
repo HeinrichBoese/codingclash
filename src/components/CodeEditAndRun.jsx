@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect  } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 //import ChallengeDescription from "./ChallengeDescription";
 //import TestResults from "./TestResults";
@@ -16,6 +16,10 @@ export default function CodeEditAndRun({ challenge }) {
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
   );
+
+  const [runButtonDisabled, setRunButtonDisabled] = useState(false);
+  const [testButtonDisabled, setTestButtonDisabled] = useState(false);
+
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
@@ -23,8 +27,7 @@ export default function CodeEditAndRun({ challenge }) {
   const [testErrors, setTestErrors] = useState([]);
   const [testPassed, setTestPassed] = useState([]);
 
-
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
 
   const iframeRef = useRef(null);
 
@@ -49,7 +52,7 @@ export default function CodeEditAndRun({ challenge }) {
   useEffect(() => {
     const result = [];
     for (const [i, test] of challenge.testcases.entries()) {
-      result.push("" + testResults[i] == test.expected);
+      result.push("" + testResults[i] === test.expected);
     }
     setTestPassed(result);
   }, [testResults]);
@@ -65,14 +68,21 @@ export default function CodeEditAndRun({ challenge }) {
   };
 
   const evaluate = () => {
+    setRunButtonDisabled(true);
+    setTimeout(() => setRunButtonDisabled(false), 1000);
     taskWebWorker(code, "evaluate");
   };
 
   const runTests = () => {
+    setTestButtonDisabled(true);
+    setTimeout(
+      () => setTestButtonDisabled(false),
+      challenge.testcases.length * 1000
+    );
     setTestResults([]);
     setTestErrors([]);
     setTestPassed([]);
-    setSubmitted(true)
+    setSubmitted(true);
     function* genFunc() {
       for (let item of challenge.testcases) {
         yield item;
@@ -89,9 +99,8 @@ export default function CodeEditAndRun({ challenge }) {
         taskWebWorker(codeToRun, "runTests");
       }
     }, 1000);
-    
   };
-console.log(testResults,challenge)
+
   return (
     <div style={{ width: 800 }}>
       <CodeMirror
@@ -105,8 +114,15 @@ console.log(testResults,challenge)
         }}
         onBeforeChange={(editor, data, value) => setCode(value)}
       />
+
+      <span>Evaluation Result: {result ? JSON.stringify(result) : 'no return value'}</span>
+      <br />
+      <span>Error: {error ? JSON.stringify(error) : 'no errors thrown :)'}</span>
+      <br />
+
       <Button
         onClick={runTests}
+        disabled={testButtonDisabled}
         variant="contained"
         color="primary"
         style={{ margin: 5, float: "right" }}
@@ -115,6 +131,7 @@ console.log(testResults,challenge)
       </Button>
       <Button
         onClick={evaluate}
+        disabled={runButtonDisabled}
         variant="contained"
         color="primary"
         style={{ margin: 5, float: "right" }}
@@ -123,27 +140,17 @@ console.log(testResults,challenge)
       </Button>
       <br />
 
-      <span>Result: {result && JSON.stringify(result)}</span>
-      <br />
-      <span>Error: {error && JSON.stringify(error)}</span>
-      <br />
-      <span>
-        Test Cases: {challenge.testcases && JSON.stringify(challenge.testcases)}
-      </span>
-      <br />
-      <span>Test Results: {testResults && JSON.stringify(testResults)}</span>
-      <br />
-      <span>Test Errors: {testErrors && JSON.stringify(testErrors)}</span>
-      <br />
-      <span>Test Passed: {testPassed && JSON.stringify(testPassed)}</span>
-
       <iframe
         ref={iframeRef}
         title="hidden iframe"
         style={{ display: "none" }}
         sandbox="allow-scripts allow-same-origin"
       />
-      <TestResults testcases={challenge.testcases} testResults={testResults} submitted={submitted}/>
+      <TestResults
+        testcases={challenge.testcases}
+        testResults={testResults}
+        submitted={submitted}
+      />
     </div>
   );
 }
