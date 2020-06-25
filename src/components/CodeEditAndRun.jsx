@@ -37,7 +37,7 @@ export default function CodeEditAndRun({ challenge }) {
     const codeEscaped = encodeURIComponent(code);
     iframeRef.current.srcdoc = `
       <script>
-      let webworker = new Worker('webworker.js');
+      let webworker = new Worker('${window.location.origin}/webworker.js');
       let timecap = setTimeout(() => webworker.terminate(), 1000);
       webworker.postMessage(\`${codeEscaped}\`);
       webworker.onmessage = (e) => window.parent.postMessage(e.data);
