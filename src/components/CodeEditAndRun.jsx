@@ -31,7 +31,6 @@ export default function CodeEditAndRun({ challenge }) {
         setError(msg.data.errortext);
       }
       if (msg.data.caller === "runTests") {
-        console.log(msg.data);
         setTestResults((prev) => [...prev, msg.data.payload]);
         setTestErrors((prev) => [...prev, msg.data.errortext]);
       }
@@ -46,7 +45,6 @@ export default function CodeEditAndRun({ challenge }) {
   useEffect(() => {
     const result = [];
     for (const [i, test] of challenge.testcases.entries()) {
-      console.log(testResults);
       result.push("" + testResults[i] == test.expected);
     }
     setTestPassed(result);
