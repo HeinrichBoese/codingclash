@@ -16,7 +16,7 @@ export default function CodeEditAndRun({ challenge }) {
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
   );
-  
+
   const [runButtonDisabled, setRunButtonDisabled] = useState(false);
   const [testButtonDisabled, setTestButtonDisabled] = useState(false);
 
@@ -75,7 +75,10 @@ export default function CodeEditAndRun({ challenge }) {
 
   const runTests = () => {
     setTestButtonDisabled(true);
-    setTimeout(() => setTestButtonDisabled(false), challenge.testcases.length * 1000);
+    setTimeout(
+      () => setTestButtonDisabled(false),
+      challenge.testcases.length * 1000
+    );
     setTestResults([]);
     setTestErrors([]);
     setTestPassed([]);
@@ -111,6 +114,12 @@ export default function CodeEditAndRun({ challenge }) {
         }}
         onBeforeChange={(editor, data, value) => setCode(value)}
       />
+
+      <span>Evaluation Result: {result ? JSON.stringify(result) : 'no return value'}</span>
+      <br />
+      <span>Error: {error ? JSON.stringify(error) : 'no errors thrown :)'}</span>
+      <br />
+
       <Button
         onClick={runTests}
         disabled={testButtonDisabled}
@@ -130,20 +139,6 @@ export default function CodeEditAndRun({ challenge }) {
         Evaluate
       </Button>
       <br />
-
-      <span>Result: {result && JSON.stringify(result)}</span>
-      <br />
-      <span>Error: {error && JSON.stringify(error)}</span>
-      <br />
-      <span>
-        Test Cases: {challenge.testcases && JSON.stringify(challenge.testcases)}
-      </span>
-      <br />
-      <span>Test Results: {testResults && JSON.stringify(testResults)}</span>
-      <br />
-      <span>Test Errors: {testErrors && JSON.stringify(testErrors)}</span>
-      <br />
-      <span>Test Passed: {testPassed && JSON.stringify(testPassed)}</span>
 
       <iframe
         ref={iframeRef}
