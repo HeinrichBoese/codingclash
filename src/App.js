@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Register from "./components/Register";
 import { AuthProvider } from './Auth';
 import Login from './components/Login';
+import { InputForm } from "./components/inputForm";
 
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
         </Route>
         <Route exact path="/register">
           <Register />
+        </Route>
+        <Route exact path="/inputForm">
+          <InputForm />
         </Route>
       </Switch>
     </Router>

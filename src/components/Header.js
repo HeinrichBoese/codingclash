@@ -47,16 +47,18 @@ function ButtonAppBar(props) {
           >
             Home
           </Button>
-          <Button
-            component={Link}
-            to={"/InputForm"}
-            startIcon={<CreateIcon />}
-            edge="start"
-            variant="contained"
-            className={classes.button}
-          >
-            New
-          </Button>
+          {currentUser && (
+            <Button
+              component={Link}
+              to={"/InputForm"}
+              startIcon={<CreateIcon />}
+              edge="start"
+              variant="contained"
+              className={classes.button}
+            >
+              New
+            </Button>
+          )}
           <Typography variant="h6" className={classes.title}>
             Hallo {currentUser ? "currentUser" : "Gast"}! Willkommen bei Code
             Clash
