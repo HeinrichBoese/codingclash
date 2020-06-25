@@ -5,6 +5,9 @@ import CodeEditAndRun from "./CodeEditAndRun";
 const getRandomChallenge = async () => {
   const db = firebase.firestore();
   const collectionRef = db.collection("challenges");
+  //TODO: THIS DOES NOT SCALE WELL, AS IT GETS ALL CHALLENGES FROM THE DATABASE EVERY TIME,
+  //SO ONCE WE HAVE 100+ CHALLENGES, WE NEED TO GET A RANDOM ONE VIA AUTOID COMPARE TRICK
+  //OR CUSTOM BACKEND ENDPOINT!
   const snapshot = await collectionRef.get();
   const randomIndex = Math.floor(Math.random() * snapshot.docs.length);
   return snapshot.docs[randomIndex].data();
