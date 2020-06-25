@@ -32,15 +32,25 @@ export default function CodeEditAndRun({ challenge }) {
       }
       if (msg.data.caller === "runTests") {
         console.log(msg.data);
-        setTestResults(prev => [...prev, msg.data.payload]);
-        setTestErrors(prev => [...prev, msg.data.errortext]);
+        setTestResults((prev) => [...prev, msg.data.payload]);
+        setTestErrors((prev) => [...prev, msg.data.errortext]);
       }
     }
   };
+
   useEffect(() => {
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, []);
+
+  useEffect(() => {
+    const result = [];
+    for (const [i, test] of challenge.testcases.entries()) {
+      console.log(testResults);
+      result.push("" + testResults[i] == test.expected);
+    }
+    setTestPassed(result);
+  }, [testResults]);
 
   const taskWebWorker = (codeToRun, callerIdentifier) => {
     iframeRef.current.srcdoc = `
@@ -53,15 +63,7 @@ export default function CodeEditAndRun({ challenge }) {
   };
 
   const evaluate = () => {
-    taskWebWorker(code, 'evaluate');
-  };
-
-  const compareTestResultsWithExpected = () => {
-    const result = [];
-    for (const [i, test] of challenge.testcases.entries()) {
-      result.push(testResults[i]===test.expected)
-    }
-    setTestPassed(result);
+    taskWebWorker(code, "evaluate");
   };
 
   const runTests = () => {
@@ -78,11 +80,10 @@ export default function CodeEditAndRun({ challenge }) {
     const interval = setInterval(() => {
       let val = genObj.next();
       if (val.done) {
-        compareTestResultsWithExpected();
         clearInterval(interval);
       } else {
         let codeToRun = code + "\n" + val.value.test.replace(/\\n/g, "\n");
-        taskWebWorker(codeToRun, 'runTests');
+        taskWebWorker(codeToRun, "runTests");
       }
     }, 1000);
   };
@@ -117,7 +118,7 @@ export default function CodeEditAndRun({ challenge }) {
         Evaluate
       </Button>
       <br />
-      
+
       <span>Result: {result && JSON.stringify(result)}</span>
       <br />
       <span>Error: {error && JSON.stringify(error)}</span>
