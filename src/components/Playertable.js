@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
-        height: 100,
+        height: 160,
         width: 'auto'
     },
 }
@@ -21,13 +21,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Playertable = ({ players }) => {
     const classes = useStyles();
+ 
 
 console.log(players)
     return (
         players.map(player => {
             return (
 
-                <Box p={1} css={{ width: 100 }}>
+                <Box p={1} css={{ width: 200, height:200}}>
                     <Paper className={classes.paper} ><PersonIcon></PersonIcon><br/>
                     {player==='?'?'waiting for player': player}
                     </Paper>
