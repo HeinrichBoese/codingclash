@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect  } from "react";
 
 //import ChallengeDescription from "./ChallengeDescription";
 //import TestResults from "./TestResults";
@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
+import TestResults from "./TestResults";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
@@ -21,6 +22,9 @@ export default function CodeEditAndRun({ challenge }) {
   const [testResults, setTestResults] = useState([]);
   const [testErrors, setTestErrors] = useState([]);
   const [testPassed, setTestPassed] = useState([]);
+
+
+  const [submitted, setSubmitted] = useState(false)
 
   const iframeRef = useRef(null);
 
@@ -68,6 +72,7 @@ export default function CodeEditAndRun({ challenge }) {
     setTestResults([]);
     setTestErrors([]);
     setTestPassed([]);
+    setSubmitted(true)
     function* genFunc() {
       for (let item of challenge.testcases) {
         yield item;
@@ -84,8 +89,9 @@ export default function CodeEditAndRun({ challenge }) {
         taskWebWorker(codeToRun, "runTests");
       }
     }, 1000);
+    
   };
-
+console.log(testResults,challenge)
   return (
     <div style={{ width: 800 }}>
       <CodeMirror
@@ -137,6 +143,7 @@ export default function CodeEditAndRun({ challenge }) {
         style={{ display: "none" }}
         sandbox="allow-scripts allow-same-origin"
       />
+      <TestResults testcases={challenge.testcases} testResults={testResults} submitted={submitted}/>
     </div>
   );
 }
