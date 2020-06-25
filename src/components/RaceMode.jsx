@@ -23,16 +23,16 @@ const getRandomChallenge = async () => {
 export default function RaceMode(props) {
 
   const [challenge, setChallenge] = useState(null);
-  const [initializer, setInitializer] = useState(false);
+  const [initializer, setInitializer] = useState(true);
   const [started, setStarted] = useState(false);
   useEffect(() => {
     if(initializer) {
     getRandomChallenge().then(res => setChallenge(res));
-  }}, []);
+    }}, []);
 //   style = {{paddingTop: height/3.5}}
   return (
     <div style = {styles.container}>
-        {started ? <CodeEditAndRun challenge={challenge} /> : <div><Lobby initializer = {initializer}/></div>}
+        {started ? <CodeEditAndRun challenge={challenge} /> : <div><Lobby initializer = {initializer} setStarted={setStarted}/></div>}
         {/* {challenge ? <CodeEditAndRun challenge={challenge} /> : <div style = {styles.loading}><CircularProgress /></div>} */}
     </div>
   );

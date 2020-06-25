@@ -28,9 +28,10 @@ console.log(players)
         players.map(player => {
             return (
 
-                <Box p={1} css={{ width: 200, height:200}}>
-                    <Paper className={classes.paper} ><PersonIcon></PersonIcon><br/>
-                    {player==='?'?'waiting for player': player}
+                <Box p={1} css={{textAlign:'center', width: 200, height:200}}>
+                    <Paper className={classes.paper} >
+                        <PersonIcon style={{fontSize:100}}></PersonIcon><br/>
+                        <span style = {{fontWeight:'bold', fontSize: 20}}>{player}</span>
                     </Paper>
                 </Box>
 
