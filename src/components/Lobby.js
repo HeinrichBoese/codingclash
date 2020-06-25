@@ -6,7 +6,7 @@ import useWindowDimensions from '../componentsunderconstruction/getWindowDimensi
 
 const Lobby = ({initializer, mode}) => {
     const [players, setPlayers] = useState([
-        'daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel','daniel',
+        'daniel','daniel meinnameistlänger'
     ])
     const [opponent, setOpponent] = useState(false)
     const { height, width } = useWindowDimensions();

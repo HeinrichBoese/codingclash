@@ -23,7 +23,7 @@ const getRandomChallenge = async () => {
 export default function RaceMode(props) {
 
   const [challenge, setChallenge] = useState(null);
-  const [initializer, setInitializer] = useState(false);
+  const [initializer, setInitializer] = useState();
   const [started, setStarted] = useState(false);
   useEffect(() => {
     if(initializer) {

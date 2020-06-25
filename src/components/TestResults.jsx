@@ -23,8 +23,9 @@ export default function TestResults({ testcases, notChecked, checks }) {
                 width: 430,
                 height: 50,
                 textAlign: "center",
-                backgroundColor: divColor,
+                backgroundColor: 'grey',
                 borderRadius: 0,
+
               }}
             >
               <div style={{ paddingTop: 12, marginTop: 8 }}>
