@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import useWindowDimensions from "../componentsunderconstruction/getWindowDimensions";
 import { Link } from "react-router-dom";
 
-const Lobby = () => {
+const Lobby = ({startGame}) => {
   const [gameID, setGameID] = useState("a0s8df9as8d7f");
   const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
   const { height, width } = useWindowDimensions();
@@ -83,7 +83,7 @@ const Lobby = () => {
       </div>
 
       <div style={styles.bottomButton}>
-        <Button style={styles.root}>Start Game</Button>
+        <Button style={styles.root} onClick={startGame}>Start Game</Button>
         <Button style={styles.root} component={Link} to={"/"}>
           Leave Lobby
         </Button>

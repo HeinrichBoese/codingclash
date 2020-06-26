@@ -1,15 +1,41 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import firebase from "../firebase";
 import { AuthContext } from "../Auth";
+import Lobby from "./Lobby";
+import CodeEditAndRun from "./CodeEditAndRun";
+import GameSummary from "./GameSummary";
 
 const GameMaster = () => {
+  const db = firebase.firestore();
   const gameID = useParams().id;
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
+  const [gamesession, setGamesession] = useState(null);
+  const [challenge, setChallenge] = useState(null);
+
+  useEffect(() => {
+    const setupSubscription = () => {
+      db.collection("gamesessions")
+      .doc(gameID)
+      .onSnapshot((doc) => setGamesession(doc.data()));
+    }
+    gameID && setupSubscription();
+  }, [gameID]);
+
+  useEffect(() => {
+      const fetchChallenge = async () => {
+        const challengeDoc = await gamesession.challenge.get();
+        setChallenge( challengeDoc.data());
+      }
+      gamesession && fetchChallenge();
+  }, [gamesession])
+
+  const startGame = () => {
+    db.collection('gamesessions').doc(gameID).update({gameState: 'INGAME'});
+  }
 
   const getRandomChallengeRef = async () => {
-    const db = firebase.firestore();
     const collectionRef = db.collection("challenges");
     //TODO: THIS DOES NOT SCALE WELL, AS IT GETS ALL CHALLENGES FROM THE DATABASE EVERY TIME,
     //SO ONCE WE HAVE 100+ CHALLENGES, WE NEED TO GET A RANDOM ONE VIA AUTOID COMPARE TRICK
@@ -20,7 +46,6 @@ const GameMaster = () => {
   };
 
   const createNewGameSession = async () => {
-    const db = firebase.firestore();
     const userRef = db.collection("User").doc(currentUser.uid);
     const challengeRef = await getRandomChallengeRef();
     const docRef = db.collection("gamesessions").doc();
@@ -34,12 +59,11 @@ const GameMaster = () => {
 
   !gameID && currentUser && createNewGameSession();
 
-  return (
-    <div>
-      {gameID} <br />
-      {currentUser && currentUser.uid}
-    </div>
-  );
+  return <div>
+      {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame}/>}
+      {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} />}
+      {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
+  </div>;
 };
 
 export default GameMaster;
