@@ -9,13 +9,18 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const db = firebase.firestore();
-    firebase.auth().onAuthStateChanged(setCurrentUser);
     firebase.auth().onAuthStateChanged(
-      authUser => { if (authUser){
-        localStorage.setItem('AuthUser', JSON.stringify(authUser))}
-        if(authUser && !userData || authUser && userData.email !== authUser.email){
-        db.collection('User').doc(authUser.uid).get().then((doc) => {setUserData(doc.data());
-          localStorage.setItem('UserData', JSON.stringify(doc.data()))})}        
+      authUser => {
+        setCurrentUser(authUser);
+        if (authUser) {
+          localStorage.setItem('AuthUser', JSON.stringify(authUser));
+        }
+        if (authUser && !userData || authUser && userData.email !== authUser.email) {
+          db.collection('User').doc(authUser.uid).get().then((doc) => {
+            setUserData(doc.data());
+            localStorage.setItem('UserData', JSON.stringify(doc.data()))
+          })
+        }
       },
       // Error handling
       () => {
