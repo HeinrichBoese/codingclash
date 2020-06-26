@@ -23,14 +23,8 @@ const styles = {
 const Home = () => {
   return (
     <div style={styles.container}>
-      <Button style={styles.root} component={Link} to={"/solo"}>
-        Challenge yourself
-      </Button>
-      <Button style={styles.root} component={Link} to={"/race"}>
-        Challenge a friend
-      </Button>
-      <Button style={styles.root} component={Link} to={"/classroom"}>
-        Challenge your Class
+      <Button style={styles.root} component={Link} to={"/game"}>
+        Start Lobby
       </Button>
     </div>
   );
