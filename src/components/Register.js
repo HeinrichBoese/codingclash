@@ -57,7 +57,15 @@ export default function Register(props) {
         await firebase
           .auth()
           .createUserWithEmailAndPassword(values.email, values.password)
-          .then((resp)=>{resp.user.updateProfile({displayName: values.name})});
+          .then((resp)=>{resp.user.updateProfile({displayName: values.name});
+            const db = firebase.firestore();
+            db.collection('User').doc(resp.user.uid).set(
+              {
+                playerName: values.name,
+                playerEmail: values.email,
+              }
+            )
+        })
       } catch (error) {
         alert(error);
       };
