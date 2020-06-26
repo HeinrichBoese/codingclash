@@ -28,6 +28,7 @@ export default function CodeEditAndRun({ challenge }) {
   const [testPassed, setTestPassed] = useState([]);
 
   const [submitted, setSubmitted] = useState(false);
+  const [testRunning, setTestRunning] = useState(false)
 
   const iframeRef = useRef(null);
 
@@ -75,14 +76,19 @@ export default function CodeEditAndRun({ challenge }) {
 
   const runTests = () => {
     setTestButtonDisabled(true);
+    setSubmitted(false);
+    setTestRunning(true)
     setTimeout(
-      () => setTestButtonDisabled(false),
+      () => {
+        setTestButtonDisabled(false);  
+        setTestRunning(false);
+        setSubmitted(true);  
+      },
       challenge.testcases.length * 1000
     );
     setTestResults([]);
     setTestErrors([]);
     setTestPassed([]);
-    setSubmitted(true);
     function* genFunc() {
       for (let item of challenge.testcases) {
         yield item;
@@ -93,15 +99,16 @@ export default function CodeEditAndRun({ challenge }) {
     const interval = setInterval(() => {
       let val = genObj.next();
       if (val.done) {
+      
         clearInterval(interval);
       } else {
         let codeToRun = code + "\n" + val.value.test.replace(/\\n/g, "\n");
         taskWebWorker(codeToRun, "runTests");
       }
-    }, 1000);
+    }, 900);
   };
-
   return (
+    <div>
     <div style={{ width: 800 }}>
       <CodeMirror
         value={code}
@@ -125,7 +132,7 @@ export default function CodeEditAndRun({ challenge }) {
         disabled={testButtonDisabled}
         variant="contained"
         color="primary"
-        style={{ margin: 5, float: "right" }}
+        style={{ marginTop: -25, float: "right" }}
       >
         Run Test Cases
       </Button>
@@ -134,7 +141,7 @@ export default function CodeEditAndRun({ challenge }) {
         disabled={runButtonDisabled}
         variant="contained"
         color="primary"
-        style={{ margin: 5, float: "right" }}
+        style={{ marginTop: -25, marginRight:4, float: "right" }}
       >
         Evaluate
       </Button>
@@ -146,13 +153,17 @@ export default function CodeEditAndRun({ challenge }) {
         style={{ display: "none" }}
         sandbox="allow-scripts allow-same-origin"
       />
+      </div>
+      <div>
       <TestResults
         testcases={challenge.testcases}
         testResults={testResults}
         testError={testErrors}
         testPassed={testPassed}
+        testRunning={testRunning}
         submitted={submitted}
       />
+    </div>
     </div>
   );
 }
