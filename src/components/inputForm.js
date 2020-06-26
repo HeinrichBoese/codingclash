@@ -189,7 +189,7 @@ export const InputForm = (props) => {
 
     return (
         <Container maxWidth="sm">
-            <h1>Neue Aufgabe</h1>
+            <h2>Neue Aufgabe anlegen</h2>
             <Box >
                 <Paper elevation={2} className={classes.root}>
                     <form onSubmit={formik.handleSubmit}>
@@ -285,41 +285,30 @@ export const InputForm = (props) => {
                                     />
                                 </Box>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Box px={2} py={1}>
-                                    <TextField
-                                        {...formikProps("email")}
-                                        type="email"
-                                        label={
-                                            formik.touched.email && formik.errors.email
-                                                ? formik.errors.email
-                                                : "E-Mail Adresse"
-                                        }
-
-                                    />
-                                </Box>
-                            </Grid>
                             <Grid item xs={8}>
                                 <Box px={2} py={1}>
-                                <Button
-                                        className={classes.button}
-                                        variant="outlined"
-                                        color="primary"
-                                        disabled={isAllOk}
-                                        onClick={()=> setIsAllOk(true)}
-                                    >
-                                       is everythig ok?
+                                    {!isAllOk ?
+                                        <Button
+                                            className={classes.button}
+                                            variant="outlined"
+                                            color="primary"
+                                            disabled={isAllOk}
+                                            onClick={() => setIsAllOk(true)}
+                                        >
+                                            is everythig ok?
                                     </Button>
-                                    <Button
-                                        className={classes.button}
-                                        type="submit"
-                                        variant="outlined"
-                                        color="primary"
-                                        onClick={()=> setIsAllOk(false)}
-                                        disabled={formik.isValidating || formik.isSubmitting || !isAllOk}
-                                    >
-                                        Submit
+                                        :
+                                        <Button
+                                            className={classes.button}
+                                            type="submit"
+                                            variant="outlined"
+                                            color="primary"
+                                            onClick={() => setIsAllOk(false)}
+                                            disabled={formik.isValidating || formik.isSubmitting || !isAllOk}
+                                        >
+                                            Submit
                                     </Button>
+                                    }
                                 </Box>
                             </Grid>
                         </Grid>
