@@ -105,7 +105,7 @@ export default function Register(props) {
               label={
                 formik.touched.email && formik.errors.email
                   ? formik.errors.email
-                  : "E-Mail Adress"
+                  : "E-Mail address"
               }
             />
           </Grid>
