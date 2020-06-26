@@ -60,7 +60,7 @@ function ButtonAppBar(props) {
             </Button>
           )}
           <Typography variant="h6" className={classes.title}>
-            Hallo {currentUser ? "currentUser" : "Gast"}! Willkommen bei Code
+            Hallo { currentUser ? !currentUser.displayName ? currentUser.email : currentUser.displayName : "Gast"}! Willkommen bei Code
             Clash
           </Typography>
           {currentUser && (
