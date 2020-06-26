@@ -56,10 +56,12 @@ export default function Register(props) {
       try {
         await firebase
           .auth()
-          .createUserWithEmailAndPassword(values.email, values.password);
+          .createUserWithEmailAndPassword(values.email, values.password)
+          .then((resp)=>{resp.user.updateProfile({displayName: values.name})});
       } catch (error) {
         alert(error);
       };
+      setTimeout(()=>{history.push("/")}, 200);
     }
   });
 
