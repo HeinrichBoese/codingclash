@@ -102,7 +102,7 @@ export const InputForm = (props) => {
         onSubmit: async (values) => {
             const db = firebase.firestore();
             db.collection("challenges").add({
-                creator: "Inputform",
+                creator: currentUser.displayName,
                 title: formik.values.title,
                 description: formik.values.description,
                 example: formik.values.example,
@@ -292,19 +292,20 @@ export const InputForm = (props) => {
                                             className={classes.button}
                                             variant="outlined"
                                             color="primary"
-                                            disabled={isAllOk}
-                                            onClick={() => setIsAllOk(true)}
+                                            // disabled={isAllOk}
+                                            onClick={(e) => { e.preventDefault(); setIsAllOk(true);
+                                            }}
                                         >
                                             is everythig ok?
-                                    </Button>
+                                        </Button>
                                         :
                                         <Button
                                             className={classes.button}
                                             type="submit"
                                             variant="outlined"
                                             color="primary"
-                                            onClick={() => setIsAllOk(false)}
-                                            disabled={formik.isValidating || formik.isSubmitting || !isAllOk}
+                                            // onClick={() => setIsAllOk(false)}
+                                            // disabled={formik.isValidating || formik.isSubmitting || !isAllOk}
                                         >
                                             Submit
                                     </Button>
