@@ -23,14 +23,19 @@ const useStyles = makeStyles((theme) => ({
 const validate = (values) => {
   const errors = {};
   if (!values.email) {
-    errors.email = "Email muss angegeben werden!";
+    errors.email = "Email is mandatory";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Invalid email address";
   }
   if (!values.password) {
-    errors.password = "Passwort muss angegeben werden!";
-  } else if (values.password.length < 4) {
-    errors.password = "Passwort muss mindestens 4 Zeichen lang sein!";
+    errors.password = "Password is mandatory";
+  } else if (values.password.length < 6) {
+    errors.password = "Passwort must have 6 characters or more";
+  }
+  if (!values.name) {
+    errors.name = "Name is required";
+  } else if (values.name.length < 3) {
+    errors.name = "Name must have 3 characters or more";
   }
   return errors;
 };
@@ -44,79 +49,102 @@ export default function Register(props) {
     initialValues: {
       email: "",
       password: "",
+      name: "",
     },
     validate,
     onSubmit: async (values) => {
       try {
         await firebase
           .auth()
-          .createUserWithEmailAndPassword(values.email, values.password);
-        history.push("/");
+          .createUserWithEmailAndPassword(values.email, values.password)
+          .then((resp)=>{resp.user.updateProfile({displayName: values.name});
+            const db = firebase.firestore();
+            db.collection('User').doc(resp.user.uid).set(
+              {
+                playerName: values.name,
+                playerEmail: values.email,
+              }
+            )
+        })
       } catch (error) {
         alert(error);
-      }
-    },
+      };
+      setTimeout(()=>{history.push("/")}, 200);
+    }
   });
 
   const formikProps = (name, initialValue = "") => ({
-    id: name,
-    name: name,
-    variant: "outlined",
-    value: formik.values[name],
-    onChange: formik.handleChange,
-    onBlur: formik.handleBlur,
-    error: Boolean(formik.errors[name] && formik.touched[name]),
-  });
+      id: name,
+      name: name,
+      variant: "outlined",
+      value: formik.values[name],
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      error: Boolean(formik.errors[name] && formik.touched[name]),
+    });
 
-  return (
+    return(
     <div>
-      {currentUser && <Redirect to="/" />}
-      <Container maxWidth="xs">
-        <Paper>
-          <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
-            <form onSubmit={formik.handleSubmit}>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <TextField
-                    className={classes.textField}
-                    {...formikProps("email")}
-                    type="email"
-                    autoComplete="off"
-                    label={
-                      formik.touched.email && formik.errors.email
-                        ? formik.errors.email
-                        : "E-Mail Adresse"
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    className={classes.textField}
-                    {...formikProps("password")}
-                    type="password"
-                    autoComplete="off"
-                    label={
-                      formik.touched.password && formik.errors.password
-                        ? formik.errors.password
-                        : "Passwort"
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    className={classes.button}
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                  >
-                    Registrieren
+    { currentUser && <Redirect to="/" />}
+<Container maxWidth="xs">
+  <Paper>
+    <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <TextField
+              className={classes.textField}
+              {...formikProps("name")}
+              type="text"
+              autoComplete="off"
+              label={
+                formik.touched.name && formik.errors.name
+                  ? formik.errors.name
+                  : "Player Name"
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              className={classes.textField}
+              {...formikProps("email")}
+              type="email"
+              autoComplete="off"
+              label={
+                formik.touched.email && formik.errors.email
+                  ? formik.errors.email
+                  : "E-Mail address"
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              className={classes.textField}
+              {...formikProps("password")}
+              type="password"
+              autoComplete="off"
+              label={
+                formik.touched.password && formik.errors.password
+                  ? formik.errors.password
+                  : "Password"
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              className={classes.button}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              SIGN UP
                   </Button>
-                </Grid>
-              </Grid>
-            </form>
-          </Box>
-        </Paper>
-      </Container>
-    </div>
+          </Grid>
+        </Grid>
+      </form>
+    </Box>
+  </Paper>
+</Container>
+    </div >
   );
 }
