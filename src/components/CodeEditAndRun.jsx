@@ -149,6 +149,8 @@ export default function CodeEditAndRun({ challenge }) {
       <TestResults
         testcases={challenge.testcases}
         testResults={testResults}
+        testError={testErrors}
+        testPassed={testPassed}
         submitted={submitted}
       />
     </div>
