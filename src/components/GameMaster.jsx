@@ -60,10 +60,8 @@ const GameMaster = () => {
   !gameID && currentUser && createNewGameSession();
 
   return <div>
-      GameMaster here. Buckle up!
-      <button onClick={startGame}>GO</button>
-      {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby />}
-      {(gamesession && gamesession.gameState === 'INGAME') && <CodeEditAndRun challenge={challenge} />}
+      {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame}/>}
+      {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} />}
       {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
   </div>;
 };

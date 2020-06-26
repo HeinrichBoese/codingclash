@@ -28,7 +28,7 @@ export default function CodeEditAndRun({ challenge }) {
   const [testPassed, setTestPassed] = useState([]);
 
   const [submitted, setSubmitted] = useState(false);
-  const [testRunning, setTestRunning] = useState(false)
+  const [testRunning, setTestRunning] = useState(false);
 
   const iframeRef = useRef(null);
 
@@ -77,15 +77,12 @@ export default function CodeEditAndRun({ challenge }) {
   const runTests = () => {
     setTestButtonDisabled(true);
     setSubmitted(false);
-    setTestRunning(true)
-    setTimeout(
-      () => {
-        setTestButtonDisabled(false);  
-        setTestRunning(false);
-        setSubmitted(true);  
-      },
-      challenge.testcases.length * 1000
-    );
+    setTestRunning(true);
+    setTimeout(() => {
+      setTestButtonDisabled(false);
+      setTestRunning(false);
+      setSubmitted(true);
+    }, challenge.testcases.length * 1000);
     setTestResults([]);
     setTestErrors([]);
     setTestPassed([]);
@@ -99,7 +96,6 @@ export default function CodeEditAndRun({ challenge }) {
     const interval = setInterval(() => {
       let val = genObj.next();
       if (val.done) {
-      
         clearInterval(interval);
       } else {
         let codeToRun = code + "\n" + val.value.test.replace(/\\n/g, "\n");
@@ -109,61 +105,66 @@ export default function CodeEditAndRun({ challenge }) {
   };
   return (
     <div>
-    <div style={{ width: 800 }}>
-      <CodeMirror
-        value={code}
-        options={{
-          mode: "javascript",
-          theme: "material",
-          tabSize: 2,
-          lineNumbers: true,
-          screenReaderLabel: "code editor",
-        }}
-        onBeforeChange={(editor, data, value) => setCode(value)}
-      />
+      <div style={{ width: 800 }}>
+        <CodeMirror
+          value={code}
+          options={{
+            mode: "javascript",
+            theme: "material",
+            tabSize: 2,
+            lineNumbers: true,
+            screenReaderLabel: "code editor",
+          }}
+          onBeforeChange={(editor, data, value) => setCode(value)}
+        />
 
-      <span>Evaluation Result: {result ? JSON.stringify(result) : 'no return value'}</span>
-      <br />
-      <span>Error: {error ? JSON.stringify(error) : 'no errors thrown :)'}</span>
-      <br />
+        <span>
+          Evaluation Result:{" "}
+          {result ? JSON.stringify(result) : "no return value"}
+        </span>
+        <br />
+        <span>
+          Error: {error ? JSON.stringify(error) : "no errors thrown :)"}
+        </span>
+        <br />
 
-      <Button
-        onClick={runTests}
-        disabled={testButtonDisabled}
-        variant="contained"
-        color="primary"
-        style={{ marginTop: -25, float: "right" }}
-      >
-        Run Test Cases
-      </Button>
-      <Button
-        onClick={evaluate}
-        disabled={runButtonDisabled}
-        variant="contained"
-        color="primary"
-        style={{ marginTop: -25, marginRight:4, float: "right" }}
-      >
-        Evaluate
-      </Button>
-      <br />
+        <Button
+          onClick={runTests}
+          disabled={testButtonDisabled}
+          variant="contained"
+          color="primary"
+          style={{ marginTop: -25, float: "right" }}
+        >
+          Run Test Cases
+        </Button>
+        <Button
+          onClick={evaluate}
+          disabled={runButtonDisabled}
+          variant="contained"
+          color="primary"
+          style={{ marginTop: -25, marginRight: 4, float: "right" }}
+        >
+          Evaluate
+        </Button>
+        <br />
 
-      <iframe
-        ref={iframeRef}
-        title="hidden iframe"
-        style={{ display: "none" }}
-        sandbox="allow-scripts allow-same-origin"
-      />
+        <iframe
+          ref={iframeRef}
+          title="hidden iframe"
+          style={{ display: "none" }}
+          sandbox="allow-scripts allow-same-origin"
+        />
       </div>
       <div>
-      <TestResults
-        testcases={challenge.testcases}
-        testResults={testResults}
-        testError={testErrors}
-        testPassed={testPassed}
-        testRunning={testRunning}
-        submitted={submitted}
-      />
-    </div>
+        <TestResults
+          testcases={challenge.testcases}
+          testResults={testResults}
+          testError={testErrors}
+          testPassed={testPassed}
+          testRunning={testRunning}
+          submitted={submitted}
+        />
+      </div>
     </div>
   );
 }
