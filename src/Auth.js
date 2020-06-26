@@ -4,10 +4,18 @@ import firebase from './firebase';
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(null);
-
-    useEffect(() => {
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('AuthUser')));
+   
+    useEffect(() => {        
         firebase.auth().onAuthStateChanged(setCurrentUser);
+        firebase.auth().onAuthStateChanged(
+            authUser => {
+              localStorage.setItem('AuthUser', JSON.stringify(authUser));
+            },
+            () => {
+              localStorage.removeItem('AuthUser');
+            },
+          );    
     }, []);
     
 
