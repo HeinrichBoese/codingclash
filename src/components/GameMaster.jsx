@@ -32,7 +32,7 @@ const GameMaster = () => {
   }, [gamesession])
 
   const startGame = () => {
-      setGamesession((prev)=>({...prev, gameState: 'INGAME'}));
+    db.collection('gamesessions').doc(gameID).update({gameState: 'INGAME'});
   }
 
   const getRandomChallengeRef = async () => {
