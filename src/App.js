@@ -20,7 +20,7 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="/game">
+          <Route path="/game/:id?">
             <GameMaster />
           </Route>
           <Route exact path="/solo">
