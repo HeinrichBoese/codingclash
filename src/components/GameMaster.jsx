@@ -13,27 +13,51 @@ const GameMaster = () => {
   const { currentUser } = useContext(AuthContext);
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
+  const [secondsLeft, setSecondsLeft] = useState(null);
+  const TIMELIMIT = 100;
 
   useEffect(() => {
     const setupSubscription = () => {
       db.collection("gamesessions")
-      .doc(gameID)
-      .onSnapshot((doc) => setGamesession(doc.data()));
-    }
+        .doc(gameID)
+        .onSnapshot((doc) => setGamesession(doc.data()));
+    };
     gameID && setupSubscription();
   }, [gameID]);
 
   useEffect(() => {
-      const fetchChallenge = async () => {
-        const challengeDoc = await gamesession.challenge.get();
-        setChallenge( challengeDoc.data());
-      }
-      gamesession && fetchChallenge();
-  }, [gamesession])
+    const fetchChallenge = async () => {
+      const challengeDoc = await gamesession.challenge.get();
+      setChallenge(challengeDoc.data());
+    };
+    gamesession && fetchChallenge();
+  }, [gamesession]);
+
+  useEffect(() => {
+    if (gamesession && gamesession.gameState === "INGAME") {
+      const countdown = () => {
+        const secondsPassed = Math.floor(
+          (Date.now() - gamesession.startTime.toDate()) / 1000
+        );
+        TIMELIMIT - secondsPassed >= 0
+          ? setSecondsLeft(TIMELIMIT - secondsPassed)
+          : finishGame();
+      };
+      const interval = setInterval(() => countdown(), 1000);
+      return () => clearInterval(interval);
+    }
+  }, [gamesession]);
 
   const startGame = () => {
-    db.collection('gamesessions').doc(gameID).update({gameState: 'INGAME'});
-  }
+    db.collection("gamesessions").doc(gameID).update({
+      gameState: "INGAME",
+      startTime: firebase.firestore.Timestamp.now(),
+    });
+  };
+
+  const finishGame = () => {
+    db.collection("gamesessions").doc(gameID).update({ gameState: "FINISHED" });
+  };
 
   const getRandomChallengeRef = async () => {
     const collectionRef = db.collection("challenges");
@@ -59,11 +83,20 @@ const GameMaster = () => {
 
   !gameID && currentUser && createNewGameSession();
 
-  return <div>
-      {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame}/>}
-      {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} />}
-      {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
-  </div>;
+  return (
+    <div>
+      {gamesession && gamesession.gameState === "LOBBY" && (
+        <Lobby startGame={startGame} />
+      )}
+      {gamesession && gamesession.gameState === "INGAME" && challenge && (
+        <div>
+          <span>SECONDS LEFT: {secondsLeft}</span>
+          <CodeEditAndRun challenge={challenge} />
+        </div>
+      )}
+      {gamesession && gamesession.gameState === "FINISHED" && <GameSummary />}
+    </div>
+  );
 };
 
 export default GameMaster;
