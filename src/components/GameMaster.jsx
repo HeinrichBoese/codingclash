@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import firebase from "../firebase";
 import { AuthContext } from "../Auth";
+import Box from "@material-ui/core/Box";
+import Playertable from "./Playertable";
 import Lobby from "./Lobby";
 import CodeEditAndRun from "./CodeEditAndRun";
 import GameSummary from "./GameSummary";
@@ -11,6 +13,8 @@ const GameMaster = () => {
   const gameID = useParams().id;
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
+  //TODO: FILL WITH PLAYERNICKS
+  const [players, setPlayers] = useState(["Rambo"]);
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
   const [secondsLeft, setSecondsLeft] = useState(null);
@@ -59,13 +63,13 @@ const GameMaster = () => {
     db.collection("gamesessions").doc(gameID).update({ gameState: "FINISHED" });
   };
 
-  const lobbyLeader = () => {
+  const isLobbyLeader = () => {
     if (gamesession && gamesession.players[0].userID === currentUser.uid) {
       return true;
     } else {
       return false;
     }
-  }
+  };
 
   const getRandomChallengeRef = async () => {
     const collectionRef = db.collection("challenges");
@@ -91,18 +95,26 @@ const GameMaster = () => {
   !gameID && currentUser && createNewGameSession();
 
   return (
-    <div>
-      {gamesession && gamesession.gameState === "LOBBY" && (
-        <Lobby startGame={startGame} lobbyLeader={lobbyLeader}/>
-      )}
-      {gamesession && gamesession.gameState === "INGAME" && challenge && (
-        <div>
-          <span>SECONDS LEFT: {secondsLeft}</span>
-          <CodeEditAndRun challenge={challenge} />
-        </div>
-      )}
-      {gamesession && gamesession.gameState === "FINISHED" && <GameSummary />}
-    </div>
+    gamesession && (
+      <div>
+        <Box display="flex" css={{ justifyContent: "center" }}>
+          <Playertable players={players} />
+        </Box>
+
+        {gamesession.gameState === "LOBBY" && (
+          <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
+        )}
+
+        {gamesession.gameState === "INGAME" && challenge && (
+          <div>
+            <span>SECONDS LEFT: {secondsLeft}</span>
+            <CodeEditAndRun challenge={challenge} />
+          </div>
+        )}
+
+        {gamesession.gameState === "FINISHED" && <GameSummary />}
+      </div>
+    )
   );
 };
 

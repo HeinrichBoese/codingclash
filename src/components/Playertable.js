@@ -11,25 +11,25 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(1),
     color: theme.palette.text.secondary,
-    height: 160,
-    width: "auto",
   },
 }));
 
 const Playertable = ({ players }) => {
   const classes = useStyles();
 
-  return players.map((player) => {
-    return (
-      <Box p={1} css={{ textAlign: "center", width: 200, height: 200 }}>
-        <Paper className={classes.paper}>
-          <PersonIcon style={{ fontSize: 100 }}></PersonIcon>
-          <br />
-          <span style={{ fontWeight: "bold", fontSize: 20 }}>{player}</span>
-        </Paper>
-      </Box>
-    );
-  });
+  return (
+    <Box display="inline-flex">
+      {players.map((player) => (
+        <Box p={1} css={{ textAlign: "center" }} key={player}>
+          <Paper className={classes.paper}>
+            <PersonIcon style={{ fontSize: 50 }} />
+            <br />
+            <span style={{ fontWeight: "bold", fontSize: 20 }}>{player}</span>
+          </Paper>
+        </Box>
+      ))}
+    </Box>
+  );
 };
 
 export default Playertable;
