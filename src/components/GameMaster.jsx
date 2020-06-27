@@ -59,6 +59,14 @@ const GameMaster = () => {
     db.collection("gamesessions").doc(gameID).update({ gameState: "FINISHED" });
   };
 
+  const lobbyLeader = () => {
+    if (gamesession && gamesession.players[0].userID === currentUser.uid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const getRandomChallengeRef = async () => {
     const collectionRef = db.collection("challenges");
     //TODO: THIS DOES NOT SCALE WELL, AS IT GETS ALL CHALLENGES FROM THE DATABASE EVERY TIME,
@@ -70,12 +78,11 @@ const GameMaster = () => {
   };
 
   const createNewGameSession = async () => {
-    const userRef = db.collection("User").doc(currentUser.uid);
     const challengeRef = await getRandomChallengeRef();
     const docRef = db.collection("gamesessions").doc();
     docRef.set({
       gameState: "LOBBY",
-      players: [{ user: userRef, finished: false }],
+      players: [{ userID: currentUser.uid, finished: false }],
       challenge: challengeRef,
     });
     history.push("/game/" + docRef.id);
@@ -86,7 +93,7 @@ const GameMaster = () => {
   return (
     <div>
       {gamesession && gamesession.gameState === "LOBBY" && (
-        <Lobby startGame={startGame} />
+        <Lobby startGame={startGame} lobbyLeader={lobbyLeader}/>
       )}
       {gamesession && gamesession.gameState === "INGAME" && challenge && (
         <div>
