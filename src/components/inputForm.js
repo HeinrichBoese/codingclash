@@ -82,7 +82,7 @@ const validate = (values) => {
 
 
 export const InputForm = (props) => {
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser, userData } = useContext(AuthContext);
     const [testCount, setTestCount] = useState(1)
     const [isAllOk, setIsAllOk] = useState(false)
     const history = useHistory();
@@ -185,8 +185,8 @@ export const InputForm = (props) => {
         }
         return tests
     };
-
-
+    // console.log(userData)
+    // console.log(currentUser)
     return (
         <Container maxWidth="sm">
             <h2>Neue Aufgabe anlegen</h2>
