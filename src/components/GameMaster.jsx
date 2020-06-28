@@ -105,14 +105,14 @@ const GameMaster = () => {
   //     {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
   // </div>;
 
-
+  
   return (
-    gamesession && (
-      <div>
-        <Box display="flex" css={{ justifyContent: "center" }}>
+    gamesession &&  (
+      <div style={{width:'100vw', height: '100vh'}}>
+        {gamesession.gameState !== "INGAME" && (<Box display="flex" css={{ justifyContent: "center" }}>
           <Playertable players={players} />
         </Box>
-
+        )}
         {gamesession.gameState === "LOBBY" && (
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
         )}
@@ -120,7 +120,7 @@ const GameMaster = () => {
         {gamesession.gameState === "INGAME" && challenge && (
           <div>
             <span>SECONDS LEFT: {secondsLeft}</span>
-            <CodeEditAndRun challenge={challenge} />
+            <CodeEditAndRun challenge={challenge} players={players}/>
           </div>
         )}
 
