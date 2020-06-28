@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react";
-import Playertable from "./Playertable";
-import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import useWindowDimensions from "../componentsunderconstruction/getWindowDimensions";
 import { Link } from "react-router-dom";
 
-const Lobby = ({startGame, gameSessionID, players}) => {
+// const Lobby = ({startGame, gameSessionID, players}) => {
   // const [gameID, setGameID] = useState("a0s8df9as8d7f");
   // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
-  const { height, width } = useWindowDimensions();
+  // const { height, width } = useWindowDimensions();
+
+const Lobby = ({startGame, isLobbyLeader}) => {
+
   const styles = {
     root: {
       background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -30,7 +30,7 @@ const Lobby = ({startGame, gameSessionID, players}) => {
     textInput: {
       backgroundColor: "#cccccc",
       fontSize: 18,
-      width: 400,
+      width: 450,
       border: "none",
       borderRadius: 0,
       borderTopLeftRadius: 5,
@@ -55,12 +55,15 @@ const Lobby = ({startGame, gameSessionID, players}) => {
     document.execCommand("copy");
     e.target.focus();
   }
-  gameSessionID = '/'+gameSessionID
-  const sessionLink = window.location.href + gameSessionID;
+
+  // gameSessionID = '/'+gameSessionID
+  // const sessionLink = window.location.href + gameSessionID;
+
+
   return (
     <div style={styles.container}>
       <form style={styles.form}>
-        <input style={styles.textInput} ref={textAreaRef} value={sessionLink} />
+        <input style={styles.textInput} ref={textAreaRef} value={window.location.href} readOnly />
         {document.queryCommandSupported("copy") && (
           <span>
             <Button style={styles.copy} onClick={copyToClipboard}>
@@ -69,22 +72,9 @@ const Lobby = ({startGame, gameSessionID, players}) => {
           </span>
         )}
       </form>
-      <div>
-        <div style={styles.bottomButton}>
-          <Box
-            display="flex"
-            flexWrap="wrap"
-            p={1}
-            m={1}
-            css={{ maxWidth: width, justifyContent: "center" }}
-          >
-            <Playertable players={players} />
-          </Box>
-        </div>
-      </div>
 
       <div style={styles.bottomButton}>
-        <Button style={styles.root} onClick={startGame}>Start Game</Button>
+        {isLobbyLeader && <Button style={styles.root} onClick={startGame}>Start Game</Button>}
         <Button style={styles.root} component={Link} to={"/"}>
           Leave Lobby
         </Button>

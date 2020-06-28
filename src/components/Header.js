@@ -32,7 +32,14 @@ function ButtonAppBar(props) {
   const classes = useStyles();
   const { currentUser } = useContext(AuthContext);
 
+  let game = true;
+  if(window.location.pathname.includes('game')) {
+    game = false
+  }
+  
   return (
+    <div>
+    {game&&
     <div className={classes.root}>
       <Toolbar/> {/*SPACE KEEPER SO CONTENT DOES NOT SLIDE UNDER MENU BAR */}
       <AppBar >
@@ -100,6 +107,8 @@ function ButtonAppBar(props) {
         </Toolbar>
       </AppBar>
     </div>
+    }
+  </div>
   );
 }
 
