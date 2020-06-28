@@ -119,8 +119,8 @@ const GameMaster = () => {
 
         {gamesession.gameState === "INGAME" && challenge && (
           <div>
-            <span>SECONDS LEFT: {secondsLeft}</span>
-            <CodeEditAndRun challenge={challenge} players={players}/>
+            {/* <span>SECONDS LEFT: {secondsLeft}</span> */}
+            <CodeEditAndRun challenge={challenge} players={players} secondsLeft={secondsLeft}/>
           </div>
         )}
 

@@ -19,7 +19,7 @@ import Actions from "./Actions";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
-export default function CodeEditAndRun({ challenge, players }) {
+export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
   );
@@ -114,7 +114,7 @@ export default function CodeEditAndRun({ challenge, players }) {
   return (
     // <Container style={{ width:'100vw', height:'100vh'}}>
     <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}>
-     <UserGameMenu />
+     <UserGameMenu secondsLeft={secondsLeft}/>
       <div style={{backgroundColor:'#2a2a2e', width:'35vw',height:'53vh', overflowY:'auto', margin: 8}}>
         <ChallengeDescription challenge={challenge}/>
       </div>
