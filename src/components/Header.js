@@ -34,8 +34,8 @@ function ButtonAppBar(props) {
 
   return (
     <div className={classes.root}>
-      <Toolbar /> {/*SPACE KEEPER SO CONTENT DOES NOT SLIDE UNDER MENU BAR */}
-      <AppBar>
+      <Toolbar/> {/*SPACE KEEPER SO CONTENT DOES NOT SLIDE UNDER MENU BAR */}
+      <AppBar >
         <Toolbar>
           <Button
             component={Link}

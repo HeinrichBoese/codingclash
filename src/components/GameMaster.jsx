@@ -13,6 +13,8 @@ const GameMaster = () => {
   const { currentUser } = useContext(AuthContext);
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
+  const [gameSessionID, setGameSessionID] = useState("a0s8df9as8d7f");
+  const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
 
   useEffect(() => {
     const setupSubscription = () => {
@@ -58,10 +60,9 @@ const GameMaster = () => {
   };
 
   !gameID && currentUser && createNewGameSession();
-
   return <div>
-      {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame}/>}
-      {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} />}
+      {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame} gameSessionID={gameSessionID} players={players}/>}
+      {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} players={players}/>}
       {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
   </div>;
 };

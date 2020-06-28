@@ -5,9 +5,9 @@ import Button from "@material-ui/core/Button";
 import useWindowDimensions from "../componentsunderconstruction/getWindowDimensions";
 import { Link } from "react-router-dom";
 
-const Lobby = ({startGame}) => {
-  const [gameID, setGameID] = useState("a0s8df9as8d7f");
-  const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
+const Lobby = ({startGame, gameSessionID, players}) => {
+  // const [gameID, setGameID] = useState("a0s8df9as8d7f");
+  // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
   const { height, width } = useWindowDimensions();
   const styles = {
     root: {
@@ -55,7 +55,8 @@ const Lobby = ({startGame}) => {
     document.execCommand("copy");
     e.target.focus();
   }
-  const sessionLink = window.location.href + "/" + gameID;
+  gameSessionID = '/'+gameSessionID
+  const sessionLink = window.location.href + gameSessionID;
   return (
     <div style={styles.container}>
       <form style={styles.form}>

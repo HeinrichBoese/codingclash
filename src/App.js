@@ -15,7 +15,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Header />
+        {/* <Header /> */}
         <Switch>
           <Route exact path="/">
             <Home />

@@ -7,17 +7,20 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 
 //import CheckBoxIcon from "@material-ui/icons/CheckBox";
-const Output = ({testcases, testErr, testPassed, testResults, testRunning, submitted}) => {
+const Output = ({testcases, testError, testPassed, testResults, testRunning, submitted}) => {
   let divColor = "white";
-
+  let testErr = null;
+  if(testError) {
+    testErr = testError[0]
+  }
   return(
     <div>
-    <div style={{display:'flex',justifyContent:'center', backgroundColor:"#5c5d5e"}}>Output</div>
+    <div style={{display:'flex',justifyContent:'center', backgroundColor:"#2a2a2e",  borderBottom:'2px solid #00bef7',fontSize:'1.5em', fontWeight:'bold', color:'#00bef7' }}>Output</div>
       {testcases.map((c,i) => {
           return(
-            <div style={{display:'flex', justifyContent:'center', verticalAlign:'middle', alignItems:'center'}}>
-              {testPassed[i] && !testRunning && submitted && !testErr? <div style={{display:'flex', color:"#77ff73", height: 50, alignItems:'center'}}>Success</div> : null }
-              {!testPassed[i] && !testRunning && submitted && !testErr?<div style={{display:'flex',color:'red', height: 50,alignItems:'center'}}>Failed: Expected {testResults[i]} to be {c.expected}</div> : null}
+            <div key = {i} style={{display:'flex', justifyContent:'center', verticalAlign:'middle', alignItems:'center', fontWeight:'bold',}}>
+              {testPassed[i] && !testRunning && submitted && !testErr? <div style={{display:'flex', color:"#77ff73", height: 50, alignItems:'center', borderBottom:'2px solid #00bef7'}}>Success</div> : null }
+              {!testPassed[i] && !testRunning && submitted && !testErr?<div style={{display:'flex',color:'red', height: 50,alignItems:'center', borderBottom:'2px solid #00bef7'}}>Failed: Expected {testResults[i]} to be {c.expected}</div> : null}
             </div>
           )
       })}
