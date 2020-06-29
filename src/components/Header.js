@@ -15,6 +15,7 @@ import { grey } from "@material-ui/core/colors";
 import { AuthContext } from "../Auth";
 import { Box } from "@material-ui/core";
 import images from "./images";
+import { Avatar } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,95 +37,92 @@ function ButtonAppBar(props) {
   const { currentUser, userData } = useContext(AuthContext);
 
   let game = true;
-  if(window.location.pathname.includes('game')) {
+  if (window.location.pathname.includes('game')) {
     game = false
   }
-  
+
   return (
     <div>
-    {game&&
-    <div className={classes.root}>
-      <Toolbar/> {/*SPACE KEEPER SO CONTENT DOES NOT SLIDE UNDER MENU BAR */}
-      <AppBar >
-        <Toolbar>
-          <Button
-            component={Link}
-            to={"/"}
-            startIcon={<HomeIcon />}
-            edge="start"
-            variant="contained"
-            className={classes.button}
-          >
-            Home
+      {game &&
+        <div className={classes.root}>
+          <Toolbar /> {/*SPACE KEEPER SO CONTENT DOES NOT SLIDE UNDER MENU BAR */}
+          <AppBar >
+            <Toolbar>
+              <Button
+                component={Link}
+                to={"/"}
+                startIcon={<HomeIcon />}
+                edge="start"
+                variant="contained"
+                className={classes.button}
+              >
+                Home
           </Button>
-          {currentUser && (
-            <Button
-              component={Link}
-              to={"/InputForm"}
-              startIcon={<CreateIcon />}
-              edge="start"
-              variant="contained"
-              className={classes.button}
-            >
-              New
-            </Button>
-          )}
-          <Typography variant="h6" className={classes.title}>
-            Hallo { currentUser ? !currentUser.displayName ? currentUser.email : currentUser.displayName : "Gast"}! Willkommen bei Code
+              {currentUser && (
+                <Button
+                  component={Link}
+                  to={"/InputForm"}
+                  startIcon={<CreateIcon />}
+                  edge="start"
+                  variant="contained"
+                  className={classes.button}
+                >
+                  New
+                </Button>
+              )}
+              <Typography variant="h6" className={classes.title}>
+                Hallo {currentUser ? !currentUser.displayName ? currentUser.email : currentUser.displayName : "Gast"}! Willkommen bei Code
             Clash
           </Typography>
-          
-          {currentUser && (
-            <Box
-            borderRadius={20} 
-              component={Link}
-              to={"/Playerprofile"}
-              className={classes.button}
-            >
-              <img src={images[userData.playerImage]} height={35} alt="my image" />
 
-            </Box>
-          )}
 
-          {currentUser && (
-            <Button
-              component={Link}
-              to={"/"}
-              className={classes.button}
-              startIcon={<LockIcon />}
-              variant="contained"
-              onClick={() => firebase.auth().signOut()}
-            >
-              LOG OUT
-            </Button>
-          )}
-          {!currentUser && (
-            <Button
-              component={Link}
-              to={"/login"}
-              className={classes.button}
-              startIcon={<LockOpenIcon />}
-              variant="contained"
-            >
-              LOG IN
-            </Button>
-          )}
-          {!currentUser && (
-            <Button
-              component={Link}
-              to={"/register"}
-              className={classes.button}
-              startIcon={<AssignmentIcon />}
-              variant="contained"
-            >
-              SIGN UP
-            </Button>
-          )}
-        </Toolbar>
-      </AppBar>
+              {currentUser && (
+                <Button
+                  component={Link}
+                  to={"/"}
+                  className={classes.button}
+                  startIcon={<LockIcon />}
+                  variant="contained"
+                  onClick={() => firebase.auth().signOut()}
+                >
+                  LOG OUT
+                </Button>
+              )}
+              {currentUser && (
+                <Avatar
+                  alt="Avatar"
+                  component={Link}
+                  to={"/Playerprofile"}
+                  src={images[userData.playerImage]}
+                  className={classes.large} />
+              )}
+              {!currentUser && (
+                <Button
+                  component={Link}
+                  to={"/login"}
+                  className={classes.button}
+                  startIcon={<LockOpenIcon />}
+                  variant="contained"
+                >
+                  LOG IN
+                </Button>
+              )}
+              {!currentUser && (
+                <Button
+                  component={Link}
+                  to={"/register"}
+                  className={classes.button}
+                  startIcon={<AssignmentIcon />}
+                  variant="contained"
+                >
+                  SIGN UP
+                </Button>
+              )}
+            </Toolbar>
+          </AppBar>
+        </div>
+      }
     </div>
-    }
-  </div>
   );
 }
 
