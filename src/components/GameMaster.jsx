@@ -148,12 +148,6 @@ const GameMaster = () => {
   return (
     gamesession && (
       <div className="lobbyCont">
-        <p style={{ color: "white" }}>
-          gamesession.players: {JSON.stringify(gamesession.players)}
-        </p>
-        <p style={{ color: "white" }}>
-          playerNames: {JSON.stringify(playerNames)}
-        </p>
         <Box display="flex" css={{ justifyContent: "center" }}>
           <Playertable playerNames={playerNames} />
         </Box>
