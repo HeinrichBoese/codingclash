@@ -81,7 +81,7 @@ function ButtonAppBar(props) {
               to={"/Playerprofile"}
               className={classes.button}
             >
-              <img src={images.Male1} height={35} alt="my image" />
+              <img src={images[userData.playerImage]} height={35} alt="my image" />
 
             </Box>
           )}

@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import PersonIcon from "@material-ui/icons/Person";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import images from "./images";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +26,7 @@ const Playertable = ({ gamesessionPlayers, playerData }) => {
       {playerTable.map((playerData) => (
         <Box p={1} css={{ textAlign: "center" }} key={playerData.userID}>
           <Paper className={classes.paper}>
-            <PersonIcon style={{ fontSize: 50 }} />
+            <img src={images[playerData.playerImage]} height={35} alt="my image" />
             <br />
             <span style={{ fontWeight: "bold", fontSize: 20 }}>
               {playerData.playerName}
