@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ButtonAppBar(props) {
   const classes = useStyles();
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, userData } = useContext(AuthContext);
 
   let game = true;
   if(window.location.pathname.includes('game')) {
@@ -79,7 +79,7 @@ function ButtonAppBar(props) {
               to={"/Playerprofile"}
               className={classes.button}
             >
-              <img src="./heads/headMalew.png" height={35} alt="my image" />
+              <img src={userData.playerImage} height={35} alt="my image" />
             </Box>
           )}
 

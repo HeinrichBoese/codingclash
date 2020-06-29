@@ -6,15 +6,16 @@ import Box from "@material-ui/core/Box";
 import Playertable from "./Playertable";
 import Lobby from "./Lobby";
 import CodeEditAndRun from "./CodeEditAndRun";
+
 import GameSummary from "./GameSummary";
 import Sidebar from "./Sidebar";
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
-    width:'calc(100vw - 160px)'
+    width:'calc(100vw - 160px)',
   }
 }));
-
 
 const GameMaster = () => {
   const classes = useStyles();
@@ -22,15 +23,22 @@ const GameMaster = () => {
   const gameID = useParams().id;
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
-  const [playerNames, setPlayerNames] = useState([]);
+  const [playerTableData, setPlayerTableData] = useState([]);
+
+  // GAME STATE FROM SUBSCRIPTION - NEVER UPDATE GAMESTATE LOCALLY!
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
+
 
   // const [gameSessionID, setGameSessionID] = useState("a0s8df9as8d7f");
   // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
 
-  const [secondsLeft, setSecondsLeft] = useState(null);
-  const TIMELIMIT = 100000000;
+  // const [secondsLeft, setSecondsLeft] = useState(null);
+  // const TIMELIMIT = 100000000;
+
+  const [secondsLeft, setSecondsLeft] = useState(0);
+  const TIMELIMIT = 100000;
+
 
   useEffect(() => {
     const setupSubscription = () => {
@@ -53,34 +61,40 @@ const GameMaster = () => {
   // ADD PLAYER TO PLAYER LIST IF HE JOINED BY LINK
   useEffect(() => {
     const addPlayer = () => {
-      const uids = []
-      gamesession.players.forEach(player => uids.push(player.userID));
+      const uids = [];
+      gamesession.players.forEach((player) => uids.push(player.userID));
       if (!uids.includes(currentUser.uid)) {
-        const newPlayers = [...gamesession.players, {userID: currentUser.uid, finished: false}]
-        db.collection('gamesessions').doc(gameID).update( { players: newPlayers });
+        const newPlayers = [
+          ...gamesession.players,
+          { userID: currentUser.uid, finished: false },
+        ];
+        db.collection("gamesessions")
+          .doc(gameID)
+          .update({ players: newPlayers });
       }
     };
     gamesession && addPlayer();
   }, [gamesession]);
-  
+
   // LOAD PLAYER NAMES
   useEffect(() => {
-    const fetchNames = () => {
-      const names = [];
-      gamesession.players.forEach(async (player) => {
-        const userDocRef = db.collection("User").doc(player.userID);
-        const userDoc = await userDocRef.get();
-        const name = userDoc.data().playerName;
-        name ? names.push(name) : names.push('Anonymous');
-      });
-      setPlayerNames(names);
+    const fetchPlayerData = async () => {
+      const playerData = [];
+      for (let player of gamesession.players) {
+        const userDoc = await db.collection("User").doc(player.userID).get();
+        const PlayerDataPoint = userDoc.data();
+        playerData.push({ ...PlayerDataPoint, ...player });
+      }
+      setPlayerTableData(playerData);
     };
-    gamesession && fetchNames();
+    gamesession &&
+      playerTableData.length !== gamesession.players.length &&
+      fetchPlayerData();
   }, [gamesession]);
 
   // GAME TIMER
   useEffect(() => {
-    if (gamesession && gamesession.gameState === "INGAME") {
+    const startCountdown = () => {
       const countdown = () => {
         const secondsPassed = Math.floor(
           (Date.now() - gamesession.startTime.toDate()) / 1000
@@ -91,7 +105,8 @@ const GameMaster = () => {
       };
       const interval = setInterval(() => countdown(), 1000);
       return () => clearInterval(interval);
-    }
+    };
+    gamesession && gamesession.gameState === "INGAME" && startCountdown();
   }, [gamesession]);
 
   const startGame = () => {
@@ -106,10 +121,10 @@ const GameMaster = () => {
   };
 
   const submit = () => {
-    // CodeEditAndRun component should check if all test cases pass
+    // CodeEditAndRun component checks if all test cases pass before allowing submit
     const players = [...gamesession.players];
     const currentPlayerIndex = players.findIndex(
-      (player) => player.uid === currentUser.userID
+      (player) => player.userID === currentUser.uid
     );
     players[currentPlayerIndex].finished = true;
     players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
@@ -119,6 +134,11 @@ const GameMaster = () => {
       docRef.update({ gameState: "FINISHED" });
     }
   };
+
+  const checkSelfFinished = () => {
+    const myself = gamesession.players.find(player => player.userID === currentUser.uid);
+    return myself.finished;
+  }
 
   const isLobbyLeader = () => {
     if (gamesession && gamesession.players[0].userID === currentUser.uid) {
@@ -153,12 +173,18 @@ const GameMaster = () => {
   let playerName = 'Daniel'
   return (
     gamesession && (
+
       <div style= {{display:'flex', width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
          <Sidebar style={{display:'flex'}} playerName={playerName}/>
          <Box className={classes.root}>
         <Box style={{display:"flex", justifyContent: "center", borderBottom:'2px solid #00bef7'}}>
           
-          <Playertable playerNames={playerNames} />
+          {/* <Playertable playerNames={playerNames} /> */}
+
+       {/* <div className="lobbyCont"> */}
+        {/* <Box display="flex" css={{ justifyContent: "center" }}> */}
+          <Playertable playerTableData={playerTableData} /> 
+
         </Box>
 
         {gamesession.gameState === "LOBBY" && (
@@ -167,19 +193,34 @@ const GameMaster = () => {
           </div>
         )}
 
-        {gamesession.gameState === "INGAME" && challenge && (
+         {/* {gamesession.gameState === "INGAME" && challenge && ( */}
+          {/* <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}> */}
+
+        {gamesession.gameState === "INGAME" && !checkSelfFinished() && challenge && (
           <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
             <CodeEditAndRun
               challenge={challenge}
               secondsLeft={secondsLeft}
               submit={submit}
+              secondsLeft={secondsLeft}
             />
           </div>
         )}
 
-        {gamesession.gameState === "FINISHED" && <GameSummary />}
-        </Box>
-       </div>
+
+         {/* {gamesession.gameState === "FINISHED" && <GameSummary />} */}
+         </Box>
+        {/* </div> */}
+
+        {gamesession.gameState === "FINISHED" && (
+          <Box display="flex" css={{ justifyContent: "center" }}>
+            <Typography style={{ color: "white", fontSize: 22 }}>
+              Game ended.
+            </Typography>
+          </Box>
+        )}
+      </div>
+
     )
   );
 };

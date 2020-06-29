@@ -10,6 +10,7 @@ import { AuthProvider } from "./Auth";
 import Login from "./components/Login";
 import { InputForm } from "./components/inputForm";
 import Lobby from "./components/Lobby";
+import PlayerProfile from "./components/PlayerProfile";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/PlayerProfile">
+            <PlayerProfile />
           </Route>
           <Route exact path="/register">
             <Register />

@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight:0
   },
   testResultsContainer: {
-    width:'33.5%',
+    width:'37%',
     height:'43.5%', 
     margin:8,
     marginLeft:0,
