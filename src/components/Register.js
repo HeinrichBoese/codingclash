@@ -63,6 +63,7 @@ export default function Register(props) {
               {
                 playerName: values.name,
                 playerEmail: values.email,
+                playerLevel: 0,                
               }
             )
         })
