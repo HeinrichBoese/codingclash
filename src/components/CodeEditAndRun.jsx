@@ -16,10 +16,24 @@ import Playerboard from "./Playerboard";
 import UserGameMenu from "./UserGameMenu";
 import Output from "../componentsunderconstruction/Output";
 import Actions from "./Actions";
+import Sidebar from "./Sidebar";
+import { makeStyles } from '@material-ui/core/styles';
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'block',
+    width: '100vw',
+    height: '100vh',
+    [theme.breakpoints.up('sm')]: {
+      display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh',
+    },
+  },
+}));
+
 export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
+  const classes = useStyles();
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
   );
@@ -113,8 +127,10 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
 
   return (
     // <Container style={{ width:'100vw', height:'100vh'}}>
-    // <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}>
-    <Box className='flexBox'>
+    <div>
+    {/* <Sidebar /> */}
+    {/* <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}> */}
+    <Box className = {classes.root}>
      {/* <UserGameMenu secondsLeft={secondsLeft}/> */}
       <div style={{backgroundColor:'#2a2a2e', width:'35vw',height:'53vh', overflowY:'auto', margin: 8}}>
         <ChallengeDescription challenge={challenge}/>
@@ -199,6 +215,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
        testButtonDisabled={testButtonDisabled}/>
       </Box>
     </Box>
+    </div>
     // </Container>
   );
 }

@@ -9,12 +9,6 @@ body {
     font-size:1.5em !important
 }
 
-/* .flexBox {
-    display:flex;
-    flex-wrap: wrap;
-    width:100vw;
-    height:100vh
-} */
 .illuminate {
     background:  #2a2a2e;
     color: "#f547e1";
@@ -43,18 +37,3 @@ body {
  
 }
 
-@media (min-width: 379px) {
-    .flexBox {
-        display:block;
-        width:100vw;
-        height:100vh
-    }
-}
-@media (min-width: 800px) {
-    .flexBox {
-        display:flex;
-        flex-wrap: wrap;
-        width:100vw;
-        height:100vh
-    }
-}
