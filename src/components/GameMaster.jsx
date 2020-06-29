@@ -55,7 +55,7 @@ const GameMaster = () => {
           .update({ players: newPlayers });
       }
     };
-    (gamesession && gamesession.gameState !== 'FINISHED') && addPlayer();
+    gamesession && gamesession.gameState !== "FINISHED" && addPlayer();
   }, [gamesession]);
 
   // LOAD ADDITIONAL PLAYER DATA FOR PLAYERTABLE
@@ -118,9 +118,11 @@ const GameMaster = () => {
   };
 
   const checkSelfFinished = () => {
-    const myself = gamesession.players.find(player => player.userID === currentUser.uid);
+    const myself = gamesession.players.find(
+      (player) => player.userID === currentUser.uid
+    );
     return myself.finished;
-  }
+  };
 
   const isLobbyLeader = () => {
     if (gamesession && gamesession.players[0].userID === currentUser.uid) {
@@ -153,38 +155,47 @@ const GameMaster = () => {
 
   !gameID && currentUser && createNewGameSession();
 
-  return (
-    gamesession && (
-      <div className="lobbyCont">
-        <Box display="flex" css={{ justifyContent: "center" }}>
-          <Playertable gamesessionPlayers={gamesession.players} playerData={playerData} />
-        </Box>
-
-        {gamesession.gameState === "LOBBY" && (
-          <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
-        )}
-
-        {gamesession.gameState === "INGAME" && !checkSelfFinished() && challenge && (
-          <div>
-            <CodeEditAndRun
-              challenge={challenge}
-              secondsLeft={secondsLeft}
-              submit={submit}
-              secondsLeft={secondsLeft}
-            />
-          </div>
-        )}
-
-        {gamesession.gameState === "FINISHED" && (
+  if (!gamesession) {
+    return null;
+  } else {
+    return (
+      gamesession && (
+        <div className="lobbyCont">
           <Box display="flex" css={{ justifyContent: "center" }}>
-            <Typography style={{ color: "white", fontSize: 22 }}>
-              Game ended.
-            </Typography>
+            <Playertable
+              gamesessionPlayers={gamesession.players}
+              playerData={playerData}
+            />
           </Box>
-        )}
-      </div>
-    )
-  );
+
+          {gamesession.gameState === "LOBBY" && (
+            <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
+          )}
+
+          {gamesession.gameState === "INGAME" &&
+            !checkSelfFinished() &&
+            challenge && (
+              <div>
+                <CodeEditAndRun
+                  challenge={challenge}
+                  secondsLeft={secondsLeft}
+                  submit={submit}
+                  secondsLeft={secondsLeft}
+                />
+              </div>
+            )}
+
+          {gamesession.gameState === "FINISHED" && (
+            <Box display="flex" css={{ justifyContent: "center" }}>
+              <Typography style={{ color: "white", fontSize: 22 }}>
+                Game ended.
+              </Typography>
+            </Box>
+          )}
+        </div>
+      )
+    );
+  }
 };
 
 export default GameMaster;

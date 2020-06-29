@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CodeEditAndRun({ challenge, players, secondsLeft, submit}) {
   const classes = useStyles();
-  const [code, setCode] = useState(
-    (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
-  );
+  const [code, setCode] = useState("");
 
   const [runButtonDisabled, setRunButtonDisabled] = useState(false);
   const [testButtonDisabled, setTestButtonDisabled] = useState(false);
@@ -53,6 +51,10 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
   const [testRunning, setTestRunning] = useState(false);
 
   const iframeRef = useRef(null);
+
+  useEffect(()=> {
+    setCode((challenge && challenge.template.replace(/\\n/g, "\n")) || "");
+  },[challenge])
 
   const handleMessage = (msg) => {
     if (msg.data.source === "iframe") {
