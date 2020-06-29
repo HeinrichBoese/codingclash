@@ -17,23 +17,32 @@ import UserGameMenu from "./UserGameMenu";
 import Output from "../componentsunderconstruction/Output";
 import Actions from "./Actions";
 import Sidebar from "./Sidebar";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
-const equal = require('fast-deep-equal/es6');
+const equal = require("fast-deep-equal/es6");
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'block',
-    width: '100vw',
-    height: '100vh',
-    [theme.breakpoints.up('sm')]: {
-      display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh',
+    display: "block",
+    width: "100vw",
+    height: "100vh",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex",
+      flexWrap: "wrap",
+      width: "100vw",
+      height: "100vh",
     },
   },
 }));
 
-export default function CodeEditAndRun({ challenge, players, secondsLeft, submit}) {
+export default function CodeEditAndRun({
+  challenge,
+  players,
+  secondsLeft,
+  submit,
+}) {
   const classes = useStyles();
   const [code, setCode] = useState("");
 
@@ -46,16 +55,16 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
   const [testResults, setTestResults] = useState([]);
   const [testErrors, setTestErrors] = useState([]);
   const [testPassed, setTestPassed] = useState([]);
-  const [allChecksDone, setAllChecksDone] = useState(false)
+  const [allChecksDone, setAllChecksDone] = useState(false);
 
   const [submitted, setSubmitted] = useState(false);
   const [testRunning, setTestRunning] = useState(false);
 
   const iframeRef = useRef(null);
 
-  useEffect(()=> {
+  useEffect(() => {
     setCode((challenge && challenge.template.replace(/\\n/g, "\n")) || "");
-  },[challenge])
+  }, [challenge]);
 
   const handleMessage = (msg) => {
     if (msg.data.source === "iframe") {
@@ -81,15 +90,15 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
       result.push(equal(testResults[i], JSON.parse(test.expected)));
     }
     setTestPassed(result);
-    let done = true
-      for (const t of result) {
-        if(t === false) {
-          done = false
-        }
+    let done = true;
+    for (const t of result) {
+      if (t === false) {
+        done = false;
       }
-      if(done) {
-    setAllChecksDone(true)  
-      }    
+    }
+    if (done) {
+      setAllChecksDone(true);
+    }
   }, [testResults]);
 
   const taskWebWorker = (codeToRun, callerIdentifier) => {
@@ -139,31 +148,43 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
     }, 900);
   };
 
-
   return (
     // <Container style={{ width:'100vw', height:'100vh'}}>
     <div>
-    {/* <Sidebar /> */}
-    {/* <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}> */}
-    <Box className = {classes.root}>
-     {/* <UserGameMenu secondsLeft={secondsLeft}/> */}
-      <div style={{backgroundColor:'#2a2a2e', width:'35vw',height:'53vh', overflowY:'auto', margin: 8}}>
-        <ChallengeDescription challenge={challenge}/>
-      </div>
-      <Box style={{ width:'40vw', height:'53vh', margin: 8 }}>
-        <CodeMirror
-          value={code}
-          options={{
-            mode: "javascript",
-            theme: "shadowfox",
-            tabSize: 2,
-            lineNumbers: true,
-            screenReaderLabel: "code editor",
+      {/* <Sidebar /> */}
+      {/* <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}> */}
+      <Box className={classes.root}>
+        {/* <UserGameMenu secondsLeft={secondsLeft}/> */}
+        <Box display="flex" css={{ justifyContent: "center" }}>
+          <Typography style={{ color: "white", fontSize: 22 }}>
+            You have {secondsLeft}seconds left...
+          </Typography>
+        </Box>
+        <div
+          style={{
+            backgroundColor: "#2a2a2e",
+            width: "35vw",
+            height: "53vh",
+            overflowY: "auto",
+            margin: 8,
           }}
-          onBeforeChange={(editor, data, value) => setCode(value)}
-        />
+        >
+          <ChallengeDescription challenge={challenge} />
+        </div>
+        <Box style={{ width: "40vw", height: "53vh", margin: 8 }}>
+          <CodeMirror
+            value={code}
+            options={{
+              mode: "javascript",
+              theme: "shadowfox",
+              tabSize: 2,
+              lineNumbers: true,
+              screenReaderLabel: "code editor",
+            }}
+            onBeforeChange={(editor, data, value) => setCode(value)}
+          />
 
-        {/* <span>
+          {/* <span>
           Evaluation Result:{" "}
           {result ? JSON.stringify(result) : "no return value"}
         </span>
@@ -173,7 +194,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
         </span>
         <br /> */}
 
-        {/* <Button
+          {/* <Button
           onClick={runTests}
           disabled={testButtonDisabled}
           variant="contained"
@@ -191,48 +212,69 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
         >
           Evaluate
         </Button> */}
-        {/* <br /> */}
+          {/* <br /> */}
 
-        <iframe
-          ref={iframeRef}
-          title="hidden iframe"
-          style={{ display: "none" }}
-          sandbox="allow-scripts allow-same-origin"
-        />
-      </Box>
-      <Box style={{display:'flex', justifyContent:'center', height:'37vh', margin: 8}}>
-      {/* <div>
+          <iframe
+            ref={iframeRef}
+            title="hidden iframe"
+            style={{ display: "none" }}
+            sandbox="allow-scripts allow-same-origin"
+          />
+        </Box>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: "37vh",
+            margin: 8,
+          }}
+        >
+          {/* <div>
         <Playerboard players={players}/>
       </div> */}
-      <div>
-         <Box style={{width:'26vw',height:'38vh', backgroundColor:'#252626', margin:8}}> 
-        <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
-         </Box>
-      </div>
-      <div>
-        <TestResults
-          testcases={challenge.testcases}
-          testResults={testResults}
-          testError={testErrors}
-          testPassed={testPassed}
-          testRunning={testRunning}
-          submitted={submitted}
-          // runTests={runTests}
-          // evaluate={evaluate}
-          // runButtonDisabled={runButtonDisabled}
-          // testButtonDisabled={testButtonDisabled}
-        />
-      </div>
-      <Actions 
-       runTests={runTests}
-       evaluate={evaluate}
-       runButtonDisabled={runButtonDisabled}
-       testButtonDisabled={testButtonDisabled}
-       submit={submit}
-       allChecksDone={allChecksDone}
-       />
+          <div>
+            <Box
+              style={{
+                width: "26vw",
+                height: "38vh",
+                backgroundColor: "#252626",
+                margin: 8,
+              }}
+            >
+              <Output
+                testcases={challenge.testcases}
+                testError={testErrors}
+                testResults={testResults}
+                submitted={submitted}
+                testRunning={testRunning}
+                testPassed={testPassed}
+              />
+            </Box>
+          </div>
+          <div>
+            <TestResults
+              testcases={challenge.testcases}
+              testResults={testResults}
+              testError={testErrors}
+              testPassed={testPassed}
+              testRunning={testRunning}
+              submitted={submitted}
+              // runTests={runTests}
+              // evaluate={evaluate}
+              // runButtonDisabled={runButtonDisabled}
+              // testButtonDisabled={testButtonDisabled}
+            />
+          </div>
+          <Actions
+            runTests={runTests}
+            evaluate={evaluate}
+            runButtonDisabled={runButtonDisabled}
+            testButtonDisabled={testButtonDisabled}
+            submit={submit}
+            allChecksDone={allChecksDone}
+          />
+        </Box>
       </Box>
-    </Box>
     </div>
     // </Container>
   );

@@ -18,6 +18,7 @@ const GameMaster = () => {
   // GAME STATE FROM SUBSCRIPTION - NEVER UPDATE GAMESTATE LOCALLY!
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
+  const [challengeLoaded, setChallengeLoaded] = useState(false);
 
   const [secondsLeft, setSecondsLeft] = useState(0);
   const TIMELIMIT = 100;
@@ -36,8 +37,9 @@ const GameMaster = () => {
     const fetchChallenge = async () => {
       const challengeDoc = await gamesession.challenge.get();
       setChallenge(challengeDoc.data());
+      setChallengeLoaded(true);
     };
-    gamesession && fetchChallenge();
+    (gamesession && !challengeLoaded) && fetchChallenge();
   }, [gamesession]);
 
   // ADD PLAYER TO PLAYER LIST IF HE JOINED BY LINK
