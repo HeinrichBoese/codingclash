@@ -24,7 +24,6 @@ const GameMaster = () => {
   const [secondsLeft, setSecondsLeft] = useState(null);
   const TIMELIMIT = 100;
 
-
   useEffect(() => {
     const setupSubscription = () => {
       db.collection("gamesessions")
@@ -68,6 +67,21 @@ const GameMaster = () => {
     db.collection("gamesessions").doc(gameID).update({ gameState: "FINISHED" });
   };
 
+  const submit = () => {
+    // CodeEditAndRun component should check if all test cases pass
+    const players = [...gamesession.players];
+    const currentPlayerIndex = players.findIndex(
+      (player) => player.uid === currentUser.uid
+    );
+    players[currentPlayerIndex].finished = true;
+    players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
+    const docRef = db.collection("gamesessions").doc();
+    docRef.update({ players });
+    if (players.every((player) => player.finished)) {
+      docRef.update({ gameState: "FINISHED" });
+    }
+  };
+
   const isLobbyLeader = () => {
     if (gamesession && gamesession.players[0].userID === currentUser.uid) {
       return true;
@@ -99,27 +113,25 @@ const GameMaster = () => {
 
   !gameID && currentUser && createNewGameSession();
 
-  // return <div>
-  //     {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame} gameSessionID={gameSessionID} players={players}/>}
-  //     {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} players={players}/>}
-  //     {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
-  // </div>;
-
-  
   return (
-    gamesession &&  (
-      <div className = 'lobbyCont'>
+    gamesession && (
+      <div className="lobbyCont">
         <Box display="flex" css={{ justifyContent: "center" }}>
           <Playertable players={players} />
         </Box>
+
         {gamesession.gameState === "LOBBY" && (
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
         )}
 
         {gamesession.gameState === "INGAME" && challenge && (
           <div>
-            {/* <span>SECONDS LEFT: {secondsLeft}</span> */}
-            <CodeEditAndRun challenge={challenge} players={players} secondsLeft={secondsLeft}/>
+            <CodeEditAndRun
+              challenge={challenge}
+              players={players}
+              secondsLeft={secondsLeft}
+              submit={submit}
+            />
           </div>
         )}
 
@@ -127,7 +139,6 @@ const GameMaster = () => {
       </div>
     )
   );
-
 };
 
 export default GameMaster;
