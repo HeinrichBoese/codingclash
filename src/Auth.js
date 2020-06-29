@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
         if (authUser) {
           localStorage.setItem('AuthUser', JSON.stringify(authUser));
         }
-        if (authUser && !userData || authUser && userData.email !== authUser.email) {
+        if ((authUser && !userData) || (authUser && userData.email !== authUser.email)) {
           db.collection('User').doc(authUser.uid).get().then((doc) => {
             setUserData(doc.data());
             localStorage.setItem('UserData', JSON.stringify(doc.data()))
