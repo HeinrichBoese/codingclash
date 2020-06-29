@@ -18,7 +18,8 @@ const Playertable = ({ playerNames }) => {
   const classes = useStyles();
 
   return (
-    <Box display="inline-flex">
+    <div>
+    <Box style={{display:"inline-flex"}} >
       {playerNames.map((playerName) => (
         <Box p={1} css={{ textAlign: "center" }} key={playerName}>
           <Paper className={classes.paper}>
@@ -29,6 +30,7 @@ const Playertable = ({ playerNames }) => {
         </Box>
       ))}
     </Box>
+    </div>
   );
 };
 

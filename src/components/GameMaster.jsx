@@ -7,8 +7,17 @@ import Playertable from "./Playertable";
 import Lobby from "./Lobby";
 import CodeEditAndRun from "./CodeEditAndRun";
 import GameSummary from "./GameSummary";
+import Sidebar from "./Sidebar";
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width:'calc(100vw - 168px)'
+  }
+}));
+
 
 const GameMaster = () => {
+  const classes = useStyles();
   const db = firebase.firestore();
   const gameID = useParams().id;
   const history = useHistory();
@@ -21,7 +30,7 @@ const GameMaster = () => {
   // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
 
   const [secondsLeft, setSecondsLeft] = useState(null);
-  const TIMELIMIT = 100;
+  const TIMELIMIT = 100000000;
 
   useEffect(() => {
     const setupSubscription = () => {
@@ -128,11 +137,14 @@ const GameMaster = () => {
   };
 
   !gameID && currentUser && createNewGameSession();
-
+  let playerName = 'Daniel'
   return (
     gamesession && (
-      <div className="lobbyCont">
-        <Box display="flex" css={{ justifyContent: "center" }}>
+      <div style= {{display:'flex'}}>
+         <Sidebar style={{display:'flex'}} playerName={playerName}/>
+         <Box className={classes.root}>
+        <Box style={{display:"flex", justifyContent: "center", borderBottom:'2px solid #00bef7'}}>
+          
           <Playertable playerNames={playerNames} />
         </Box>
 
@@ -151,7 +163,8 @@ const GameMaster = () => {
         )}
 
         {gamesession.gameState === "FINISHED" && <GameSummary />}
-      </div>
+        </Box>
+       </div>
     )
   );
 };

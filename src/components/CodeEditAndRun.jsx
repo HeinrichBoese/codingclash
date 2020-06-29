@@ -24,12 +24,28 @@ require("codemirror/mode/javascript/javascript");
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'block',
-    width: '100vw',
-    height: '100vh',
+    // width:'100vw', 
+    height:'100vh',
+    // display:'flex', 
+    // flexWrap:'wrap', 
     [theme.breakpoints.up('sm')]: {
-      display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh',
+      display:'flex', 
+      flexWrap:'wrap', 
+      width: 'calc(100vw - 168px)',
+      height: 'calc(100vh - 112)',
     },
   },
+  codeMirrContainer: {
+    width:'calc(48vw - 160px)', 
+    height:'53vh', 
+    margin: 8 
+  },
+  challengeDescContainer: {
+    backgroundColor:'#2a2a2e', 
+    width:'calc(48vw - 160px)',height:'53vh', 
+    overflowY:'auto', 
+    margin: 8
+  }
 }));
 
 export default function CodeEditAndRun({ challenge, players, secondsLeft, submit}) {
@@ -138,16 +154,12 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
 
 
   return (
-    // <Container style={{ width:'100vw', height:'100vh'}}>
     <div>
-    {/* <Sidebar /> */}
-    {/* <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}> */}
     <Box className = {classes.root}>
-     {/* <UserGameMenu secondsLeft={secondsLeft}/> */}
-      <div style={{backgroundColor:'#2a2a2e', width:'35vw',height:'53vh', overflowY:'auto', margin: 8}}>
+      <div className={classes.challengeDescContainer}>
         <ChallengeDescription challenge={challenge}/>
       </div>
-      <Box style={{ width:'40vw', height:'53vh', margin: 8 }}>
+      <Box className={classes.codeMirrContainer}>
         <CodeMirror
           value={code}
           options={{
@@ -159,37 +171,6 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
           }}
           onBeforeChange={(editor, data, value) => setCode(value)}
         />
-
-        {/* <span>
-          Evaluation Result:{" "}
-          {result ? JSON.stringify(result) : "no return value"}
-        </span>
-        <br />
-        <span>
-          Error: {error ? JSON.stringify(error) : "no errors thrown :)"}
-        </span>
-        <br /> */}
-
-        {/* <Button
-          onClick={runTests}
-          disabled={testButtonDisabled}
-          variant="contained"
-          color="primary"
-          style={{ float: "right" }}
-        >
-          Run Test Cases
-        </Button>
-        <Button
-          onClick={evaluate}
-          disabled={runButtonDisabled}
-          variant="contained"
-          color="primary"
-          style={{  marginRight: 5, float: "right" }}
-        >
-          Evaluate
-        </Button> */}
-        {/* <br /> */}
-
         <iframe
           ref={iframeRef}
           title="hidden iframe"
@@ -197,10 +178,6 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
           sandbox="allow-scripts allow-same-origin"
         />
       </Box>
-      <Box style={{display:'flex', justifyContent:'center', height:'37vh', margin: 8}}>
-      {/* <div>
-        <Playerboard players={players}/>
-      </div> */}
       <div>
          <Box style={{width:'26vw',height:'38vh', backgroundColor:'#252626', margin:8}}> 
         <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
@@ -228,9 +205,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
        submit={submit}
        allChecksDone={allChecksDone}
        />
-      </Box>
     </Box>
     </div>
-    // </Container>
   );
 }

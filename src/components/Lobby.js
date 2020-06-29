@@ -11,27 +11,39 @@ const Lobby = ({startGame, isLobbyLeader}) => {
 
   const styles = {
     root: {
-      background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-      borderRadius: 3,
-      border: 0,
-      color: "white",
-      height: 48,
-      padding: "0 30px",
-      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-      margin: 20,
+      // 
+        // background: 'rgb(241,26,255)',
+        background:  "#2a2a2e",
+        // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
+        color: "#f547e1",
+        fontSize:'1em',
+        fontWeight:'bold',
+        height: 50,
+        // padding: "0 30px",
+        // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
+        width:200,
+        margin:20,
+        // border: '2px solid rgb(241,26,255)',
+        border: '2px solid  #00bef7'
+        // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
     },
     copy: {
-      color: "white",
+      color: "#f547e1",
       borderRadius: 0,
       borderTopRightRadius: 5,
       borderBottomRightRadius: 5,
-      background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+      backgroundColor: "#2a2a2e",
+      border: '2px solid  #00bef7',
+      width:100,
+      height:40
     },
     textInput: {
-      backgroundColor: "#cccccc",
+      backgroundColor: "#2a2a2e",
+      color:'#f547e1',
+      border: '2px solid  #00bef7',
       fontSize: 18,
       width: 450,
-      border: "none",
+      // border: "none",
       borderRadius: 0,
       borderTopLeftRadius: 5,
       borderBottomLeftRadius: 5,
@@ -66,7 +78,7 @@ const Lobby = ({startGame, isLobbyLeader}) => {
         <input style={styles.textInput} ref={textAreaRef} value={window.location.href} readOnly />
         {document.queryCommandSupported("copy") && (
           <span>
-            <Button style={styles.copy} onClick={copyToClipboard}>
+            <Button className='illuminate' style={styles.copy} onClick={copyToClipboard}>
               Copy Link
             </Button>
           </span>
@@ -74,8 +86,8 @@ const Lobby = ({startGame, isLobbyLeader}) => {
       </form>
 
       <div style={styles.bottomButton}>
-        {isLobbyLeader && <Button style={styles.root} onClick={startGame}>Start Game</Button>}
-        <Button style={styles.root} component={Link} to={"/"}>
+        {isLobbyLeader && <Button className='illuminate' style={styles.root} onClick={startGame}>Start Game</Button>}
+        <Button className='illuminate' style={styles.root} component={Link} to={"/"}>
           Leave Lobby
         </Button>
       </div>
