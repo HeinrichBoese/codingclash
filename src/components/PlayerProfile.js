@@ -14,9 +14,12 @@ export default function PlayerProfile(props) {
     return (
         <div>
             { !currentUser && <Redirect to="/" />}
+            {/* Bild */}
+            {/* Level  */}
+            {/* Profilname */}
+            {/* Background */}
+
             
-
-
         </div>
     );
 }
