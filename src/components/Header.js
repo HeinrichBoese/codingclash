@@ -14,6 +14,8 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { grey } from "@material-ui/core/colors";
 import { AuthContext } from "../Auth";
 import { Box } from "@material-ui/core";
+import images from "./images";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,7 +81,8 @@ function ButtonAppBar(props) {
               to={"/Playerprofile"}
               className={classes.button}
             >
-              <img src={userData.playerImage} height={35} alt="my image" />
+              <img src={images.Male1} height={35} alt="my image" />
+
             </Box>
           )}
 
