@@ -13,8 +13,7 @@ const GameMaster = () => {
   const gameID = useParams().id;
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
-  //TODO: FILL WITH PLAYERNICKS
-  const [players, setPlayers] = useState(["Rambo"]);
+  const [playerNames, setPlayerNames] = useState([]);
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
 
@@ -33,6 +32,7 @@ const GameMaster = () => {
     gameID && setupSubscription();
   }, [gameID]);
 
+  // LOAD CURRENT CHALLENGE
   useEffect(() => {
     const fetchChallenge = async () => {
       const challengeDoc = await gamesession.challenge.get();
@@ -41,6 +41,22 @@ const GameMaster = () => {
     gamesession && fetchChallenge();
   }, [gamesession]);
 
+  // LOAD PLAYER NAMES
+  useEffect(() => {
+    const fetchNames = () => {
+      const names = [];
+      gamesession.players.forEach(async (player) => {
+        const userDocRef = db.collection("User").doc(player.userID);
+        const userDoc = await userDocRef.get();
+        const name = userDoc.data().playerName;
+        name ? names.push(name) : names.push('Anonymous');
+      });
+      setPlayerNames(names);
+    };
+    gamesession && fetchNames();
+  }, [gamesession]);
+
+  // GAME TIMER
   useEffect(() => {
     if (gamesession && gamesession.gameState === "INGAME") {
       const countdown = () => {
@@ -117,7 +133,7 @@ const GameMaster = () => {
     gamesession && (
       <div className="lobbyCont">
         <Box display="flex" css={{ justifyContent: "center" }}>
-          <Playertable players={players} />
+          <Playertable playerNames={playerNames} />
         </Box>
 
         {gamesession.gameState === "LOBBY" && (
@@ -128,7 +144,6 @@ const GameMaster = () => {
           <div>
             <CodeEditAndRun
               challenge={challenge}
-              players={players}
               secondsLeft={secondsLeft}
               submit={submit}
             />
