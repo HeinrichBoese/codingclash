@@ -20,6 +20,7 @@ import Sidebar from "./Sidebar";
 import { makeStyles } from '@material-ui/core/styles';
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
+const equal = require('fast-deep-equal/es6');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +78,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
   useEffect(() => {
     const result = [];
     for (const [i, test] of challenge.testcases.entries()) {
-      result.push("" + testResults[i] === test.expected);
+      result.push(equal(testResults[i], JSON.parse(test.expected)));
     }
     setTestPassed(result);
     let done = true
