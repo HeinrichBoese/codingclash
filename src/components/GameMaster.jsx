@@ -41,6 +41,19 @@ const GameMaster = () => {
     gamesession && fetchChallenge();
   }, [gamesession]);
 
+  // ADD PLAYER TO PLAYER LIST IF HE JOINED BY LINK
+  useEffect(() => {
+    const addPlayer = () => {
+      const uids = []
+      gamesession.players.forEach(player => uids.push(player.userID));
+      if (!uids.includes(currentUser.uid)) {
+        const newPlayers = [...gamesession.players, {userID: currentUser.uid, finished: false}]
+        db.collection('gamesessions').doc(gameID).update( newPlayers);
+      }
+    };
+    gamesession && addPlayer();
+  }, [gamesession]);
+  
   // LOAD PLAYER NAMES
   useEffect(() => {
     const fetchNames = () => {
