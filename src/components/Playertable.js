@@ -14,17 +14,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Playertable = ({ playerNames }) => {
+const Playertable = ({ playerTableData }) => {
   const classes = useStyles();
 
   return (
     <Box display="inline-flex">
-      {playerNames.map((playerName) => (
-        <Box p={1} css={{ textAlign: "center" }} key={playerName}>
+      {playerTableData.map((playerData) => (
+        <Box p={1} css={{ textAlign: "center" }} key={playerData.userID}>
           <Paper className={classes.paper}>
             <PersonIcon style={{ fontSize: 50 }} />
             <br />
-            <span style={{ fontWeight: "bold", fontSize: 20 }}>{playerName}</span>
+            <span style={{ fontWeight: "bold", fontSize: 20 }}>
+              {playerData.playerName}
+            </span>
           </Paper>
         </Box>
       ))}
