@@ -57,7 +57,7 @@ const GameMaster = () => {
       gamesession.players.forEach(player => uids.push(player.userID));
       if (!uids.includes(currentUser.uid)) {
         const newPlayers = [...gamesession.players, {userID: currentUser.uid, finished: false}]
-        db.collection('gamesessions').doc(gameID).update( { newPlayers });
+        db.collection('gamesessions').doc(gameID).update( { players: newPlayers });
       }
     };
     gamesession && addPlayer();
