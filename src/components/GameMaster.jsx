@@ -17,7 +17,7 @@ const GameMaster = () => {
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
 
-  const [secondsLeft, setSecondsLeft] = useState(null);
+  const [secondsLeft, setSecondsLeft] = useState(0);
   const TIMELIMIT = 100;
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const GameMaster = () => {
 
   // GAME TIMER
   useEffect(() => {
-    if (gamesession && gamesession.gameState === "INGAME") {
+    const startCountdown = () => {
       const countdown = () => {
         const secondsPassed = Math.floor(
           (Date.now() - gamesession.startTime.toDate()) / 1000
@@ -86,6 +86,7 @@ const GameMaster = () => {
       const interval = setInterval(() => countdown(), 1000);
       return () => clearInterval(interval);
     }
+    gamesession && gamesession.gameState === "INGAME" && startCountdown();
   }, [gamesession]);
 
   const startGame = () => {
@@ -162,6 +163,7 @@ const GameMaster = () => {
               challenge={challenge}
               secondsLeft={secondsLeft}
               submit={submit}
+              secondsLeft={secondsLeft}
             />
           </div>
         )}
