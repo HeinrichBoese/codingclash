@@ -46,14 +46,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 //import CheckBoxIcon from "@material-ui/icons/CheckBox";
-const Sidebar = ({playerName}) => {
+const Sidebar = ({playerData}) => {
   const classes = useStyles();
   return(
     <div className={classes.sidebar}>
       <Card style={{height:110, width:160}}>
         <CardMedia style={{height:90}} image={bild}/>
         {/* <CardContent> */}
-          <p style={{ display:'flex', justifyContent:'center', color:'green', margin:1}}>{playerName}</p>
+          
         {/* </CardContent> */}
       </Card>
       <Button className = {classes.buttons}>Home</Button>
