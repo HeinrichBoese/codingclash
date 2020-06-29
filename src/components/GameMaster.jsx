@@ -11,7 +11,7 @@ import Sidebar from "./Sidebar";
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
-    width:'120px'
+    width:'calc(100vw - 160px)'
   }
 }));
 
@@ -153,7 +153,7 @@ const GameMaster = () => {
   let playerName = 'Daniel'
   return (
     gamesession && (
-      <div style= {{display:'flex'}}>
+      <div style= {{display:'flex', width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
          <Sidebar style={{display:'flex'}} playerName={playerName}/>
          <Box className={classes.root}>
         <Box style={{display:"flex", justifyContent: "center", borderBottom:'2px solid #00bef7'}}>
@@ -162,11 +162,13 @@ const GameMaster = () => {
         </Box>
 
         {gamesession.gameState === "LOBBY" && (
+          <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
+          </div>
         )}
 
         {gamesession.gameState === "INGAME" && challenge && (
-          <div>
+          <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
             <CodeEditAndRun
               challenge={challenge}
               secondsLeft={secondsLeft}

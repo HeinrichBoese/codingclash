@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import "codemirror/lib/codemirror.css";
 // import "codemirror/theme/material.css";
+import useWindowDimensions from '../componentsunderconstruction/getWindowDimensions'
 import "codemirror/theme/shadowfox.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import TestResults from "./TestResults";
@@ -23,32 +24,64 @@ require("codemirror/mode/javascript/javascript");
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'block',
+    // display: 'block',
     // width:'100vw', 
-    height:'100vh',
+    // height:'100vh',
     // display:'flex', 
     // flexWrap:'wrap', 
-    [theme.breakpoints.up('sm')]: {
+    // [theme.breakpoints.up('sm')]: {
       display:'flex', 
       flexWrap:'wrap', 
-      width: 'calc(100vw - 168px)',
-      height: 'calc(100vh - 112)',
-    },
+      width: `calc(100vw - 170px)`,
+      height: 'calc(100vh - 122px)',
+    // },
   },
   codeMirrContainer: {
-    width:'calc(48vw - 160px)', 
-    height:'53vh', 
-    margin: 8 
+    width:'55%', 
+    height:'95%', 
+    margin: 8,
+    display:'flex',
+    flexWrap:'wrap'
   },
   challengeDescContainer: {
     backgroundColor:'#2a2a2e', 
-    width:'calc(48vw - 160px)',height:'53vh', 
+    width:'40%',
+    height:'95%', 
     overflowY:'auto', 
     margin: 8
+  },
+  outputContainer: {
+    width:'45%',
+    height:'43.5%', 
+    backgroundColor:'#252626',
+    margin:8,
+    marginLeft:0,
+    marginRight:0
+  },
+  testResultsContainer: {
+    width:'33.5%',
+    height:'43.5%', 
+    margin:8,
+    marginLeft:0,
+    marginRight:0,
+    backgroundColor:'grey'
+  },
+  actionsContainer:{
+    display:'flex', 
+    flexWrap:'wrap', 
+    width:'18%',
+    height:'43.5%',
+    margin: 8, 
+    marginRight:0,
+    marginLeft:0,
+    justifyContent:'center',
+    backgroundColor:'grey'
   }
 }));
 
+
 export default function CodeEditAndRun({ challenge, players, secondsLeft, submit}) {
+
   const classes = useStyles();
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
@@ -154,12 +187,13 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
 
 
   return (
-    <div>
+    <div style={{width:'calc(100vw-170)', height:'calc(100vh-123)'}}>
     <Box className = {classes.root}>
-      <div className={classes.challengeDescContainer}>
+      <Box className={classes.challengeDescContainer}>
         <ChallengeDescription challenge={challenge}/>
-      </div>
+      </Box>
       <Box className={classes.codeMirrContainer}>
+        <Box style={{width:'100%', height:'55%'}}>
         <CodeMirror
           value={code}
           options={{
@@ -177,13 +211,8 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
           style={{ display: "none" }}
           sandbox="allow-scripts allow-same-origin"
         />
-      </Box>
-      <div>
-         <Box style={{width:'26vw',height:'38vh', backgroundColor:'#252626', margin:8}}> 
-        <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
-         </Box>
-      </div>
-      <div>
+     </Box>
+      <Box className={classes.testResultsContainer}>
         <TestResults
           testcases={challenge.testcases}
           testResults={testResults}
@@ -196,7 +225,11 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
           // runButtonDisabled={runButtonDisabled}
           // testButtonDisabled={testButtonDisabled}
         />
-      </div>
+      </Box>
+         <Box className={classes.outputContainer}> 
+        <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
+         </Box>
+      <Box className={classes.actionsContainer}>
       <Actions 
        runTests={runTests}
        evaluate={evaluate}
@@ -205,6 +238,8 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft, submit
        submit={submit}
        allChecksDone={allChecksDone}
        />
+       </Box>
+      </Box>
     </Box>
     </div>
   );

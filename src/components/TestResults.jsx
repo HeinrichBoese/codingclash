@@ -16,15 +16,7 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
   // let testResult = '';
   let testErr = '';
   return (
-    <div style={{ backgroundColor: "#2a2a2e", height:'38vh',width:'21vw', margin: 8  }}>
-      {/* <Container
-        style={{ backgroundColor: "#5c5d5e", height:'45vh',width:'74vw'  }}
-      > */}
-        <Box style={{display:'flex', width:'30vw', height:'38vh'}}>
-        {/* <Box style={{width:'20vw',height:'38vh', backgroundColor:'#252626', marginRight:8}}> */}
-        {/* <Output testcases={testcases} testErr={testErr} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/> */}
-        {/* </Box> */}
-        <Box style = {{width:'20vw', height:'38vh',marginLeft:8, marginRight:8}}>
+        <Box >
           <div style={{display:'flex', justifyContent:'center', overflowY: 'auto', borderBottom: '2px solid #00bef7',fontSize:'1.5em', fontWeight:'bold', color:'#00bef7'}}>Testcases</div>
          {testcases.map((c, i) => {
           if (submitted && testPassed[i]) {
@@ -62,44 +54,6 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
           );
         })}
         </Box>
-        {/* <div style={{width:'50vw'}}>
-          <div style={{marginLeft:8}}>
-        <Button
-          onClick={runTests}
-          disabled={testButtonDisabled}
-          variant="contained"
-          color="primary"
-          style={{width:'20vw', float:'right'}}
-        >
-          Submit
-        </Button>
-        </div>
-        <div>
-        <Button
-          onClick={runTests}
-          disabled={testButtonDisabled}
-          variant="contained"
-          color="primary"
-          style={{ float: "right" }}
-        >
-          Run Test Cases
-        </Button>
-        </div>
-        <div>
-        <Button
-          onClick={evaluate}
-          disabled={runButtonDisabled}
-          variant="contained"
-          color="primary"
-          style={{ float: "right" }}
-        >
-          Evaluate
-        </Button>
-        </div>
-      </div>*/}
-        </Box> 
-      {/* </Container>  */}
-    </div> 
   );
 }
 

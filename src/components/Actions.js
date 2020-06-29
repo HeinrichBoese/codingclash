@@ -13,7 +13,7 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
             height: '8vh',
             // padding: "0 30px",
             // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
-            width:'18vw',
+            width:'8vw',
             margin:8,
             // border: '2px solid rgb(241,26,255)',
             border: '2px solid  #00bef7'
@@ -28,15 +28,14 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
             height: '8vh',
             // padding: "0 30px",
             // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
-            width:'18vw',
+            width:'8vw',
             margin:8,
             // border: '2px solid rgb(241,26,255)',
             border: '2px solid  #adadad'
         }
     }
     return(
-       <div style={{display:'flex', flexWrap:'wrap', width:'22vw', height: '38vh',margin: 8, backgroundColor: "#2a2a2e", justifyContent:'center'}}>
-           <div style={{width:'22vw',fontSize:'1.5em', fontWeight:'bold', color:'#00bef7'}}>Actions</div>
+
           <div>
          {allChecksDone ? 
          <Button
@@ -54,8 +53,7 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
         Submit
         </Button>
          }   
-        </div>
-        <div>
+ 
         <Button
           onClick={runTests}
           disabled={testButtonDisabled}
@@ -64,8 +62,7 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
         >
           Run Test Cases
         </Button>
-        </div>
-        <div>
+     
         <Button
           onClick={evaluate}
           disabled={runButtonDisabled}
@@ -75,6 +72,5 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
           Evaluate
         </Button>
         </div>
-      </div>
       )
 }
