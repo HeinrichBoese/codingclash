@@ -55,7 +55,7 @@ const GameMaster = () => {
           .update({ players: newPlayers });
       }
     };
-    gamesession && addPlayer();
+    gamesession && gamesession.gameState !== 'FINISHED' && addPlayer();
   }, [gamesession]);
 
   // LOAD ADDITIONAL PLAYER DATA FOR PLAYERTABLE

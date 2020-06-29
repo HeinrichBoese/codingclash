@@ -74,7 +74,7 @@ const Lobby = ({startGame, isLobbyLeader}) => {
       </form>
 
       <div style={styles.bottomButton}>
-        {isLobbyLeader && <Button style={styles.root} onClick={startGame}>Start Game</Button>}
+        {isLobbyLeader() && <Button style={styles.root} onClick={startGame}>Start Game</Button>}
         <Button style={styles.root} component={Link} to={"/"}>
           Leave Lobby
         </Button>
