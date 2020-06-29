@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import PersonIcon from "@material-ui/icons/Person";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +28,19 @@ const Playertable = ({ playerTableData }) => {
             <span style={{ fontWeight: "bold", fontSize: 20 }}>
               {playerData.playerName}
             </span>
+            <br />
+            {playerData.finished && (
+              <span
+                style={{
+                  color: "lightgreen",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <CheckBoxIcon />
+                {" " + playerData.finishTime.toDate().toLocaleTimeString()}
+              </span>
+            )}
           </Paper>
         </Box>
       ))}

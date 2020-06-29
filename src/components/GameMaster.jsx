@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import Playertable from "./Playertable";
 import Lobby from "./Lobby";
 import CodeEditAndRun from "./CodeEditAndRun";
-import GameSummary from "./GameSummary";
+import { Typography } from "@material-ui/core";
 
 const GameMaster = () => {
   const db = firebase.firestore();
@@ -65,7 +65,7 @@ const GameMaster = () => {
       for (let player of gamesession.players) {
         const userDoc = await db.collection("User").doc(player.userID).get();
         const PlayerDataPoint = userDoc.data();
-        playerData.push({...PlayerDataPoint, ...player});
+        playerData.push({ ...PlayerDataPoint, ...player });
       }
       setPlayerTableData(playerData);
     };
@@ -117,6 +117,11 @@ const GameMaster = () => {
     }
   };
 
+  const checkSelfFinished = () => {
+    const myself = gamesession.players.find(player => player.userID === currentUser.uid);
+    return myself.finished;
+  }
+
   const isLobbyLeader = () => {
     if (gamesession && gamesession.players[0].userID === currentUser.uid) {
       return true;
@@ -159,7 +164,7 @@ const GameMaster = () => {
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
         )}
 
-        {gamesession.gameState === "INGAME" && challenge && (
+        {gamesession.gameState === "INGAME" && !checkSelfFinished() && challenge && (
           <div>
             <CodeEditAndRun
               challenge={challenge}
@@ -170,7 +175,13 @@ const GameMaster = () => {
           </div>
         )}
 
-        {gamesession.gameState === "FINISHED" && <GameSummary />}
+        {gamesession.gameState === "FINISHED" && (
+          <Box display="flex" css={{ justifyContent: "center" }}>
+            <Typography style={{ color: "white", fontSize: 22 }}>
+              Game ended.
+            </Typography>
+          </Box>
+        )}
       </div>
     )
   );
