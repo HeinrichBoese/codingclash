@@ -11,7 +11,7 @@ const Sidebar = () => {
   let divColor = "white";
 
   return(
-    <div style={{height:'99vh', backgroundColor:'white', width:100}}>
+    <div style={{height:'100vh', backgroundColor:'white', width:100}}>
       </div>
   )
 }

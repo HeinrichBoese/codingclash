@@ -13,8 +13,7 @@ const GameMaster = () => {
   const gameID = useParams().id;
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
-  //TODO: FILL WITH PLAYERNICKS
-  const [players, setPlayers] = useState(["Rambo"]);
+  const [playerNames, setPlayerNames] = useState([]);
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
 
@@ -23,7 +22,6 @@ const GameMaster = () => {
 
   const [secondsLeft, setSecondsLeft] = useState(null);
   const TIMELIMIT = 100;
-
 
   useEffect(() => {
     const setupSubscription = () => {
@@ -34,6 +32,7 @@ const GameMaster = () => {
     gameID && setupSubscription();
   }, [gameID]);
 
+  // LOAD CURRENT CHALLENGE
   useEffect(() => {
     const fetchChallenge = async () => {
       const challengeDoc = await gamesession.challenge.get();
@@ -42,6 +41,22 @@ const GameMaster = () => {
     gamesession && fetchChallenge();
   }, [gamesession]);
 
+  // LOAD PLAYER NAMES
+  useEffect(() => {
+    const fetchNames = () => {
+      const names = [];
+      gamesession.players.forEach(async (player) => {
+        const userDocRef = db.collection("User").doc(player.userID);
+        const userDoc = await userDocRef.get();
+        const name = userDoc.data().playerName;
+        name ? names.push(name) : names.push('Anonymous');
+      });
+      setPlayerNames(names);
+    };
+    gamesession && fetchNames();
+  }, [gamesession]);
+
+  // GAME TIMER
   useEffect(() => {
     if (gamesession && gamesession.gameState === "INGAME") {
       const countdown = () => {
@@ -66,6 +81,21 @@ const GameMaster = () => {
 
   const finishGame = () => {
     db.collection("gamesessions").doc(gameID).update({ gameState: "FINISHED" });
+  };
+
+  const submit = () => {
+    // CodeEditAndRun component should check if all test cases pass
+    const players = [...gamesession.players];
+    const currentPlayerIndex = players.findIndex(
+      (player) => player.uid === currentUser.userID
+    );
+    players[currentPlayerIndex].finished = true;
+    players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
+    const docRef = db.collection("gamesessions").doc(gameID);
+    docRef.update({ players });
+    if (players.every((player) => player.finished)) {
+      docRef.update({ gameState: "FINISHED" });
+    }
   };
 
   const isLobbyLeader = () => {
@@ -99,28 +129,24 @@ const GameMaster = () => {
 
   !gameID && currentUser && createNewGameSession();
 
-  // return <div>
-  //     {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame} gameSessionID={gameSessionID} players={players}/>}
-  //     {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} players={players}/>}
-  //     {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
-  // </div>;
-
-  
   return (
-    gamesession &&  (
-      <div style={{width:'100vw', height: '100vh'}}>
-        {gamesession.gameState !== "INGAME" && (<Box display="flex" css={{ justifyContent: "center" }}>
-          <Playertable players={players} />
+    gamesession && (
+      <div className="lobbyCont">
+        <Box display="flex" css={{ justifyContent: "center" }}>
+          <Playertable playerNames={playerNames} />
         </Box>
-        )}
+
         {gamesession.gameState === "LOBBY" && (
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
         )}
 
         {gamesession.gameState === "INGAME" && challenge && (
           <div>
-            {/* <span>SECONDS LEFT: {secondsLeft}</span> */}
-            <CodeEditAndRun challenge={challenge} players={players} secondsLeft={secondsLeft}/>
+            <CodeEditAndRun
+              challenge={challenge}
+              secondsLeft={secondsLeft}
+              submit={submit}
+            />
           </div>
         )}
 
@@ -128,7 +154,6 @@ const GameMaster = () => {
       </div>
     )
   );
-
 };
 
 export default GameMaster;

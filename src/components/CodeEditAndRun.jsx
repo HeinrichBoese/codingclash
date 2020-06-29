@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import "../App.css";
 //import ChallengeDescription from "./ChallengeDescription";
 //import TestResults from "./TestResults";
 import Box from "@material-ui/core/Box";
@@ -16,10 +16,24 @@ import Playerboard from "./Playerboard";
 import UserGameMenu from "./UserGameMenu";
 import Output from "../componentsunderconstruction/Output";
 import Actions from "./Actions";
+import Sidebar from "./Sidebar";
+import { makeStyles } from '@material-ui/core/styles';
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
-export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'block',
+    width: '100vw',
+    height: '100vh',
+    [theme.breakpoints.up('sm')]: {
+      display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh',
+    },
+  },
+}));
+
+export default function CodeEditAndRun({ challenge, players, secondsLeft, submit}) {
+  const classes = useStyles();
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
   );
@@ -33,6 +47,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
   const [testResults, setTestResults] = useState([]);
   const [testErrors, setTestErrors] = useState([]);
   const [testPassed, setTestPassed] = useState([]);
+  const [allChecksDone, setAllChecksDone] = useState(false)
 
   const [submitted, setSubmitted] = useState(false);
   const [testRunning, setTestRunning] = useState(false);
@@ -63,6 +78,15 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
       result.push("" + testResults[i] === test.expected);
     }
     setTestPassed(result);
+    let done = true
+      for (const t of result) {
+        if(t === false) {
+          done = false
+        }
+      }
+      if(done) {
+    setAllChecksDone(true)  
+      }    
   }, [testResults]);
 
   const taskWebWorker = (codeToRun, callerIdentifier) => {
@@ -90,6 +114,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
       setTestRunning(false);
       setSubmitted(true);
     }, challenge.testcases.length * 1000);
+    // testHandle()
     setTestResults([]);
     setTestErrors([]);
     setTestPassed([]);
@@ -111,10 +136,14 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
     }, 900);
   };
 
+
   return (
     // <Container style={{ width:'100vw', height:'100vh'}}>
-    <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}>
-     <UserGameMenu secondsLeft={secondsLeft}/>
+    <div>
+    {/* <Sidebar /> */}
+    {/* <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}> */}
+    <Box className = {classes.root}>
+     {/* <UserGameMenu secondsLeft={secondsLeft}/> */}
       <div style={{backgroundColor:'#2a2a2e', width:'35vw',height:'53vh', overflowY:'auto', margin: 8}}>
         <ChallengeDescription challenge={challenge}/>
       </div>
@@ -169,9 +198,9 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
         />
       </Box>
       <Box style={{display:'flex', justifyContent:'center', height:'37vh', margin: 8}}>
-      <div>
+      {/* <div>
         <Playerboard players={players}/>
-      </div>
+      </div> */}
       <div>
          <Box style={{width:'26vw',height:'38vh', backgroundColor:'#252626', margin:8}}> 
         <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
@@ -195,9 +224,13 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
        runTests={runTests}
        evaluate={evaluate}
        runButtonDisabled={runButtonDisabled}
-       testButtonDisabled={testButtonDisabled}/>
+       testButtonDisabled={testButtonDisabled}
+       submit={submit}
+       allChecksDone={allChecksDone}
+       />
       </Box>
     </Box>
+    </div>
     // </Container>
   );
 }

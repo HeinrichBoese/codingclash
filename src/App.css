@@ -8,6 +8,7 @@ body {
     height: 53vh !important;
     font-size:1.5em !important
 }
+
 .illuminate {
     background:  #2a2a2e;
     color: "#f547e1";
@@ -27,3 +28,12 @@ body {
     /* box-shadow: 0px 0px 20px 10px  rgb(241,26,255);  */
     box-shadow: 0px 0px 20px 10px #00bef7
 }
+
+.lobbyContainer {
+
+          height:calc(100vh - 64px);
+          width:100vw
+
+ 
+}
+

@@ -18,8 +18,8 @@ const styles = {
   container: {
     display: "flex",
     justifyContent: "center",
-    height:'100vh',
-    widht:'100vw'
+    // height:'100vh',
+    // widht:'100vw'
   },
   root2: {
     background: 'rgb(66,5,137)',
@@ -43,7 +43,7 @@ const styles = {
 
 const Home = () => {
   return (
-    <div style={styles.container}>
+    <div className = 'lobbyCont' style={styles.container}>
       <Button  style={styles.root} component={Link} to={"/game"}>
         Start Lobby
       </Button>
