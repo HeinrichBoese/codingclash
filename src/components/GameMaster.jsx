@@ -11,7 +11,7 @@ import Sidebar from "./Sidebar";
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
-    width:'calc(100vw - 168px)'
+    width:'120px'
   }
 }));
 
