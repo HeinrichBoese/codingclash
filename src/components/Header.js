@@ -88,11 +88,13 @@ function ButtonAppBar(props) {
                 </Button>
               )}
               {currentUser && (
-                <img
-                  src={images[userData.playerImage]}
+                <Box
                   component={Link}
-                  to={"/Playerprofile"}
-                  height={35} alt="my image" />
+                  to={"/Playerprofile"}>
+                  <img
+                    src={images[userData.playerImage]}
+                    height={35} alt="my Head" />
+                </Box>
               )}
               {!currentUser && (
                 <Button
