@@ -17,9 +17,6 @@ const GameMaster = () => {
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
 
-  // const [gameSessionID, setGameSessionID] = useState("a0s8df9as8d7f");
-  // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
-
   const [secondsLeft, setSecondsLeft] = useState(null);
   const TIMELIMIT = 100;
 
@@ -44,29 +41,35 @@ const GameMaster = () => {
   // ADD PLAYER TO PLAYER LIST IF HE JOINED BY LINK
   useEffect(() => {
     const addPlayer = () => {
-      const uids = []
-      gamesession.players.forEach(player => uids.push(player.userID));
+      const uids = [];
+      gamesession.players.forEach((player) => uids.push(player.userID));
       if (!uids.includes(currentUser.uid)) {
-        const newPlayers = [...gamesession.players, {userID: currentUser.uid, finished: false}]
-        db.collection('gamesessions').doc(gameID).update( { players: newPlayers });
+        const newPlayers = [
+          ...gamesession.players,
+          { userID: currentUser.uid, finished: false },
+        ];
+        db.collection("gamesessions")
+          .doc(gameID)
+          .update({ players: newPlayers });
       }
     };
     gamesession && addPlayer();
   }, [gamesession]);
-  
+
   // LOAD PLAYER NAMES
   useEffect(() => {
-    const fetchNames = () => {
+    const fetchNames = async () => {
       const names = [];
-      gamesession.players.forEach(async (player) => {
-        const userDocRef = db.collection("User").doc(player.userID);
-        const userDoc = await userDocRef.get();
+      for (let player of gamesession.players) {
+        const userDoc = await db.collection("User").doc(player.userID).get();
         const name = userDoc.data().playerName;
-        name ? names.push(name) : names.push('Anonymous');
-      });
+        name ? names.push(name) : names.push("Anonymous");
+      }
       setPlayerNames(names);
     };
-    gamesession && fetchNames();
+    gamesession &&
+      playerNames.length !== gamesession.players.length &&
+      fetchNames();
   }, [gamesession]);
 
   // GAME TIMER
@@ -97,7 +100,7 @@ const GameMaster = () => {
   };
 
   const submit = () => {
-    // CodeEditAndRun component should check if all test cases pass
+    // CodeEditAndRun component checks if all test cases pass before allowing submit
     const players = [...gamesession.players];
     const currentPlayerIndex = players.findIndex(
       (player) => player.uid === currentUser.userID
@@ -145,6 +148,12 @@ const GameMaster = () => {
   return (
     gamesession && (
       <div className="lobbyCont">
+        <p style={{ color: "white" }}>
+          gamesession.players: {JSON.stringify(gamesession.players)}
+        </p>
+        <p style={{ color: "white" }}>
+          playerNames: {JSON.stringify(playerNames)}
+        </p>
         <Box display="flex" css={{ justifyContent: "center" }}>
           <Playertable playerNames={playerNames} />
         </Box>
