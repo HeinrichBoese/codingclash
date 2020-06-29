@@ -87,7 +87,7 @@ const GameMaster = () => {
     // CodeEditAndRun component should check if all test cases pass
     const players = [...gamesession.players];
     const currentPlayerIndex = players.findIndex(
-      (player) => player.uid === currentUser.uid
+      (player) => player.uid === currentUser.userID
     );
     players[currentPlayerIndex].finished = true;
     players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
