@@ -4,13 +4,16 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import Tooltip from '@material-ui/core/Tooltip';
+
 
 //import CheckBoxIcon from "@material-ui/icons/CheckBox";
-const Questiontable = ({test}) => {
+const Sidebar = () => {
   let divColor = "white";
 
-
+  return(
+    <div style={{height:'99vh', backgroundColor:'white', width:100}}>
+      </div>
+  )
 }
 
-export default Questiontable;
+export default Sidebar;

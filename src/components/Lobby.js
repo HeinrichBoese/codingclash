@@ -2,7 +2,13 @@ import React, { useState, useRef } from "react";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 
+// const Lobby = ({startGame, gameSessionID, players}) => {
+  // const [gameID, setGameID] = useState("a0s8df9as8d7f");
+  // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
+  // const { height, width } = useWindowDimensions();
+
 const Lobby = ({startGame, isLobbyLeader}) => {
+
   const styles = {
     root: {
       background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -49,6 +55,10 @@ const Lobby = ({startGame, isLobbyLeader}) => {
     document.execCommand("copy");
     e.target.focus();
   }
+
+  // gameSessionID = '/'+gameSessionID
+  // const sessionLink = window.location.href + gameSessionID;
+
 
   return (
     <div style={styles.container}>

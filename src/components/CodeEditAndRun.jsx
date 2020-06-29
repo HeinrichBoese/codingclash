@@ -2,17 +2,24 @@ import React, { useState, useRef, useEffect } from "react";
 
 //import ChallengeDescription from "./ChallengeDescription";
 //import TestResults from "./TestResults";
-
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-
+import Container from "@material-ui/core/Container";
 import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
+// import "codemirror/theme/material.css";
+import "codemirror/theme/shadowfox.css";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import TestResults from "./TestResults";
+import Questiontable from "./Questiontable";
+import ChallengeDescription from "./ChallengeDescription";
+import Playerboard from "./Playerboard";
+import UserGameMenu from "./UserGameMenu";
+import Output from "../componentsunderconstruction/Output";
+import Actions from "./Actions";
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
 
-export default function CodeEditAndRun({ challenge }) {
+export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
   );
@@ -103,14 +110,20 @@ export default function CodeEditAndRun({ challenge }) {
       }
     }, 900);
   };
+
   return (
-    <div>
-      <div style={{ width: 800 }}>
+    // <Container style={{ width:'100vw', height:'100vh'}}>
+    <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}>
+     <UserGameMenu secondsLeft={secondsLeft}/>
+      <div style={{backgroundColor:'#2a2a2e', width:'35vw',height:'53vh', overflowY:'auto', margin: 8}}>
+        <ChallengeDescription challenge={challenge}/>
+      </div>
+      <Box style={{ width:'40vw', height:'53vh', margin: 8 }}>
         <CodeMirror
           value={code}
           options={{
             mode: "javascript",
-            theme: "material",
+            theme: "shadowfox",
             tabSize: 2,
             lineNumbers: true,
             screenReaderLabel: "code editor",
@@ -118,7 +131,7 @@ export default function CodeEditAndRun({ challenge }) {
           onBeforeChange={(editor, data, value) => setCode(value)}
         />
 
-        <span>
+        {/* <span>
           Evaluation Result:{" "}
           {result ? JSON.stringify(result) : "no return value"}
         </span>
@@ -126,14 +139,14 @@ export default function CodeEditAndRun({ challenge }) {
         <span>
           Error: {error ? JSON.stringify(error) : "no errors thrown :)"}
         </span>
-        <br />
+        <br /> */}
 
-        <Button
+        {/* <Button
           onClick={runTests}
           disabled={testButtonDisabled}
           variant="contained"
           color="primary"
-          style={{ marginTop: -25, float: "right" }}
+          style={{ float: "right" }}
         >
           Run Test Cases
         </Button>
@@ -142,11 +155,11 @@ export default function CodeEditAndRun({ challenge }) {
           disabled={runButtonDisabled}
           variant="contained"
           color="primary"
-          style={{ marginTop: -25, marginRight: 4, float: "right" }}
+          style={{  marginRight: 5, float: "right" }}
         >
           Evaluate
-        </Button>
-        <br />
+        </Button> */}
+        {/* <br /> */}
 
         <iframe
           ref={iframeRef}
@@ -154,6 +167,15 @@ export default function CodeEditAndRun({ challenge }) {
           style={{ display: "none" }}
           sandbox="allow-scripts allow-same-origin"
         />
+      </Box>
+      <Box style={{display:'flex', justifyContent:'center', height:'37vh', margin: 8}}>
+      <div>
+        <Playerboard players={players}/>
+      </div>
+      <div>
+         <Box style={{width:'26vw',height:'38vh', backgroundColor:'#252626', margin:8}}> 
+        <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
+         </Box>
       </div>
       <div>
         <TestResults
@@ -163,8 +185,19 @@ export default function CodeEditAndRun({ challenge }) {
           testPassed={testPassed}
           testRunning={testRunning}
           submitted={submitted}
+          // runTests={runTests}
+          // evaluate={evaluate}
+          // runButtonDisabled={runButtonDisabled}
+          // testButtonDisabled={testButtonDisabled}
         />
       </div>
-    </div>
+      <Actions 
+       runTests={runTests}
+       evaluate={evaluate}
+       runButtonDisabled={runButtonDisabled}
+       testButtonDisabled={testButtonDisabled}/>
+      </Box>
+    </Box>
+    // </Container>
   );
 }

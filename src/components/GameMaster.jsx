@@ -17,8 +17,13 @@ const GameMaster = () => {
   const [players, setPlayers] = useState(["Rambo"]);
   const [gamesession, setGamesession] = useState(null);
   const [challenge, setChallenge] = useState(null);
+
+  // const [gameSessionID, setGameSessionID] = useState("a0s8df9as8d7f");
+  // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
+
   const [secondsLeft, setSecondsLeft] = useState(null);
   const TIMELIMIT = 100;
+
 
   useEffect(() => {
     const setupSubscription = () => {
@@ -94,21 +99,28 @@ const GameMaster = () => {
 
   !gameID && currentUser && createNewGameSession();
 
+  // return <div>
+  //     {(gamesession && gamesession.gameState === 'LOBBY') && <Lobby startGame={startGame} gameSessionID={gameSessionID} players={players}/>}
+  //     {((gamesession && gamesession.gameState === 'INGAME') && challenge) && <CodeEditAndRun challenge={challenge} players={players}/>}
+  //     {(gamesession && gamesession.gameState === 'FINISHED') && <GameSummary />}
+  // </div>;
+
+  
   return (
-    gamesession && (
-      <div>
-        <Box display="flex" css={{ justifyContent: "center" }}>
+    gamesession &&  (
+      <div style={{width:'100vw', height: '100vh'}}>
+        {gamesession.gameState !== "INGAME" && (<Box display="flex" css={{ justifyContent: "center" }}>
           <Playertable players={players} />
         </Box>
-
+        )}
         {gamesession.gameState === "LOBBY" && (
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
         )}
 
         {gamesession.gameState === "INGAME" && challenge && (
           <div>
-            <span>SECONDS LEFT: {secondsLeft}</span>
-            <CodeEditAndRun challenge={challenge} />
+            {/* <span>SECONDS LEFT: {secondsLeft}</span> */}
+            <CodeEditAndRun challenge={challenge} players={players} secondsLeft={secondsLeft}/>
           </div>
         )}
 
@@ -116,6 +128,7 @@ const GameMaster = () => {
       </div>
     )
   );
+
 };
 
 export default GameMaster;
