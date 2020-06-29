@@ -14,6 +14,16 @@ import { Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     width:'calc(100vw - 160px)',
+  },
+  gameContainer: {
+    display:'flex', 
+    width:'calc(100vw-150)', 
+    height:'(calc100vh-113)',
+    [theme.breakpoints.down('md')]: {
+      display:'flex',
+      flexWrap:'wrap',
+      
+     },
   }
 }));
 
@@ -23,7 +33,7 @@ const GameMaster = () => {
   const gameID = useParams().id;
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
-  const [playerTableData, setPlayerTableData] = useState([]);
+  const [playerData, setPlayerData] = useState([]);
 
   // GAME STATE FROM SUBSCRIPTION - NEVER UPDATE GAMESTATE LOCALLY!
   const [gamesession, setGamesession] = useState(null);
@@ -76,19 +86,19 @@ const GameMaster = () => {
     gamesession && addPlayer();
   }, [gamesession]);
 
-  // LOAD PLAYER NAMES
+  // LOAD ADDITIONAL PLAYER DATA FOR PLAYERTABLE
   useEffect(() => {
     const fetchPlayerData = async () => {
       const playerData = [];
       for (let player of gamesession.players) {
         const userDoc = await db.collection("User").doc(player.userID).get();
-        const PlayerDataPoint = userDoc.data();
-        playerData.push({ ...PlayerDataPoint, ...player });
+        const playerDataPoint = userDoc.data();
+        playerData.push(playerDataPoint);
       }
-      setPlayerTableData(playerData);
+      setPlayerData(playerData);
     };
     gamesession &&
-      playerTableData.length !== gamesession.players.length &&
+      playerData.length !== gamesession.players.length &&
       fetchPlayerData();
   }, [gamesession]);
 
@@ -173,8 +183,7 @@ const GameMaster = () => {
   let playerName = 'Daniel'
   return (
     gamesession && (
-
-      <div style= {{display:'flex', width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
+      <div className= {classes.gameContainer}>
          <Sidebar style={{display:'flex'}} playerName={playerName}/>
          <Box className={classes.root}>
         <Box style={{display:"flex", justifyContent: "center", borderBottom:'2px solid #00bef7'}}>
@@ -183,8 +192,12 @@ const GameMaster = () => {
 
        {/* <div className="lobbyCont"> */}
         {/* <Box display="flex" css={{ justifyContent: "center" }}> */}
-          <Playertable playerTableData={playerTableData} /> 
+          {/* <Playertable playerTableData={playerTableData} />  */}
 
+
+      {/* <div className="lobbyCont"> */}
+        {/* <Box display="flex" css={{ justifyContent: "center" }}> */}
+          <Playertable gamesessionPlayers={gamesession.players} playerData={playerData} />
         </Box>
 
         {gamesession.gameState === "LOBBY" && (

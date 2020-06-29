@@ -44,6 +44,8 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
                 // backgroundColor: 'grey',
                 borderRadius: 0,
                 borderBottom: '2px solid #00bef7',
+                overflowX: 'auto',
+
                
               }}
             > 

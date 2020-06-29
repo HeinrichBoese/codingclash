@@ -24,39 +24,46 @@ require("codemirror/mode/javascript/javascript");
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // display: 'block',
-    // width:'100vw', 
-    // height:'100vh',
-    // display:'flex', 
-    // flexWrap:'wrap', 
-    // [theme.breakpoints.up('sm')]: {
       display:'flex', 
       flexWrap:'wrap', 
       width: `calc(100vw - 170px)`,
       height: 'calc(100vh - 122px)',
-    // },
+      justifyContent:'center',
+      alignContent: 'center',
+      [theme.breakpoints.down('md')]: {
+       display:'block'
+      },
   },
   codeMirrContainer: {
     width:'55%', 
     height:'95%', 
     margin: 8,
     display:'flex',
-    flexWrap:'wrap'
+    flexWrap:'wrap',
+    [theme.breakpoints.down('md')]: {
+      width:'100%'
+     },
   },
   challengeDescContainer: {
-    backgroundColor:'#2a2a2e', 
+    // backgroundColor:'#2a2a2e', 
     width:'40%',
     height:'95%', 
     overflowY:'auto', 
-    margin: 8
+    margin: 8,
+    border:'2px solid #f547e1',
+    [theme.breakpoints.down('md')]: {
+      width:'100%'
+     },
   },
   outputContainer: {
-    width:'45%',
+    width:'44%',
     height:'43.5%', 
-    backgroundColor:'#252626',
+    // backgroundColor:'#252626',
     margin:8,
     marginLeft:0,
-    marginRight:0
+    marginRight:0,
+    border:'2px solid #f547e1',
+    borderLeft: 'none'
   },
   testResultsContainer: {
     width:'37%',
@@ -64,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
     margin:8,
     marginLeft:0,
     marginRight:0,
-    backgroundColor:'grey'
+    border:'2px solid #f547e1',
+    // backgroundColor:'grey'
   },
   actionsContainer:{
     display:'flex', 
@@ -75,7 +83,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight:0,
     marginLeft:0,
     justifyContent:'center',
-    backgroundColor:'grey'
+    border:'2px solid #f547e1',
+    borderLeft: 'none'
+    // backgroundColor:'grey'
   }
 }));
 

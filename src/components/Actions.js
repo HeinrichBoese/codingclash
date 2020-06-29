@@ -5,9 +5,10 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
     const styles = {
         buttons: {
             // background: 'rgb(241,26,255)',
-            background:  "#2a2a2e",
+            // background:  "#2a2a2e",
             // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
             color: "#f547e1",
+           
             fontSize:'.8em',
             fontWeight:'bold',
             height: '8vh',
@@ -20,7 +21,7 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
             // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
         },
         buttonDisabled: {
-          background:  "#2a2a2e",
+          // background:  "#2a2a2e",
             // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
             color: "#adadad",
             fontSize:'.8em',
@@ -36,7 +37,7 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
     }
     return(
 
-          <div>
+          <div style={{display:'flex', justifyContent:'center', alignContent:'center', flexWrap:'wrap'}}>
          {allChecksDone ? 
          <Button
           onClick={submit}
