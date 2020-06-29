@@ -15,12 +15,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Playertable = ({ playerTableData }) => {
+const Playertable = ({ gamesessionPlayers, playerData }) => {
   const classes = useStyles();
+  // ZIP ARRAYS INTO ONE:
+  const playerTable = gamesessionPlayers.map((p, i) => ({...p, ...playerData[i]}));
 
   return (
     <Box display="inline-flex">
-      {playerTableData.map((playerData) => (
+      {playerTable.map((playerData) => (
         <Box p={1} css={{ textAlign: "center" }} key={playerData.userID}>
           <Paper className={classes.paper}>
             <PersonIcon style={{ fontSize: 50 }} />
