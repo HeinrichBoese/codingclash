@@ -91,7 +91,7 @@ const GameMaster = () => {
     );
     players[currentPlayerIndex].finished = true;
     players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
-    const docRef = db.collection("gamesessions").doc();
+    const docRef = db.collection("gamesessions").doc(gameID);
     docRef.update({ players });
     if (players.every((player) => player.finished)) {
       docRef.update({ gameState: "FINISHED" });
