@@ -15,7 +15,7 @@ import { grey } from "@material-ui/core/colors";
 import { AuthContext } from "../Auth";
 import { Box } from "@material-ui/core";
 import images from "./images";
-import { Avatar } from '@material-ui/core';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -75,7 +75,6 @@ function ButtonAppBar(props) {
             Clash
           </Typography>
 
-
               {currentUser && (
                 <Button
                   component={Link}
@@ -89,12 +88,13 @@ function ButtonAppBar(props) {
                 </Button>
               )}
               {currentUser && (
-                <Avatar
-                  alt="Avatar"
+                <Box
                   component={Link}
-                  to={"/Playerprofile"}
-                  src={images[userData.playerImage]}
-                  className={classes.large} />
+                  to={"/Playerprofile"}>
+                  <img
+                    src={images[userData.playerImage]}
+                    height={35} alt="my Head" />
+                </Box>
               )}
               {!currentUser && (
                 <Button
