@@ -50,6 +50,19 @@ const GameMaster = () => {
     gamesession && fetchChallenge();
   }, [gamesession]);
 
+  // ADD PLAYER TO PLAYER LIST IF HE JOINED BY LINK
+  useEffect(() => {
+    const addPlayer = () => {
+      const uids = []
+      gamesession.players.forEach(player => uids.push(player.userID));
+      if (!uids.includes(currentUser.uid)) {
+        const newPlayers = [...gamesession.players, {userID: currentUser.uid, finished: false}]
+        db.collection('gamesessions').doc(gameID).update( newPlayers);
+      }
+    };
+    gamesession && addPlayer();
+  }, [gamesession]);
+  
   // LOAD PLAYER NAMES
   useEffect(() => {
     const fetchNames = () => {
@@ -100,7 +113,7 @@ const GameMaster = () => {
     );
     players[currentPlayerIndex].finished = true;
     players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
-    const docRef = db.collection("gamesessions").doc();
+    const docRef = db.collection("gamesessions").doc(gameID);
     docRef.update({ players });
     if (players.every((player) => player.finished)) {
       docRef.update({ gameState: "FINISHED" });

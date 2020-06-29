@@ -13,6 +13,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { grey } from "@material-ui/core/colors";
 import { AuthContext } from "../Auth";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,6 +71,18 @@ function ButtonAppBar(props) {
             Hallo { currentUser ? !currentUser.displayName ? currentUser.email : currentUser.displayName : "Gast"}! Willkommen bei Code
             Clash
           </Typography>
+          
+          {currentUser && (
+            <Box
+            borderRadius={20} 
+              component={Link}
+              to={"/Playerprofile"}
+              className={classes.button}
+            >
+              <img src="./heads/headMalew.png" height={35} alt="my image" />
+            </Box>
+          )}
+
           {currentUser && (
             <Button
               component={Link}
