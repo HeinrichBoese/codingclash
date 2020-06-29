@@ -26,7 +26,7 @@ const Playertable = ({ gamesessionPlayers, playerData }) => {
       {playerTable.map((playerData) => (
         <Box p={1} css={{ textAlign: "center" }} key={playerData.userID}>
           <Paper className={classes.paper}>
-            <img src={images[playerData.playerImage]} height={35} alt="my image" />
+            <img src={images[playerData.playerImage]} height={50} alt="my image" />
             <br />
             <span style={{ fontWeight: "bold", fontSize: 20 }}>
               {playerData.playerName}
