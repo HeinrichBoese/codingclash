@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
+export default function CodeEditAndRun({ challenge, players, secondsLeft, submit}) {
   const classes = useStyles();
   const [code, setCode] = useState(
     (challenge && challenge.template.replace(/\\n/g, "\n")) || ""
@@ -47,6 +47,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
   const [testResults, setTestResults] = useState([]);
   const [testErrors, setTestErrors] = useState([]);
   const [testPassed, setTestPassed] = useState([]);
+  const [allChecksDone, setAllChecksDone] = useState(false)
 
   const [submitted, setSubmitted] = useState(false);
   const [testRunning, setTestRunning] = useState(false);
@@ -77,6 +78,15 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
       result.push("" + testResults[i] === test.expected);
     }
     setTestPassed(result);
+    let done = true
+      for (const t of result) {
+        if(t === false) {
+          done = false
+        }
+      }
+      if(done) {
+    setAllChecksDone(true)  
+      }    
   }, [testResults]);
 
   const taskWebWorker = (codeToRun, callerIdentifier) => {
@@ -104,6 +114,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
       setTestRunning(false);
       setSubmitted(true);
     }, challenge.testcases.length * 1000);
+    // testHandle()
     setTestResults([]);
     setTestErrors([]);
     setTestPassed([]);
@@ -124,6 +135,7 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
       }
     }, 900);
   };
+
 
   return (
     // <Container style={{ width:'100vw', height:'100vh'}}>
@@ -212,7 +224,10 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
        runTests={runTests}
        evaluate={evaluate}
        runButtonDisabled={runButtonDisabled}
-       testButtonDisabled={testButtonDisabled}/>
+       testButtonDisabled={testButtonDisabled}
+       submit={submit}
+       allChecksDone={allChecksDone}
+       />
       </Box>
     </Box>
     </div>
