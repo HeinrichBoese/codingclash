@@ -108,11 +108,10 @@ const GameMaster = () => {
   
   return (
     gamesession &&  (
-      <div style={{width:'100vw', height: '100vh'}}>
-        {gamesession.gameState !== "INGAME" && (<Box display="flex" css={{ justifyContent: "center" }}>
+      <div className = 'lobbyCont'>
+        <Box display="flex" css={{ justifyContent: "center" }}>
           <Playertable players={players} />
         </Box>
-        )}
         {gamesession.gameState === "LOBBY" && (
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
         )}

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import "../App.css";
 //import ChallengeDescription from "./ChallengeDescription";
 //import TestResults from "./TestResults";
 import Box from "@material-ui/core/Box";
@@ -113,8 +113,9 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
 
   return (
     // <Container style={{ width:'100vw', height:'100vh'}}>
-    <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}>
-     <UserGameMenu secondsLeft={secondsLeft}/>
+    // <Box style = {{display:'flex', flexWrap:'wrap', width:'100vw', height:'100vh'}}>
+    <Box className='flexBox'>
+     {/* <UserGameMenu secondsLeft={secondsLeft}/> */}
       <div style={{backgroundColor:'#2a2a2e', width:'35vw',height:'53vh', overflowY:'auto', margin: 8}}>
         <ChallengeDescription challenge={challenge}/>
       </div>
@@ -169,9 +170,9 @@ export default function CodeEditAndRun({ challenge, players, secondsLeft}) {
         />
       </Box>
       <Box style={{display:'flex', justifyContent:'center', height:'37vh', margin: 8}}>
-      <div>
+      {/* <div>
         <Playerboard players={players}/>
-      </div>
+      </div> */}
       <div>
          <Box style={{width:'26vw',height:'38vh', backgroundColor:'#252626', margin:8}}> 
         <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
