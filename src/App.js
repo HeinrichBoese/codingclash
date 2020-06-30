@@ -11,12 +11,13 @@ import Login from "./components/Login";
 import { InputForm } from "./components/inputForm";
 import Lobby from "./components/Lobby";
 import PlayerProfile from "./components/PlayerProfile";
+import Sidebar from "./components/Sidebar"
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Header />
+        <Sidebar />
         <Switch>
           <Route exact path="/">
             <Home />
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route exact path="/inputForm">
             <InputForm />
+          </Route>
+          <Route >
+            <Home />
           </Route>
         </Switch>
       </Router>
