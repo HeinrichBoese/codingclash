@@ -13,13 +13,15 @@ export const AuthProvider = ({ children }) => {
       authUser => {
         setCurrentUser(authUser);
         if (authUser) {
-          sessionStorage.setItem('AuthUser', JSON.stringify(authUser));
-        }
-        if ((authUser && !userData) || (authUser && userData.email !== authUser.email)) {
-          db.collection('User').doc(authUser.uid).get().then((doc) => {
-            setUserData(doc.data());
-            sessionStorage.setItem('UserData', JSON.stringify(doc.data()))
-          })
+          sessionStorage.setItem('AuthUser', JSON.stringify(authUser))
+        };
+        if (authUser) // notwendig alleine abzufragen da sonst ein Fehler kommt wenn authUser = null
+        { if (!userData || !authUser.isAnonymous || (authUser && userData.email !== authUser.email)) {
+            db.collection('User').doc(authUser.uid).get().then((doc) => {
+              setUserData(doc.data());
+              sessionStorage.setItem('UserData', JSON.stringify(doc.data()))
+            })
+          }
         }
       },
       // Error handling

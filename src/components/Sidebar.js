@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     // background:  "#2a2a2e",
     // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
     color: "#f547e1",
-
+    textShadow:'0px 0px 20px #f547e1',
       fontSize:'.8em',
       fontWeight:'bold',
       height: 84,
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize:'.8em',
         fontWeight:'bold',
         height: '45px',
+        textShadow:'0px 0px 20px #f547e1',
         // padding: "0 30px",
         // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
         width:'100px',
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   sidebar: {
     height:'100vh',   
     borderRight:'2px solid #00bef7', 
+    boxShadow: '0px 0px 20px 2px #00bef7',
     width:'160px',
     position: 'fixed',
     // zIndex: 1,

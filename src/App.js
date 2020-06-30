@@ -75,7 +75,6 @@ function App() {
             <Home />
           </Route>
         </Switch>
-        {/* </div> */}
       </Router>
     </AuthProvider>
   );

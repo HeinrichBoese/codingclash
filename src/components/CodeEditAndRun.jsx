@@ -65,12 +65,14 @@ const useStyles = makeStyles((theme) => ({
     border:'2px solid #f547e1',
     borderRight:'none',
     boxSizing:'border-box',
+    boxShadow: '0px 0px 20px 2px #f547e1',
     [theme.breakpoints.down('md')]: {
     width:'100%',
     height:'95%', 
     overflowY:'auto', 
     borderBottom: 'none',
     boxSizing:'border-box',
+    boxShadow: '0px 0px 20px 2px #f547e1'
      },
   },
   outputContainer: {
@@ -80,7 +82,8 @@ const useStyles = makeStyles((theme) => ({
     border:'2px solid #f547e1',
     borderLeft: 'none',
     overflowY: 'auto',
-    boxSizing:'border-box'
+    boxSizing:'border-box',
+    boxShadow: '0px 0px 20px 2px #f547e1',
   },
   testResultsContainer: {
     width:'45%',
@@ -88,7 +91,8 @@ const useStyles = makeStyles((theme) => ({
     margin:0,
     border:'2px solid #f547e1',
     overflowY: 'auto',
-    boxSizing:'border-box'
+    boxSizing:'border-box',
+    boxShadow: '0px 0px 20px 2px #f547e1',
   },
   actionsContainer:{
     display:'flex',  
@@ -100,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
     borderTop:'none',
     borderBottom: 'none',
     boxSizing:'border-box',
+    boxShadow: '0px 0px 20px 2px #f547e1',
   },
 }));
 

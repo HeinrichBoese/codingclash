@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     borderBottom: "2px solid #00bef7",
+    boxShadow: '0px 0px 20px 2px #00bef7',
   },
 }));
 
