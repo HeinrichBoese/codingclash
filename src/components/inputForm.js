@@ -39,19 +39,19 @@ const validate = (values) => {
     // } else if (values.name.length < 3) {
     //     errors.name = "Must be 3 characters or more";
     // }
-    // if (!values.title) {
-    //     errors.title = "The Title is Required";
-    // } else if (values.title.length < 10 || values.title.length > 80) {
-    //     errors.title = "Must be at least 10 characters and a max of 80 characters";
-    // }
-    // if (!values.description) {
-    //     errors.description = "The Description is Required";
-    // } else if (
-    //     values.description.length < 10 ||
-    //     values.description.length > 500) {
-    //     errors.description =
-    //         "Must be at least 10 characters and a max of 500 characters";
-    // }
+    if (!values.title) {
+        errors.title = "The Title is Required";
+    } else if (values.title.length < 10 || values.title.length > 80) {
+        errors.title = "Must be at least 10 characters and a max of 80 characters";
+    }
+    if (!values.description) {
+        errors.description = "The Description is Required";
+    } else if (
+        values.description.length < 10 ||
+        values.description.length > 500) {
+        errors.description =
+            "Must be at least 10 characters and a max of 500 characters";
+    }
     // if (!values.location) {
     //     errors.location = "The Location is Required";
     // } else if (values.location.length < 3) {
