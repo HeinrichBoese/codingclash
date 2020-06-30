@@ -97,9 +97,10 @@ const Sidebar = () => {
   return (
     <div className={classes.sidebar}>
       <Card style={{ height: 110, width: 160 }}>
-        <CardMedia style={{ height: 100, width: 100 }} image={userData ? images[userData.playerImage]: PersonIcon } />
+        <div style={{display:'flex', justifyContent:'center'}}>
+        <CardMedia style={{ width: 100,height: 100, display:'flex', justifyContent:'center'}} image={userData ? images[userData.playerImage]: PersonIcon } />
         {/* image={PersonIcon}  */}
-        
+        </div>
         {/* <CardContent> */}
 
         {/* </CardContent> */}
