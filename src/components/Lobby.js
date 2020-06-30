@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
   // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
   // const { height, width } = useWindowDimensions();
 
-const Lobby = ({startGame, isLobbyLeader}) => {
+const Lobby = ({startGame, isLobbyLeader, leaveLobby}) => {
 
   const styles = {
     root: {
@@ -79,7 +79,7 @@ const Lobby = ({startGame, isLobbyLeader}) => {
         <input style={styles.textInput} ref={textAreaRef} value={window.location.href} readOnly />
         {document.queryCommandSupported("copy") && (
           <span>
-            <Button className='illuminate' style={styles.copy} onClick={copyToClipboard}>
+            <Button className="illuminate" style={styles.copy} onClick={copyToClipboard}>
               Copy Link
             </Button>
           </span>
@@ -88,11 +88,11 @@ const Lobby = ({startGame, isLobbyLeader}) => {
 
       <div style={styles.bottomButton}>
 
-        {/* // {isLobbyLeader && <Button className='illuminate' style={styles.root} onClick={startGame}>Start Game</Button>}
-        // <Button className='illuminate' style={styles.root} component={Link} to={"/"}> */}
+        {/* // {isLobbyLeader && <Button className="illuminate" style={styles.root} onClick={startGame}>Start Game</Button>}
+        // <Button className="illuminate" style={styles.root} component={Link} to={"/"}> */}
 
-        {isLobbyLeader() && <Button className='illuminate' style={styles.root} onClick={startGame}>Start Game</Button>}
-        <Button className='illuminate' style={styles.root} component={Link} to={"/"}>
+        {isLobbyLeader() && <Button className="illuminate" style={styles.root} onClick={startGame}>Start Game</Button>}
+        <Button className="illuminate" onClick="leaveLobby" style={styles.root} component={Link} to={"/"}>
           Leave Lobby
         </Button>
       </div>
