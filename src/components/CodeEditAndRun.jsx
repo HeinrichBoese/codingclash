@@ -156,7 +156,7 @@ export default function CodeEditAndRun({
       }
     };
     testResults && checkTestResults();
-  }, [testResults]);
+  }, [testResults, challenge]);
 
   const taskWebWorker = (codeToRun, callerIdentifier) => {
     iframeRef.current.srcdoc = `

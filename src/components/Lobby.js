@@ -1,6 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
 
 // const Lobby = ({startGame, gameSessionID, players}) => {
   // const [gameID, setGameID] = useState("a0s8df9as8d7f");

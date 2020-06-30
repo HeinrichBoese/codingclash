@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import firebase from "../firebase";
-import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import {
     Box,
     Button,
@@ -83,9 +82,8 @@ const validate = (values) => {
 
 export const InputForm = (props) => {
     const { currentUser, userData } = useContext(AuthContext);
-    const [testCount, setTestCount] = useState(1)
-    const [isAllOk, setIsAllOk] = useState(false)
-    const history = useHistory();
+    const [testCount, setTestCount] = useState(1);
+    const [isAllOk, setIsAllOk] = useState(false);
     const classes = useStyles();
     const testCases = [];
     const formik = useFormik({
