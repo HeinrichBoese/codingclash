@@ -191,7 +191,6 @@ const GameMaster = () => {
     return (
     gamesession && (
       <div className= {classes.gameContainer}>
-         <Sidebar style={{display:'flex'}} playerData={playerData}/>
          <Box className={classes.root}>
         <Box style={{display:"flex", justifyContent: "center", borderBottom:'2px solid #00bef7'}}>
           <Playertable gamesessionPlayers={gamesession.players} playerData={playerData} />

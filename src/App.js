@@ -16,8 +16,15 @@ import Sidebar from "./components/Sidebar"
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router >
+      <div style={{ display: "flex" }}>
+        <div
+          style={{
+            width: '100vw',
+          }}
+        >
         <Sidebar />
+        </div>
         <Switch>
           <Route exact path="/">
             <Home />
@@ -44,6 +51,7 @@ function App() {
             <Home />
           </Route>
         </Switch>
+        </div>
       </Router>
     </AuthProvider>
   );
