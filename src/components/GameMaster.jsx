@@ -6,49 +6,31 @@ import Box from "@material-ui/core/Box";
 import Playertable from "./Playertable";
 import Lobby from "./Lobby";
 import CodeEditAndRun from "./CodeEditAndRun";
-import Sidebar from "./Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
-    width:'calc(100vw - 160px)',
-    marginLeft:'160px',
-    [theme.breakpoints.down('sm')]: {
-      width:'100vw',
-      marginLeft:0
-
-     },
+    width: "calc(100vw - 160px)",
+    marginLeft: "160px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      marginLeft: 0,
+    },
   },
   gameContainer: {
-    display:'flex', 
-    width:'100%', 
-    height:'100%',
-    [theme.breakpoints.down('sm')]: {
-      display:'flex',
-      flexWrap:'wrap',
-
-     },
+    display: "flex",
+    width: "100%",
+    height: "100%",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
   },
   playertable: {
-    display:"flex", 
-    justifyContent: "center", 
-    borderBottom:'2px solid #00bef7',
-    
-  }
-
-  //   width: "calc(100vw - 160px)",
-  // },
-  // gameContainer: {
-  //   display: "flex",
-  //   width: "calc(100vw-160px)",
-  //   height: "calc(100vh-113px)",
-  //   [theme.breakpoints.down("md")]: {
-  //     display: "flex",
-  //     flexWrap: "wrap",
-  //   },
-  // },
-
+    display: "flex",
+    justifyContent: "center",
+    borderBottom: "2px solid #00bef7",
+  },
 }));
 
 const GameMaster = () => {
@@ -64,24 +46,19 @@ const GameMaster = () => {
   const [challenge, setChallenge] = useState(null);
   const [challengeLoaded, setChallengeLoaded] = useState(false);
 
-  // const [gameSessionID, setGameSessionID] = useState("a0s8df9as8d7f");
-  // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
-
-  // const [secondsLeft, setSecondsLeft] = useState(null);
-  // const TIMELIMIT = 100000000;
-
   const [secondsLeft, setSecondsLeft] = useState(0);
   const TIMELIMIT = 10000;
 
   useEffect(() => {
-    let unsubscribe = ()=>null;
+    let unsubscribe = () => null;
     const setupSubscription = () => {
-      unsubscribe = db.collection("gamesessions")
+      unsubscribe = db
+        .collection("gamesessions")
         .doc(gameID)
         .onSnapshot((doc) => setGamesession(doc.data()));
     };
     gameID && setupSubscription();
-    return ()=>unsubscribe();
+    return () => unsubscribe();
   }, [gameID]);
 
   // LOAD CURRENT CHALLENGE
@@ -221,56 +198,10 @@ const GameMaster = () => {
     return null;
   } else {
     return (
-    gamesession && (
-      <div className= {classes.gameContainer}>
-         {/* <Sidebar style={{display:'flex'}} playerData={playerData}/> */}
-         <Box className={classes.root}>
-        <Box className={classes.playertable}>
-          <Playertable gamesessionPlayers={gamesession.players} playerData={playerData} />
-        </Box>
-
-        {gamesession.gameState === "LOBBY" && (
-          <div>
-          <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
-          </div>
-        )}
-
-         {/* {gamesession.gameState === "INGAME" && challenge && ( */}
-          {/* <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}> */}
-
-        {gamesession.gameState === "INGAME" && !checkSelfFinished() && challenge && (
-          <div style={{margtinLeft:'160px'}}>
-            <CodeEditAndRun
-              challenge={challenge}
-              secondsLeft={secondsLeft}
-              submit={submit}
-            />
-          </div>
-        )}
-
-
-         {/* {gamesession.gameState === "FINISHED" && <GameSummary />} */}
-         {/* </Box> */}
-        {/* </div> */}
-
-        {/* {gamesession.gameState === "FINISHED" && ( */}
-
-
-   {/* if (!gamesession) { */}
-     {/* return null; */}
-   {/* } else { */}
-    {/* return (
-
       gamesession && (
         <div className={classes.gameContainer}>
           <Box className={classes.root}>
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                borderBottom: "2px solid #00bef7",
-              }}
-            >
+            <Box className={classes.playertable}>
               <Playertable
                 gamesessionPlayers={gamesession.players}
                 playerData={playerData}
@@ -278,92 +209,22 @@ const GameMaster = () => {
             </Box>
 
             {gamesession.gameState === "LOBBY" && (
-              <div
-                style={{ width: "calc(100vw-150)", height: "(calc100vh-113)" }}
-              >
-                <Lobby
-                  startGame={startGame}
-                  isLobbyLeader={isLobbyLeader}
-                  leaveLobby={leaveLobby}
-                />
+              <div>
+                <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} leaveLobby={leaveLobby}/>
               </div>
             )}
 
-            {/* {gamesession.gameState === "INGAME" && challenge && ( */}
-            {/* <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}> */}
-{/* 
             {gamesession.gameState === "INGAME" &&
               !checkSelfFinished() &&
               challenge && (
-                <div
-                  style={{
-                    width: "calc(100vw-150)",
-                    height: "calc(100vh-113)",
-                  }}
-                >
+                <div style={{ margtinLeft: "160px" }}>
                   <CodeEditAndRun
                     challenge={challenge}
                     secondsLeft={secondsLeft}
                     submit={submit}
-                    secondsLeft={secondsLeft}
                   />
                 </div>
               )}
- */}
-
-            {/* {gamesession.gameState === "FINISHED" && <GameSummary />} */}
-            {/* </Box> */}
-            {/* </div> */}
-
-            {/* {gamesession.gameState === "FINISHED" && ( */}
-
-            {/* if (!gamesession) { */}
-            {/* return null; */}
-            {/* } else { */}
-            {/* return (
->>>>>>> 606aa385fb453dbf132d6836fdc22e1fe6378a85
-       gamesession && (
-         <div className="lobbyCont">
-
-           <Box display="flex" css={{ justifyContent: "center" }}>
-             <Playertable */}
-            {/* //   gamesessionPlayers={gamesession.players}
-            //   playerData={playerData}
-            // />
-          // </Box> */}
-            {/* 
-        // )} */}
-            {/* </div> */}
-
-            {/* ) */}
-            {/* ); */}
-
-            {/* {gamesession.gameState === "LOBBY" && (
-            <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
-            <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
-            </div>
-          )} */}
-
-            {/* {gamesession.gameState === "INGAME" &&
-            !checkSelfFinished() &&
-            challenge && (
-              <div>
-                <CodeEditAndRun
-                  challenge={challenge}
-                  secondsLeft={secondsLeft}
-                  submit={submit}
-                  secondsLeft={secondsLeft}
-                />
-              </div>
-            )} */}
-
-            {/* {gamesession.gameState === "FINISHED" && (
-            <Box display="flex" css={{ justifyContent: "center" }}>
-              <Typography style={{ color: "white", fontSize: 22 }}>
-                Game ended.
-              </Typography>
-            </Box>
-          )} */}
           </Box>
         </div>
       )
