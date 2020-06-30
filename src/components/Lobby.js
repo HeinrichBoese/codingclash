@@ -92,7 +92,7 @@ const Lobby = ({startGame, isLobbyLeader, leaveLobby}) => {
         // <Button className="illuminate" style={styles.root} component={Link} to={"/"}> */}
 
         {isLobbyLeader() && <Button className="illuminate" style={styles.root} onClick={startGame}>Start Game</Button>}
-        <Button className="illuminate" onClick="leaveLobby" style={styles.root} component={Link} to={"/"}>
+        <Button className="illuminate" onClick={leaveLobby} style={styles.root}>
           Leave Lobby
         </Button>
       </div>

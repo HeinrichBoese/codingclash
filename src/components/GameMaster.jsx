@@ -134,6 +134,7 @@ const GameMaster = () => {
       (player) => player.userID !== currentUser.uid
     );
     db.collection("gamesessions").doc(gameID).update({ players: newPlayers });
+    history.push("/");
   };
 
   const submit = () => {
