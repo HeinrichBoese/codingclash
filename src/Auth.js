@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const db = firebase.firestore();
-    firebase.auth().onAuthStateChanged(
+    const unsubscribe = firebase.auth().onAuthStateChanged(
       authUser => {
         setCurrentUser(authUser);
         if (authUser) {
@@ -28,7 +28,8 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('UserData');
       },
     );
-  }, []);
+    return () => unsubscribe();
+  }, [userData]);
 
 
   return (

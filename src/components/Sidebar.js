@@ -1,16 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import firebase from "../firebase";
 import { Link, withRouter } from "react-router-dom";
 import { AuthContext } from "../Auth";
-import Paper from "@material-ui/core/Paper";
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import Button from "@material-ui/core/Button";
-import CircularProgress from '@material-ui/core/CircularProgress';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { makeStyles } from '@material-ui/core/styles';
 import "../App.css";
 
