@@ -14,7 +14,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { grey } from "@material-ui/core/colors";
 import { AuthContext } from "../Auth";
 import { Box } from "@material-ui/core";
-import images from "./images";
+import images from "../components/images";
 
 
 
@@ -92,7 +92,7 @@ function ButtonAppBar(props) {
                   component={Link}
                   to={"/Playerprofile"}>
                   <img
-                    src={images[userData.playerImage]}
+                    src={userData && images[userData.playerImage]}
                     height={35} alt="my Head" />
                 </Box>
               )}

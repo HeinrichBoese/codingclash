@@ -3,7 +3,7 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Output from "../componentsunderconstruction/Output";
+import Output from "./Output";
 import Button from "@material-ui/core/Button";
 
 

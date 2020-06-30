@@ -1,13 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
 
 // const Lobby = ({startGame, gameSessionID, players}) => {
   // const [gameID, setGameID] = useState("a0s8df9as8d7f");
   // const [players, setPlayers] = useState(["ich", "nr2", "nr3"]);
   // const { height, width } = useWindowDimensions();
 
-const Lobby = ({startGame, isLobbyLeader}) => {
+const Lobby = ({startGame, isLobbyLeader, leaveLobby}) => {
 
   const styles = {
     root: {
@@ -79,7 +78,7 @@ const Lobby = ({startGame, isLobbyLeader}) => {
         <input style={styles.textInput} ref={textAreaRef} value={window.location.href} readOnly />
         {document.queryCommandSupported("copy") && (
           <span>
-            <Button className='illuminate' style={styles.copy} onClick={copyToClipboard}>
+            <Button className="illuminate" style={styles.copy} onClick={copyToClipboard}>
               Copy Link
             </Button>
           </span>
@@ -88,11 +87,11 @@ const Lobby = ({startGame, isLobbyLeader}) => {
 
       <div style={styles.bottomButton}>
 
-        {/* // {isLobbyLeader && <Button className='illuminate' style={styles.root} onClick={startGame}>Start Game</Button>}
-        // <Button className='illuminate' style={styles.root} component={Link} to={"/"}> */}
+        {/* // {isLobbyLeader && <Button className="illuminate" style={styles.root} onClick={startGame}>Start Game</Button>}
+        // <Button className="illuminate" style={styles.root} component={Link} to={"/"}> */}
 
-        {isLobbyLeader() && <Button className='illuminate' style={styles.root} onClick={startGame}>Start Game</Button>}
-        <Button className='illuminate' style={styles.root} component={Link} to={"/"}>
+        {isLobbyLeader() && <Button className="illuminate" style={styles.root} onClick={startGame}>Start Game</Button>}
+        <Button className="illuminate" onClick={leaveLobby} style={styles.root}>
           Leave Lobby
         </Button>
       </div>
