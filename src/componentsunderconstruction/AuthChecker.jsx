@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 
 export default function AuthChecker() {
     const { currentUser } = useContext(AuthContext);
-    console.log('blub');
     return (
         <div>
             
