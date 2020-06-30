@@ -47,7 +47,7 @@ const GameMaster = () => {
   const [challengeLoaded, setChallengeLoaded] = useState(false);
 
   const [secondsLeft, setSecondsLeft] = useState(0);
-  const TIMELIMIT = 10000;
+  const TIMELIMIT = 100;
 
   useEffect(() => {
     let unsubscribe = () => null;
