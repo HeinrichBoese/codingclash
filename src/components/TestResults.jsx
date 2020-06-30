@@ -17,7 +17,7 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
   let testErr = '';
   return (
         <Box >
-          <div style={{display:'flex', justifyContent:'center', overflowY: 'auto', borderBottom: '2px solid #00bef7',fontSize:'1.5em', fontWeight:'bold', color:'#00bef7'}}>Testcases</div>
+          <div style={{display:'flex', justifyContent:'center', borderBottom: '2px solid #00bef7',fontSize:'1.5em', fontWeight:'bold', color:'#00bef7'}}>Testcases</div>
          {testcases.map((c, i) => {
           if (submitted && testPassed[i]) {
             divColor = "#77ff73";
@@ -35,7 +35,7 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
               style={{
                 display:'flex',
                 // width: 430,
-                height: 50,
+                height: 60,
                 textAlign: "center",
                 alignItems:'center',
                 justifyContent:'center',

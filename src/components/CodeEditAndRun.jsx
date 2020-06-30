@@ -29,13 +29,19 @@ const useStyles = makeStyles((theme) => ({
 
       display:'flex', 
       flexWrap:'wrap', 
-      width: `calc(100vw - 170px)`,
-      height: 'calc(100vh - 122px)',
+      width: `100%`,
+      height: 'calc(100vh - 123px)',
       justifyContent:'center',
       alignContent: 'center',
       [theme.breakpoints.down('md')]: {
-       display:'block'
+       display:'block',
+       width:'100%',
       },
+      [theme.breakpoints.down('sm')]: {
+        display:'block',
+        width:'100%',
+       },
+
 
     // display: "block",
     // width: "100vw",
@@ -49,56 +55,83 @@ const useStyles = makeStyles((theme) => ({
 
   },
   codeMirrContainer: {
-    width:'57%', 
+    width:'60%', 
     height:'95%', 
-    margin: 8,
+    marginBottom:0,
     display:'flex',
     flexWrap:'wrap',
+    boxSizing:'border-box',
     [theme.breakpoints.down('md')]: {
-      width:'100%'
+    width:'100%',
+    height:'100%', 
+    overflowY:'auto', 
+    border:'2px solid #f547e1',
+    borderRight:'none',
+    borderTop:'none',
+    borderBottom: 'none',
+    boxSizing:'border-box',
      },
+     [theme.breakpoints.down('sm')]: {
+      width:'100%',
+      height:'100%', 
+      overflowY:'auto', 
+      border:'none',
+      // borderRight:'none',
+      // borderTop:'none',
+      // borderBottom: 'none',
+      boxSizing:'border-box',
+       },
   },
   challengeDescContainer: {
     // backgroundColor:'#2a2a2e', 
-    width:'40%',
+    width:'36%',
     height:'95%', 
     overflowY:'auto', 
-    margin: 8,
     border:'2px solid #f547e1',
+    borderRight:'none',
+    boxSizing:'border-box',
     [theme.breakpoints.down('md')]: {
-      width:'100%'
+    width:'100%',
+    height:'95%', 
+    overflowY:'auto', 
+    borderBottom: 'none',
+    boxSizing:'border-box',
      },
   },
   outputContainer: {
-    width:'44%',
-    height:'43.5%', 
+    width:'55% ',
+    // height:'43.3%',
+    height:'calc(50% - 60px)',
     // backgroundColor:'#252626',
-    margin:8,
-    marginLeft:0,
-    marginRight:0,
+    margin:0,
     border:'2px solid #f547e1',
-    borderLeft: 'none'
+    borderLeft: 'none',
+    overflowY: 'auto',
+    boxSizing:'border-box'
   },
   testResultsContainer: {
-    width:'37%',
-    height:'43.5%', 
-    margin:8,
-    marginLeft:0,
-    marginRight:0,
+    width:'45%',
+    // height:'43.3%', 
+    height:'calc(50% - 60px)',
+    margin:0,
     border:'2px solid #f547e1',
+    overflowY: 'auto',
+    boxSizing:'border-box'
     // backgroundColor:'grey'
   },
   actionsContainer:{
     display:'flex', 
-    flexWrap:'wrap', 
-    width:'18%',
-    height:'43.5%',
-    margin: 8, 
-    marginRight:0,
-    marginLeft:0,
+    // flexWrap:'wrap', 
+    width:'100%',
+    // height:'43.3%',
+    height:'60px',
+    margin: 0, 
     justifyContent:'center',
     border:'2px solid #f547e1',
-    borderLeft: 'none'
+    borderTop:'none',
+    borderBottom: 'none',
+    boxSizing:'border-box',
+
     // backgroundColor:'grey'
   }
 }));
@@ -223,7 +256,7 @@ export default function CodeEditAndRun({
         <ChallengeDescription challenge={challenge}/>
       </Box>
       <Box className={classes.codeMirrContainer}>
-        <Box style={{width:'100%', height:'55%'}}>
+        <Box style={{width:'100%', height:'50%'}}>
         <CodeMirror
           value={code}
           options={{
@@ -242,7 +275,17 @@ export default function CodeEditAndRun({
           sandbox="allow-scripts allow-same-origin"
         />
      </Box>
-      <Box className={classes.testResultsContainer}>
+     <Box className={classes.actionsContainer}>
+      <Actions 
+       runTests={runTests}
+       evaluate={evaluate}
+       runButtonDisabled={runButtonDisabled}
+       testButtonDisabled={testButtonDisabled}
+       submit={submit}
+       allChecksDone={allChecksDone}
+       />
+       </Box>
+     <Box className={classes.testResultsContainer}>
         <TestResults
           testcases={challenge.testcases}
           testResults={testResults}
@@ -259,17 +302,6 @@ export default function CodeEditAndRun({
          <Box className={classes.outputContainer}> 
         <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
          </Box>
-      <Box className={classes.actionsContainer}>
-      <Actions 
-       runTests={runTests}
-       evaluate={evaluate}
-       runButtonDisabled={runButtonDisabled}
-       testButtonDisabled={testButtonDisabled}
-       submit={submit}
-       allChecksDone={allChecksDone}
-       />
-       </Box>
-
     {/* // <Container style={{ width:'100vw', height:'100vh'}}>
     <div>
       <Sidebar /> */}

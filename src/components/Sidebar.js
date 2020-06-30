@@ -28,20 +28,39 @@ const useStyles = makeStyles((theme) => ({
       // border: '2px solid rgb(241,26,255)',
       border: '2px solid  #00bef7',
       boxShadow: '0px 0px 20px 2px #00bef7',
-      transition: 'box-shadow .5s',
+      transition: 'box-shadow .3s',
       // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
       '&:hover': {
         boxShadow: '0px 0px 20px 10px #00bef7',
-      }
+      },
+      [theme.breakpoints.down('sm')]: {
+        color: "#f547e1",
+        fontSize:'.8em',
+        fontWeight:'bold',
+        height: '45px',
+        // padding: "0 30px",
+        // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
+        width:'100px',
+        margin:8,
+        // border: '2px solid rgb(241,26,255)',
+        border: '2px solid  #00bef7',
+
   },
+},
   sidebar: {
     height:'100vh',   
     borderRight:'2px solid #00bef7', 
     width:'160px',
-    [theme.breakpoints.down('md')]: {
+    position: 'fixed',
+    // zIndex: 1,
+    // top: 0,
+    // left: 0,
+    [theme.breakpoints.down('sm')]: {
       width:'100vw',
-      height:100,
-      display:'flex'
+      height:112.4,
+      display:'flex',
+      borderBottom:'2px solid #00bef7',
+      position: 'static'
      },
   },
 }))

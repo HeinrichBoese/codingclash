@@ -14,16 +14,28 @@ import { Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     width:'calc(100vw - 160px)',
+    marginLeft:'160px',
+    [theme.breakpoints.down('sm')]: {
+      width:'100vw',
+      marginLeft:0
+
+     },
   },
   gameContainer: {
     display:'flex', 
     width:'calc(100vw-160px)', 
     height:'calc(100vh-113px)',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       display:'flex',
       flexWrap:'wrap',
 
      },
+  },
+  playertable: {
+    display:"flex", 
+    justifyContent: "center", 
+    borderBottom:'2px solid #00bef7',
+    
   }
 }));
 
@@ -48,7 +60,7 @@ const GameMaster = () => {
   // const TIMELIMIT = 100000000;
 
   const [secondsLeft, setSecondsLeft] = useState(0);
-  const TIMELIMIT = 100;
+  const TIMELIMIT = 10000;
 
 
   useEffect(() => {
@@ -193,12 +205,12 @@ const GameMaster = () => {
       <div className= {classes.gameContainer}>
          <Sidebar style={{display:'flex'}} playerData={playerData}/>
          <Box className={classes.root}>
-        <Box style={{display:"flex", justifyContent: "center", borderBottom:'2px solid #00bef7'}}>
+        <Box className={classes.playertable}>
           <Playertable gamesessionPlayers={gamesession.players} playerData={playerData} />
         </Box>
 
         {gamesession.gameState === "LOBBY" && (
-          <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}>
+          <div>
           <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} />
           </div>
         )}
@@ -207,12 +219,11 @@ const GameMaster = () => {
           {/* <div style={{width:'calc(100vw-150)', height:'(calc100vh-113)'}}> */}
 
         {gamesession.gameState === "INGAME" && !checkSelfFinished() && challenge && (
-          <div style={{width:'calc(100vw-150)', height:'calc(100vh-113)'}}>
+          <div style={{margtinLeft:'160px'}}>
             <CodeEditAndRun
               challenge={challenge}
               secondsLeft={secondsLeft}
               submit={submit}
-              secondsLeft={secondsLeft}
             />
           </div>
         )}

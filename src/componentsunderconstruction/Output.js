@@ -19,8 +19,8 @@ const Output = ({testcases, testError, testPassed, testResults, testRunning, sub
       {testcases.map((c,i) => {
           return(
             <div key = {i} style={{display:'flex', justifyContent:'center', verticalAlign:'middle', alignItems:'center', fontWeight:'bold',}}>
-              {testPassed[i] && !testRunning && submitted && !testErr? <div style={{display:'flex', color:"#77ff73", height: 50, alignItems:'center',width:'100%',borderBottom:'2px solid #00bef7', justifyContent:'center'}}>Success</div> : null }
-              {!testPassed[i] && !testRunning && submitted && !testErr?<div style={{display:'flex',color:'red', height: 50,alignItems:'center'}}>Failed: Expected {testResults[i]} to be {c.expected}</div> : null}
+              {testPassed[i] && !testRunning && submitted && !testErr? <div style={{display:'flex', color:"#77ff73", height: 60, alignItems:'center',width:'100%',borderBottom:'2px solid #00bef7', justifyContent:'center'}}>Success</div> : null }
+              {!testPassed[i] && !testRunning && submitted && !testErr?<div style={{display:'flex',color:'red', height: 60,alignItems:'center',borderBottom:'2px solid #00bef7', width:'100%',justifyContent:'center'}}>Failed: Expected {testResults[i]} to be {c.expected}</div> : null}
             </div>
           )
       })}
