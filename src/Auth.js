@@ -6,6 +6,7 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('AuthUser')));
   const [userData, setUserData] = useState(JSON.parse(sessionStorage.getItem('UserData')));
+  // !currentUser.isAnonymous ? JSON.parse(sessionStorage.getItem('UserData') : null )
 
   useEffect(() => {
     const db = firebase.firestore();
@@ -14,9 +15,18 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser(authUser);
         if (authUser) {
           sessionStorage.setItem('AuthUser', JSON.stringify(authUser))
+        } else {
+          sessionStorage.removeItem('AuthUser');
+          sessionStorage.removeItem('UserData')
         };
-        if (authUser) // notwendig alleine abzufragen da sonst ein Fehler kommt wenn authUser = null
-        { if (!userData || !authUser.isAnonymous || (authUser && userData.email !== authUser.email)) {
+        if (authUser && !authUser.isAnonymous ) // notwendig alleine abzufragen da sonst ein Fehler kommt wenn authUser = null
+        {
+          if (!userData) {
+            db.collection('User').doc(authUser.uid).get().then((doc) => {
+              setUserData(doc.data());
+              sessionStorage.setItem('UserData', JSON.stringify(doc.data()))
+            })
+          }else if (userData.playerEmail !== authUser.email){
             db.collection('User').doc(authUser.uid).get().then((doc) => {
               setUserData(doc.data());
               sessionStorage.setItem('UserData', JSON.stringify(doc.data()))

@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import { InputForm } from "./components/inputForm";
 import PlayerProfile from "./componentsunderconstruction/PlayerProfile";
 import Sidebar from "./components/Sidebar"
+import AuthChecker from "./components/AuthChecker";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
             <Home />
           </Route>
           <Route path="/game/:id?">
-            <GameMaster />
+          <AuthChecker />
+            {/* <GameMaster /> */}
           </Route>
           <Route exact path="/solo">
             <SoloMode />
