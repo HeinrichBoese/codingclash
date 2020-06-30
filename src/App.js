@@ -4,13 +4,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SoloMode from "./components/SoloMode";
 import Home from "./components/Home";
 import GameMaster from "./components/GameMaster";
-import Header from "./components/Header";
 import Register from "./components/Register";
 import { AuthProvider } from "./Auth";
 import Login from "./components/Login";
 import { InputForm } from "./components/inputForm";
-import Lobby from "./components/Lobby";
-import PlayerProfile from "./components/PlayerProfile";
+import PlayerProfile from "./componentsunderconstruction/PlayerProfile";
 import Sidebar from "./components/Sidebar"
 
 function App() {

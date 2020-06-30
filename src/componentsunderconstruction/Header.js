@@ -14,7 +14,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { grey } from "@material-ui/core/colors";
 import { AuthContext } from "../Auth";
 import { Box } from "@material-ui/core";
-import images from "./images";
+import images from "../components/images";
 
 
 
