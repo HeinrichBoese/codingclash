@@ -49,6 +49,7 @@ import { makeStyles } from '@material-ui/core/styles';
     },
     textInput: {
       // backgroundColor: "#2a2a2e",
+      backgroundColor:'rgba(23,0,45,1)',
       color:'#f547e1',
       border: '2px solid  #00bef7',
       fontSize: 18,
