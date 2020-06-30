@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
       flexWrap: "wrap",
     },
   },
-  playertable: {
-    display: "flex",
-    justifyContent: "center",
-    borderBottom: "2px solid #00bef7",
-  },
+  // playertable: {
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   borderBottom: "2px solid #00bef7",
+  // },
 }));
 
 const GameMaster = () => {
@@ -199,34 +199,26 @@ const GameMaster = () => {
   } else {
     return (
       gamesession && (
-        <div className={classes.gameContainer}>
-          <Box className={classes.root}>
-            <Box className={classes.playertable}>
+        <div>
               <Playertable
                 gamesessionPlayers={gamesession.players}
                 playerData={playerData}
               />
-            </Box>
-
             {gamesession.gameState === "LOBBY" && (
-              <div>
                 <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} leaveLobby={leaveLobby}/>
-              </div>
             )}
-
             {gamesession.gameState === "INGAME" &&
               !checkSelfFinished() &&
               challenge && (
-                <div style={{ margtinLeft: "160px" }}>
+                // <div style={{ margtinLeft: "160px" }}>
                   <CodeEditAndRun
                     challenge={challenge}
                     secondsLeft={secondsLeft}
                     submit={submit}
                   />
-                </div>
+                // </div>
               )}
-          </Box>
-        </div>
+         </div>
       )
     );
   }

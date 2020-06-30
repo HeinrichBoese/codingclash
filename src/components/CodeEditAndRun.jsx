@@ -218,7 +218,7 @@ export default function CodeEditAndRun({
   };
 
   return (
-
+    // <div style={{ marginLeft: "160px" }}>
     <div style={{width:'calc(100vw-170)', height:'calc(100vh-123)'}}>
     <Box className = {classes.root}>
       <Box className={classes.challengeDescContainer}>
@@ -270,5 +270,6 @@ export default function CodeEditAndRun({
         </Box>
       </Box>
     </div>
+    /* </div> */
   );
 }

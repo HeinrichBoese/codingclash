@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     // top: 0,
     // left: 0,
     [theme.breakpoints.down('sm')]: {
-      width:'100vw',
+      width:'100%',
       height:112.4,
       display:'flex',
       borderBottom:'2px solid #00bef7',
