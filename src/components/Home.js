@@ -44,16 +44,12 @@ const styles = {
 const Home = () => {
   return (
     <div className = 'lobbyCont' style={styles.container}>
+      <Button  style={styles.root} component={Link} to={"/solo"}>
+        Practice Solo
+      </Button>
       <Button  style={styles.root} component={Link} to={"/game"}>
-        Start Lobby
+        Create Lobby
       </Button>
-      <Button style={styles.root2} className ='illuminate'>
-        test1
-      </Button>
-      <Button style={styles.root3} >
-        test2
-      </Button>
-
     </div>
   );
 };
