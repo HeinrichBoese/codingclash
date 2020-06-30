@@ -1,6 +1,7 @@
 //import firebase from "../firebase";
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Auth";
 import Button from "@material-ui/core/Button";
 import "../App.css";
 
@@ -42,12 +43,16 @@ const styles = {
 };
 
 const Home = () => {
+  const { currentUser } = useContext(AuthContext);
+  const toolTip = "Please Log In or Sing Up to create a Lobby";
+
+
   return (
     <div className = 'lobbyCont' style={styles.container}>
       <Button  style={styles.root} component={Link} to={"/solo"}>
         Practice Solo
       </Button>
-      <Button  style={styles.root} component={Link} to={"/game"}>
+      <Button disabled={!currentUser} style={styles.root} component={Link} to={"/game"}>
         Create Lobby
       </Button>
     </div>
