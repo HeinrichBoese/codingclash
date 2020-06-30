@@ -15,10 +15,10 @@ function App() {
   return (
     <AuthProvider>
       <Router >
-      <div style={{ display: "flex" }}>
-        <div style={{width: '100vw',}}>
+      {/* <div style={{ display: "flex" }}>
+        <div style={{width: '100vw',}}> */}
         <Sidebar />
-        </div>
+        {/* </div> */}
         <Switch>
           <Route exact path="/">
             <Home />
@@ -45,7 +45,7 @@ function App() {
             <Home />
           </Route>
         </Switch>
-        </div>
+        {/* </div> */}
       </Router>
     </AuthProvider>
   );
