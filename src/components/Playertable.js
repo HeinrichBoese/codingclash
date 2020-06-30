@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     color: theme.palette.text.secondary,
   },
+  playertable: {
+    display: "flex",
+    justifyContent: "center",
+    borderBottom: "2px solid #00bef7",
+    boxShadow: '0px 0px 20px 2px #00bef7',
+  },
 }));
 
 const sortPlayerTable = (t) => {
@@ -43,7 +49,8 @@ const Playertable = ({ gamesessionPlayers, playerData }) => {
     // <Box style={{display:"inline-flex"}} >
     //   {playerNames.map((playerName) => (
     //     <Box p={1} css={{ textAlign: "center" }} key={playerName}>
-    <div>
+    // <div>
+    <Box className={classes.playertable}>
       <Box display="inline-flex">
         {playerTable.map((playerData) => (
           <Box p={1} css={{ textAlign: "center" }} key={playerData.userID}>
@@ -74,7 +81,8 @@ const Playertable = ({ gamesessionPlayers, playerData }) => {
           </Box>
         ))}
       </Box>
-    </div>
+      </Box>
+    // </div>
   );
 };
 

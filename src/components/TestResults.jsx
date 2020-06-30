@@ -1,23 +1,56 @@
 import React from "react";
-
-import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Output from "./Output";
-import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display:'flex',
+    justifyContent:'center', 
+    borderBottom:'2px solid #f547e1',
+    fontSize:'1.5em', fontWeight:'bold', 
+    color:'#00bef7', 
+    height:60, 
+    alignItems:'center',
+    boxShadow: '0px 0px 20px 2px #f547e1',
+    textShadow:'0px 0px 20px #00bef7'
+  },
+  checktrue: {
+    display:'flex', 
+    color:"#77ff73", 
+    height: 60, 
+    alignItems:'center',
+    width:'100%',
+    borderBottom:'2px solid #00bef7', 
+    justifyContent:'center'
+  },
+  checkfalse: {
+    display:'flex',
+    color:'red', 
+    height: 60,
+    alignItems:'center',
+    borderBottom:'2px solid #00bef7', 
+    width:'100%',
+    justifyContent:'center'
+  },
+  checkBox: {
+    display:'flex', 
+    justifyContent:'center', 
+    verticalAlign:'middle', 
+    alignItems:'center', 
+    fontWeight:'bold'
+  }
+}))
 
 
 const TestResults = ({testcases, testResults, submitted, testError, testPassed, testRunning, evaluate, runButtonDisabled, runTests, testButtonDisabled}) => {
-  let divColor = '#f547e1';
-  // let scroll = testcases.length > 5 ? "scroll" : "none";
+  const classes = useStyles();
+  let divColor = '#00bef7';
   let exp = ''
-  // let output = '';
-  // let testcase = '';
-  // let testResult = '';
   let testErr = '';
   return (
         <Box >
-          <div style={{display:'flex', justifyContent:'center', borderBottom: '2px solid #00bef7',fontSize:'1.5em', fontWeight:'bold', color:'#00bef7'}}>Testcases</div>
+          <div className={classes.container}>Testcases</div>
          {testcases.map((c, i) => {
           if (submitted && testPassed[i]) {
             divColor = "#77ff73";
@@ -34,19 +67,17 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
               key = {c.description}
               style={{
                 display:'flex',
-                // width: 430,
                 height: 60,
                 textAlign: "center",
                 alignItems:'center',
                 justifyContent:'center',
                 verticalAlign:'middle',
                 color:divColor,
-                // backgroundColor: 'grey',
+                textShadow:`0px 0px 20px ${divColor}`,
                 borderRadius: 0,
-                borderBottom: '2px solid #00bef7',
-               
-
-               
+                // borderBottom:'2px solid #f547e1',
+                // boxShadow: '0px 0px 20px 2px #f547e1',
+                
               }}
             > 
               <div style={{display:'flex',alignItems:'center' ,verticalAlign:'middle', justifyContent:'center', fontSize:'1em', fontWeight:'bold' }}>
