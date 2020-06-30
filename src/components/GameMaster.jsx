@@ -6,11 +6,9 @@ import Box from "@material-ui/core/Box";
 import Playertable from "./Playertable";
 import Lobby from "./Lobby";
 import CodeEditAndRun from "./CodeEditAndRun";
-
-import GameSummary from "./GameSummary";
 import Sidebar from "./Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "calc(100vw - 160px)",
@@ -49,12 +47,14 @@ const GameMaster = () => {
   const TIMELIMIT = 100;
 
   useEffect(() => {
+    let unsubscribe = ()=>null;
     const setupSubscription = () => {
-      db.collection("gamesessions")
+      unsubscribe = db.collection("gamesessions")
         .doc(gameID)
         .onSnapshot((doc) => setGamesession(doc.data()));
     };
     gameID && setupSubscription();
+    return ()=>unsubscribe();
   }, [gameID]);
 
   // LOAD CURRENT CHALLENGE
