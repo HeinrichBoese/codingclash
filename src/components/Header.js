@@ -92,7 +92,7 @@ function ButtonAppBar(props) {
                   component={Link}
                   to={"/Playerprofile"}>
                   <img
-                    src={images[userData.playerImage]}
+                    src={userData && images[userData.playerImage]}
                     height={35} alt="my Head" />
                 </Box>
               )}
