@@ -10,6 +10,9 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { AuthContext } from "../Auth";
+import NativeSelect from '@material-ui/core/NativeSelect';
+import Avatar from '@material-ui/core/Avatar';
+import images from "./images";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -50,6 +53,7 @@ export default function Register(props) {
       email: "",
       password: "",
       name: "",
+      image: "Male1",
     },
     validate,
     onSubmit: async (values) => {
@@ -57,95 +61,121 @@ export default function Register(props) {
         await firebase
           .auth()
           .createUserWithEmailAndPassword(values.email, values.password)
-          .then((resp)=>{resp.user.updateProfile({displayName: values.name});
+          .then((resp) => {
+            resp.user.updateProfile({ displayName: values.name });
             const db = firebase.firestore();
             db.collection('User').doc(resp.user.uid).set(
               {
                 playerName: values.name,
                 playerEmail: values.email,
-                playerLevel: 0,                
+                playerLevel: 0,
+                playerImage: values.image,
               }
             )
-        })
+          })
       } catch (error) {
         alert(error);
       };
-      setTimeout(()=>{history.push("/")}, 200);
+      setTimeout(() => { history.push("/") }, 200);
     }
   });
 
   const formikProps = (name, initialValue = "") => ({
-      id: name,
-      name: name,
-      variant: "outlined",
-      value: formik.values[name],
-      onChange: formik.handleChange,
-      onBlur: formik.handleBlur,
-      error: Boolean(formik.errors[name] && formik.touched[name]),
-    });
+    id: name,
+    name: name,
+    variant: "outlined",
+    value: formik.values[name],
+    onChange: formik.handleChange,
+    onBlur: formik.handleBlur,
+    error: Boolean(formik.errors[name] && formik.touched[name]),
+  });
 
-    return(
+  return (
     <div>
-    { currentUser && <Redirect to="/" />}
-<Container maxWidth="xs">
-  <Paper>
-    <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
-      <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <TextField
-              className={classes.textField}
-              {...formikProps("name")}
-              type="text"
-              autoComplete="off"
-              label={
-                formik.touched.name && formik.errors.name
-                  ? formik.errors.name
-                  : "Player Name"
-              }
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              className={classes.textField}
-              {...formikProps("email")}
-              type="email"
-              autoComplete="off"
-              label={
-                formik.touched.email && formik.errors.email
-                  ? formik.errors.email
-                  : "E-Mail address"
-              }
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              className={classes.textField}
-              {...formikProps("password")}
-              type="password"
-              autoComplete="off"
-              label={
-                formik.touched.password && formik.errors.password
-                  ? formik.errors.password
-                  : "Password"
-              }
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              className={classes.button}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              SIGN UP
+      {currentUser && <Redirect to="/" />}
+      <Container maxWidth="xs">
+        <Paper>
+          <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
+            <form onSubmit={formik.handleSubmit}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.textField}
+                    {...formikProps("name")}
+                    type="text"
+                    autoComplete="off"
+                    label={
+                      formik.touched.name && formik.errors.name
+                        ? formik.errors.name
+                        : "Player Name"
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} display={'flex'}>
+                  <Grid item xs={6}>
+                    <Avatar alt="Avatar" src={images[formik.values.image]} />
+                  </Grid>
+                  <NativeSelect
+                    className={classes.textField}
+                    {...formikProps("image")}
+                    type="text"
+                    autoComplete="off"
+                    label={
+                      formik.touched.image && formik.errors.image
+                        ? formik.errors.image
+                        : "Player Avatar"
+                    }
+                  >
+                    <option value={"Male1"}>Male1</option>
+                    <option value={"Male2"}>Male2</option>
+                    <option value={"Robot"}>Robot</option>
+                    <option value={"Female1"}>Female1</option>
+                    <option value={"Female2"}>Female2</option>
+                    <option value={"Zombie"}>Zombie</option>
+                  </NativeSelect>
+
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.textField}
+                    {...formikProps("email")}
+                    type="email"
+                    autoComplete="off"
+                    label={
+                      formik.touched.email && formik.errors.email
+                        ? formik.errors.email
+                        : "E-Mail address"
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.textField}
+                    {...formikProps("password")}
+                    type="password"
+                    autoComplete="off"
+                    label={
+                      formik.touched.password && formik.errors.password
+                        ? formik.errors.password
+                        : "Password"
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    className={classes.button}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    SIGN UP
                   </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Box>
-  </Paper>
-</Container>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Paper>
+      </Container>
     </div >
   );
 }

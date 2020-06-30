@@ -18,11 +18,7 @@ function App() {
     <AuthProvider>
       <Router >
       <div style={{ display: "flex" }}>
-        <div
-          style={{
-            width: '100vw',
-          }}
-        >
+        <div style={{width: '100vw',}}>
         <Sidebar />
         </div>
         <Switch>
