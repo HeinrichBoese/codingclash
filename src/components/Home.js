@@ -44,7 +44,7 @@ const styles = {
 
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
-  const toolTip = "Please Log In or Sing Up to create a Lobby";
+  const toolTip = "Please LogIn to create a Lobby";
 
 
   return (
@@ -53,7 +53,7 @@ const Home = () => {
         Practice Solo
       </Button>
       <Button disabled={!currentUser} style={styles.root} component={Link} to={"/game"}>
-        Create Lobby
+        { currentUser ? "Create Lobby" : toolTip }
       </Button>
     </div>
   );
