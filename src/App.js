@@ -5,11 +5,12 @@ import SoloMode from "./components/SoloMode";
 import Home from "./components/Home";
 import GameMaster from "./components/GameMaster";
 import Register from "./components/Register";
-import { AuthProvider } from "./Auth";
+import { AuthProvider, AuthContext } from "./Auth";
 import Login from "./components/Login";
 import { InputForm } from "./components/inputForm";
 import PlayerProfile from "./componentsunderconstruction/PlayerProfile";
 import Sidebar from "./components/Sidebar"
+import AuthChecker from "./components/AuthChecker";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 
@@ -48,7 +49,7 @@ function App() {
           <Route path="/game/:id?">
             <div className={classes.gameContainer}> 
               <Box className={classes.root}>
-                <GameMaster />
+                <AuthChecker />
               </Box>
             </div>
           </Route>
