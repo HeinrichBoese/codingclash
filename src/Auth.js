@@ -29,7 +29,9 @@ export const AuthProvider = ({ children }) => {
       },
     );
     return () => unsubscribe();
-  }, [userData]);
+  }, []); // DO NOT, I REAPEAT, DO NOT LISTEN TO WARNING ABOUT MISSING DEPENDENCY
+  // ADDING USERDATA AS DEPENDENCY WILL TRIGGER INFINITE LOOP AND HIGH BILLING
+  // THANK YOU VERY MUCH
 
 
   return (
