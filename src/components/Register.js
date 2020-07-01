@@ -73,16 +73,7 @@ export default function Register(props) {
                 playerImage: values.image,
               }
             )
-          }).then(() => setTimeout(() => {
-            sessionStorage.setItem('UserData', JSON.stringify(
-              {
-                playerName: values.name,
-                playerEmail: values.email,
-                playerLevel: 0,
-                playerImage: values.image,
-              }));
-            history.push("/")
-          }, 200))
+          }).then(() => history.push("/"))
           .catch((error) => alert(error))
       } else {
         firebase
@@ -99,7 +90,7 @@ export default function Register(props) {
                 playerImage: values.image,
               }
             )
-          }).then(() => { setTimeout(() => { history.push("/") }, 200); })
+          }).then(() => history.push("/"))
           .catch((error) => alert(error))
       } // end Else
     } // end onSubmit
