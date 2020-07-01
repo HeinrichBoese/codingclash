@@ -192,7 +192,10 @@ const GameMaster = () => {
     history.push("/game/" + docRef.id);
   };
 
-  !gameID && currentUser && createNewGameSession();
+  useEffect(()=>{
+    !gameID && currentUser && createNewGameSession();
+  }, [gameID, currentUser])
+  
 
   if (!gamesession) {
     return null;
