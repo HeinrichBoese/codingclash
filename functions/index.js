@@ -1,5 +1,17 @@
 const functions = require('firebase-functions');
 
+const admin = require('firebase-admin');
+admin.initializeApp();
+const db = admin.firestore();
+
+exports.getRandomChallengeRef = functions.https.onCall((data, context) => {
+    return db.collection('challenges').listDocuments()
+    .then(documentReferences => {
+        const randomIndex = Math.floor(Math.random() * documentReferences.length);
+        return documentReferences[randomIndex];
+    })
+  });
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //

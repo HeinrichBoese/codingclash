@@ -182,7 +182,11 @@ const GameMaster = () => {
   };
 
   const createNewGameSession = async () => {
+    // const getRandomChallengeRefCloudFunction = firebase.functions().httpsCallable("getRandomChallengeRef");
+    // const challengeRefResponse = await getRandomChallengeRefCloudFunction();
+    // const challengeRef = challengeRefResponse.data;
     const challengeRef = await getRandomChallengeRef();
+    // console.log(challengeRef);
     const docRef = db.collection("gamesessions").doc();
     docRef.set({
       gameState: "LOBBY",
@@ -192,10 +196,9 @@ const GameMaster = () => {
     history.push("/game/" + docRef.id);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     !gameID && currentUser && createNewGameSession();
-  }, [gameID, currentUser])
-  
+  }, [gameID, currentUser]);
 
   if (!gamesession) {
     return null;
@@ -203,25 +206,29 @@ const GameMaster = () => {
     return (
       gamesession && (
         <div>
-              <Playertable
-                gamesessionPlayers={gamesession.players}
-                playerData={playerData}
+          <Playertable
+            gamesessionPlayers={gamesession.players}
+            playerData={playerData}
+          />
+          {gamesession.gameState === "LOBBY" && (
+            <Lobby
+              startGame={startGame}
+              isLobbyLeader={isLobbyLeader}
+              leaveLobby={leaveLobby}
+            />
+          )}
+          {gamesession.gameState === "INGAME" &&
+            !checkSelfFinished() &&
+            challenge && (
+              // <div style={{ margtinLeft: "160px" }}>
+              <CodeEditAndRun
+                challenge={challenge}
+                secondsLeft={secondsLeft}
+                submit={submit}
               />
-            {gamesession.gameState === "LOBBY" && (
-                <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} leaveLobby={leaveLobby}/>
+              // </div>
             )}
-            {gamesession.gameState === "INGAME" &&
-              !checkSelfFinished() &&
-              challenge && (
-                // <div style={{ margtinLeft: "160px" }}>
-                  <CodeEditAndRun
-                    challenge={challenge}
-                    secondsLeft={secondsLeft}
-                    submit={submit}
-                  />
-                // </div>
-              )}
-         </div>
+        </div>
       )
     );
   }
