@@ -64,7 +64,7 @@ const GameMaster = () => {
   // LOAD CURRENT CHALLENGE
   useEffect(() => {
     const fetchChallenge = async () => {
-      const challengeDoc = await gamesession.challenge.get();
+      const challengeDoc = await db.collection('challenges').doc(gamesession.challengeID).get();
       setChallenge(challengeDoc.data());
       setChallengeLoaded(true);
     };
@@ -182,16 +182,13 @@ const GameMaster = () => {
   };
 
   const createNewGameSession = async () => {
-    // const getRandomChallengeRefCloudFunction = firebase.functions().httpsCallable("getRandomChallengeRef");
-    // const challengeRefResponse = await getRandomChallengeRefCloudFunction();
-    // const challengeRef = challengeRefResponse.data;
-    const challengeRef = await getRandomChallengeRef();
-    // console.log(challengeRef);
+    const getRandomChallengeIDCloudFunction = firebase.functions().httpsCallable("getRandomChallengeID");
+    const challengeID = await getRandomChallengeIDCloudFunction();
     const docRef = db.collection("gamesessions").doc();
     docRef.set({
       gameState: "LOBBY",
       players: [{ userID: currentUser.uid, finished: false }],
-      challenge: challengeRef,
+      challengeID: challengeID.data,
     });
     history.push("/game/" + docRef.id);
   };
