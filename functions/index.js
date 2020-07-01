@@ -1,4 +1,24 @@
-const functions = require('firebase-functions');
+const functions = require("firebase-functions");
+
+const admin = require("firebase-admin");
+admin.initializeApp();
+const db = admin.firestore();
+
+exports.getRandomChallengeID = functions.https.onCall(
+  async (data, context) => {
+    try {
+      const documentRefs = await db.collection("challenges").listDocuments();
+      const randIndex = Math.floor(Math.random() * documentRefs.length);
+      const randDocumentRef = documentRefs[randIndex];
+      const document = await randDocumentRef.get()
+      return document.id;
+    } catch (err) {
+      console.log(err.code);
+      throw new functions.https.HttpsError(err.code, err.message);
+    }
+  }
+);
+
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -7,7 +27,7 @@ const functions = require('firebase-functions');
 //  response.send("Hello from Firebase!");
 // });
 
-// FunKtion um Anonyme User zu löschen. 
+// FunKtion um Anonyme User zu löschen.
 // function deleteAnonymousUsers(nextPageToken) {
 //     adminApp
 //        .auth()

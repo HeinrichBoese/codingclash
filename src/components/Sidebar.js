@@ -3,13 +3,16 @@ import firebase from "../firebase";
 import { Link, withRouter } from "react-router-dom";
 import { AuthContext } from "../Auth";
 import Card from "@material-ui/core/Card";
-import CardMedia from '@material-ui/core/CardMedia';
+
 import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
 import "../App.css";
-
-import PersonIcon from "@material-ui/icons/Person";
 import images from "./images";
+import medals from "./medals"
+import { CardHeader, IconButton } from "@material-ui/core";
+
+
+
 const useStyles = makeStyles((theme) => ({
   buttons: {
     // background: 'rgb(241,26,255)',
@@ -22,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
       height: 84,
       // padding: "0 30px",
       // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
-      width:130,
-      margin:12,
+      width: '100px',
+      margin: 8,
       // border: '2px solid rgb(241,26,255)',
       border: `2px solid ${theme.palette.secondary.main}`,
       boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
@@ -62,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
     //   position: 'static'
     //  },
 
+
     // fontSize: '.8em',
     // fontWeight: 'bold',
     // height: 84,
@@ -74,32 +78,74 @@ const useStyles = makeStyles((theme) => ({
     // boxShadow: '0px 0px 20px 2px #00bef7',
     // transition: 'box-shadow .5s',
     // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
-  //   '&:hover': {
-  //     boxShadow: '0px 0px 20px 10px #00bef7',
-  //   }
-  // },
-  // sidebar: {    
-  //   height: '100vh',
-  //   borderRight: '2px solid #00bef7',
-  //   width: '160px',
-  //   [theme.breakpoints.down('md')]: {
-  //     width: '100vw',
-  //     height: 100,
-  //     display: 'flex'
-  //   },
+    //   '&:hover': {
+    //     boxShadow: '0px 0px 20px 10px #00bef7',
+    //   }
+    // },
+    // sidebar: {    
+    //   height: '100vh',
+    //   borderRight: '2px solid #00bef7',
+    //   width: '160px',
+    //   [theme.breakpoints.down('md')]: {
+    //     width: '100vw',
+    //     height: 100,
+    //     display: 'flex'
+    //   },
 
   },
 }))
-//import CheckBoxIcon from "@material-ui/icons/CheckBox";
 const Sidebar = () => {
   const { currentUser, userData } = useContext(AuthContext);
   const classes = useStyles();
+
+  const userCheck = () => {
+    if (!currentUser) {
+      return true
+    } else if (currentUser.isAnonymous) {
+      return true
+    } else {
+      return false
+    }
+  };
+
+
   return (
     <div className={classes.sidebar}>
-      <Card style={{ height: 110, width: 155 }}>
+
+      {/* <Card style={{ height: 110, width: 155 }}>
         <div style={{display:'flex', justifyContent:'center'}}>
         <CardMedia style={{ width: 100,height: 100, display:'flex', justifyContent:'center'}} image={userData ? images[userData.playerImage]: PersonIcon } />
-        {/* image={PersonIcon}  */}
+        image={PersonIcon}  */}
+
+      <Card style={{ height: 200, width: 160 }}>
+        <CardHeader
+          avatar={
+            <img style={{ width: 50, height: 50 }}
+              src={userCheck()
+                ? images.anonym
+                : userData && images[userData.playerImage]}
+              alt="Pic? o.O" />
+
+          }
+          action={
+            <IconButton aria-label="settings">
+              {/* <MoreVertIcon /> */}
+            </IconButton>
+          }
+          title={userCheck()
+            ? "Anonym"
+            : userData && userData.playerName}
+          subheader={userCheck()
+            ? "No XP, no cookies"
+            : userData && `Level: ${userData.playerLevel}`}
+        />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <img style={{ height: 100 }}
+            src={userCheck()
+              ? medals.M0
+              : userData && medals['M' + Math.floor(userData.playerLevel)]}
+            alt="Medal? o.O" />
+
         </div>
         {/* <CardContent> */}
 
@@ -115,18 +161,18 @@ const Sidebar = () => {
         to={"/InputForm"}
         className={classes.buttons}>Inputform</Button>)}
 
-      {currentUser && (<Button
+      {currentUser && !currentUser.isAnonymous && (<Button
         component={Link}
         to={"/"}
         onClick={() => firebase.auth().signOut()}
         className={classes.buttons}>Log Out</Button>)}
 
-      {!currentUser && (<Button
+      {userCheck() && <Button
         component={Link}
         to={"/login"}
-        className={classes.buttons}>Log In</Button>)}
+        className={classes.buttons}>Log In</Button>}
 
-      {!currentUser && (<Button
+      {userCheck() && (<Button
         component={Link}
         to={"/register"}
         className={classes.buttons}>Sign Up</Button>)}
@@ -135,6 +181,7 @@ const Sidebar = () => {
 
       {/* <Button className={classes.buttons}>Hodor</Button> */}
       <Button className={classes.buttons} component={Link} to={'/themes'}>Theme</Button>
+
     </div>
   )
 }

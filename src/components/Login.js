@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
 const validate = (values) => {
   const errors = {};
   if (!values.email) {
-    errors.email = "Email muss angegeben werden!";
+    errors.email = "Email is mandatory!";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Invalid email address";
   }
   if (!values.password) {
-    errors.password = "Passwort muss angegeben werden!";
-  } else if (values.password.length < 5) {
-    errors.password = "Passwort muss mindestens 5 Zeichen lang sein!";
+    errors.password = "Password is mandatory!";
+  } else if (values.password.length < 6) {
+    errors.password = "Password must have at least 6 chars!";
   }
   return errors;
 };
@@ -69,7 +69,7 @@ export default function Login() {
 
   return (
     <div>
-      {currentUser && <Redirect to="/" />}
+      {currentUser && !currentUser.isAnonymous && <Redirect to="/" />}
       <Container maxWidth="xs">
         <Paper>
           <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
@@ -84,7 +84,7 @@ export default function Login() {
                     label={
                       formik.touched.email && formik.errors.email
                         ? formik.errors.email
-                        : "E-Mail Adresse"
+                        : "E-Mail address"
                     }
                   />
                 </Grid>
@@ -97,7 +97,7 @@ export default function Login() {
                     label={
                       formik.touched.password && formik.errors.password
                         ? formik.errors.password
-                        : "Passwort"
+                        : "Password"
                     }
                   />
                 </Grid>
@@ -108,7 +108,7 @@ export default function Login() {
                     variant="contained"
                     color="primary"
                   >
-                    Anmelden
+                    Log In
                   </Button>
                 </Grid>
               </Grid>

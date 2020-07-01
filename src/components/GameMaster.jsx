@@ -64,7 +64,7 @@ const GameMaster = () => {
   // LOAD CURRENT CHALLENGE
   useEffect(() => {
     const fetchChallenge = async () => {
-      const challengeDoc = await gamesession.challenge.get();
+      const challengeDoc = await db.collection('challenges').doc(gamesession.challengeID).get();
       setChallenge(challengeDoc.data());
       setChallengeLoaded(true);
     };
@@ -133,6 +133,15 @@ const GameMaster = () => {
     db.collection("gamesessions").doc(gameID).update({ gameState: "FINISHED" });
   };
 
+  const userLvlUp = (uid) => {
+    const db = firebase.firestore();
+    if(!currentUser.isAnonymous)
+    {const player = db.collection('User').doc(uid);
+    return player.update({
+      playerLevel: firebase.firestore.FieldValue.increment(0.25)
+    })}
+  };
+
   const leaveLobby = () => {
     const newPlayers = gamesession.players.filter(
       (player) => player.userID !== currentUser.uid
@@ -148,6 +157,7 @@ const GameMaster = () => {
       (player) => player.userID === currentUser.uid
     );
     players[currentPlayerIndex].finished = true;
+    userLvlUp(players[currentPlayerIndex].userID);
     players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
     const docRef = db.collection("gamesessions").doc(gameID);
     docRef.update({ players });
@@ -182,31 +192,52 @@ const GameMaster = () => {
   };
 
   const createNewGameSession = async () => {
-    const challengeRef = await getRandomChallengeRef();
+    const getRandomChallengeIDCloudFunction = firebase.functions().httpsCallable("getRandomChallengeID");
+    const challengeID = await getRandomChallengeIDCloudFunction();
     const docRef = db.collection("gamesessions").doc();
     docRef.set({
       gameState: "LOBBY",
       players: [{ userID: currentUser.uid, finished: false }],
-      challenge: challengeRef,
+      challengeID: challengeID.data,
     });
     history.push("/game/" + docRef.id);
   };
 
-  !gameID && currentUser && createNewGameSession();
+  useEffect(() => {
+    !gameID && currentUser && createNewGameSession();
+  }, [gameID, currentUser]);
 
   if (!gamesession) {
     return null;
   } else {
     return (
       gamesession && (
+
         <div style={{minHeight:'600px', display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
               <Playertable
                 gamesessionPlayers={gamesession.players}
                 playerData={playerData}
+          />
+          {gamesession.gameState === "LOBBY" && (
+            <Lobby
+              startGame={startGame}
+              isLobbyLeader={isLobbyLeader}
+              leaveLobby={leaveLobby}
+            />
+          )}
+          {/* {gamesession.gameState === "INGAME" &&
+            !checkSelfFinished() &&
+            challenge && (
+              // <div style={{ margtinLeft: "160px" }}>
+              <CodeEditAndRun
+                challenge={challenge}
+                secondsLeft={secondsLeft}
+                submit={submit}
+
               />
-            {gamesession.gameState === "LOBBY" && (
-                <Lobby startGame={startGame} isLobbyLeader={isLobbyLeader} leaveLobby={leaveLobby}/>
-            )}
+              // </div>
+            )} */}
+
             {gamesession.gameState === "INGAME" &&
               !checkSelfFinished() &&
               challenge && (
