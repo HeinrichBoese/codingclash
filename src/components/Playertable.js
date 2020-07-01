@@ -16,9 +16,17 @@ const useStyles = makeStyles((theme) => ({
   },
   playertable: {
     display: "flex",
+    flexWrap:'wrap',
+    minHeight:'113px',
+    width:'96%',
+    borderRadius: 4,
+    // backgroundColor: 'linear-gradient(90deg, rgba(23,0,45,1) 60%, rgba(73,1,69,1) 100%)',
+    // marginLeft: '15px',
+    // marginRight: '15px',
     justifyContent: "center",
-    borderBottom: "2px solid #00bef7",
-    boxShadow: '0px 0px 20px 2px #00bef7',
+    overflowx: 'auto',
+    border: `2px solid ${theme.palette.primary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main}, 0px 0px 20px 2px ${theme.palette.primary.main}`,
   },
 }));
 

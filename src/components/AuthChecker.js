@@ -5,15 +5,6 @@ import { useParams, useHistory } from "react-router-dom";
 import GameMaster from "./GameMaster";
 
 
-
-
-
-
-
-
-
-
-
 export default function AuthChecker(props) {
     const { currentUser } = useContext(AuthContext);
     let history = useHistory();
@@ -30,7 +21,7 @@ export default function AuthChecker(props) {
     }
 
     return (
-<div>
+<div style={{width:'100%', minHeight: '600px'}}>
  {currentUser && <GameMaster />}
  </div>
     )

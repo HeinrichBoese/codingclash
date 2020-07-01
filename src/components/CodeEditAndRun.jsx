@@ -15,6 +15,12 @@ require("codemirror/mode/javascript/javascript");
 const equal = require("fast-deep-equal/es6");
 
 const useStyles = makeStyles((theme) => ({
+  codeMirr: {
+    height: '50%',
+    width:'100%',
+    border:`2px solid ${theme.palette.primary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main}, 0px 0px 20px 2px ${theme.palette.primary.main}` 
+  },
   root: {
       display:'flex', 
       flexWrap:'wrap', 
@@ -22,14 +28,15 @@ const useStyles = makeStyles((theme) => ({
       height: 'calc(100vh - 123px)',
       justifyContent:'center',
       alignContent: 'center',
-      [theme.breakpoints.down('md')]: {
-       display:'block',
-       width:'100%',
-      },
-      [theme.breakpoints.down('sm')]: {
-        display:'block',
-        width:'100%',
-       },
+      minHeight:'500px',
+      // [theme.breakpoints.down('md')]: {
+      //  display:'block',
+      //  width:'100%',
+      // },
+      // [theme.breakpoints.down('sm')]: {
+      //   display:'block',
+      //   width:'100%',
+      //  },
 
   },
   codeMirrContainer: {
@@ -40,59 +47,69 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     flexWrap:'wrap',
     boxSizing:'border-box',
-    [theme.breakpoints.down('md')]: {
-    width:'100%',
-    height:'100%', 
-    overflowY:'auto', 
-    border:'2px solid #f547e1',
-    borderRight:'none',
-    borderTop:'none',
-    borderBottom: 'none',
-    boxSizing:'border-box',
-     },
-     [theme.breakpoints.down('sm')]: {
-      width:'100%',
-      height:'100%', 
-      overflowY:'auto', 
-      border:'none',
-      boxSizing:'border-box',
-       },
+    minHeight:'455px',
+    // [theme.breakpoints.down('md')]: {
+    // width:'100%',
+    // height:'100%', 
+    // overflowY:'auto', 
+    // border:'2px solid #f547e1',
+    // borderRight:'none',
+    // borderTop:'none',
+    // borderBottom: 'none',
+    // boxSizing:'border-box',
+
+    //  },
+    //  [theme.breakpoints.down('sm')]: {
+    //   width:'100%',
+    //   height:'100%', 
+    //   overflowY:'auto', 
+    //   border:'none',
+    //   boxSizing:'border-box',
+ 
+    //    },
   },
   challengeDescContainer: {
     width:'36%',
     height:'95%', 
     overflowY:'auto', 
-    border:'2px solid #f547e1',
+    border:`2px solid ${theme.palette.primary.main}`,
     borderRight:'none',
     boxSizing:'border-box',
-    boxShadow: '0px 0px 20px 2px #f547e1',
-    [theme.breakpoints.down('md')]: {
-    width:'100%',
-    height:'95%', 
-    overflowY:'auto', 
-    borderBottom: 'none',
-    boxSizing:'border-box',
-    boxShadow: '0px 0px 20px 2px #f547e1'
-     },
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
+    minHeight:'455px',
+    borderRadius:4,
+    // [theme.breakpoints.down('md')]: {
+    // width:'100%',
+    // height:'95%', 
+    // overflowY:'auto', 
+    // borderBottom: 'none',
+    // boxSizing:'border-box',
+    // boxShadow: '0px 0px 20px 2px #f547e1',
+
+    //  },
   },
   outputContainer: {
     width:'55% ',
     height:'calc(50% - 60px)',
     margin:0,
-    border:'2px solid #f547e1',
+    border:`2px solid ${theme.palette.primary.main}`,
     borderLeft: 'none',
     overflowY: 'auto',
     boxSizing:'border-box',
-    boxShadow: '0px 0px 20px 2px #f547e1',
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
+    borderRadius:4
+  
   },
   testResultsContainer: {
     width:'45%',
     height:'calc(50% - 60px)',
     margin:0,
-    border:'2px solid #f547e1',
+    border:`2px solid ${theme.palette.primary.main}`,
     overflowY: 'auto',
     boxSizing:'border-box',
-    boxShadow: '0px 0px 20px 2px #f547e1',
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
+    borderRadius:4
+
   },
   actionsContainer:{
     display:'flex',  
@@ -100,11 +117,12 @@ const useStyles = makeStyles((theme) => ({
     height:'60px',
     margin: 0, 
     justifyContent:'center',
-    border:'2px solid #f547e1',
+    border:`2px solid ${theme.palette.primary.main}`,
     borderTop:'none',
     borderBottom: 'none',
     boxSizing:'border-box',
-    boxShadow: '0px 0px 20px 2px #f547e1',
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
+    borderRadius:4
   },
 }));
 
@@ -113,6 +131,7 @@ export default function CodeEditAndRun({
   players,
   secondsLeft,
   submit,
+  multiplayer
 }) {
   const classes = useStyles();
   const [code, setCode] = useState("");
@@ -224,13 +243,13 @@ export default function CodeEditAndRun({
 
   return (
     // <div style={{ marginLeft: "160px" }}>
-    <div style={{width:'calc(100vw-170)', height:'calc(100vh-123)'}}>
+    <div style={{width:'100%', height:'100%', minHeight:'500px'}}>
     <Box className = {classes.root}>
       <Box className={classes.challengeDescContainer}>
         <ChallengeDescription challenge={challenge}/>
       </Box>
       <Box className={classes.codeMirrContainer}>
-        <Box style={{width:'100%', height:'50%'}}>
+        <Box className={classes.codeMirr}>
         <CodeMirror
           value={code}
           options={{
@@ -257,6 +276,8 @@ export default function CodeEditAndRun({
        testButtonDisabled={testButtonDisabled}
        submit={submit}
        allChecksDone={allChecksDone}
+       secondsLeft={secondsLeft}
+       multiplayer={multiplayer}
        />
        </Box>
      <Box className={classes.testResultsContainer}>
@@ -270,7 +291,7 @@ export default function CodeEditAndRun({
         />
       </Box>
          <Box className={classes.outputContainer}> 
-        <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed}/>
+        <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed} />
          </Box>
         </Box>
       </Box>

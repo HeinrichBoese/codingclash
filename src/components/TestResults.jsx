@@ -7,13 +7,16 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display:'flex',
     justifyContent:'center', 
-    borderBottom:'2px solid #f547e1',
+    width:'100%',
+    // borderBottom:'2px solid #f547e1',
     fontSize:'1.5em', fontWeight:'bold', 
-    color:'#00bef7', 
+    // color:'#00bef7', 
+    color: theme.palette.secondary.main,
     height:60, 
     alignItems:'center',
-    boxShadow: '0px 0px 20px 2px #f547e1',
-    textShadow:'0px 0px 20px #00bef7'
+    // boxShadow: 'inset 0px 0px 20px 2px #f547e1,0px 0px 20px 2px #f547e1',
+    textShadow:`0px 0px 20px ${theme.palette.secondary.main}`,
+    borderRadius:4
   },
   checktrue: {
     display:'flex', 
@@ -39,23 +42,51 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign:'middle', 
     alignItems:'center', 
     fontWeight:'bold'
+  },
+  loading: {
+    height:'calc(100% - 62px)'
+  },
+  loadingContainer: {
+    height:'100%',
+    width:'100%', 
+    display:'flex', 
+    justifyContent:'center', 
+    alignItems:'center'
+  },
+  normal: {
+    color: theme.palette.secondary.main,
+    textShadow: `0px 0px 20px ${theme.palette.secondary.main}`
+  },
+  correct: {
+  color: 'green',
+  textShadow:'0px 0px 20px green'
+  },
+  incorrect: {
+    color: 'red',
+  textShadow:'red'
   }
 }))
 
 
 const TestResults = ({testcases, testResults, submitted, testError, testPassed, testRunning, evaluate, runButtonDisabled, runTests, testButtonDisabled}) => {
   const classes = useStyles();
-  let divColor = '#00bef7';
+  let switchClass = classes.normal;
   let exp = ''
   let testErr = '';
+  if(testRunning) {
+    return ( 
+    <Box className={classes.loading}>
+    <div className={classes.container}>Testcases</div><span className={classes.loadingContainer}><p><CircularProgress /></p> </span>
+    </Box>
+  )}
   return (
-        <Box >
+        <Box style={{width:'100%'}}>
           <div className={classes.container}>Testcases</div>
          {testcases.map((c, i) => {
           if (submitted && testPassed[i]) {
-            divColor = "#77ff73";
+            switchClass = classes.correct;
           } else if (submitted && !testPassed[i]) {
-            divColor = '#f05841';
+            switchClass = classes.incorrect;
             exp = testResults[i]
             // testResult = testResults[i]
             if(testError[i] !== null) {
@@ -65,6 +96,7 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
           return (
             <Box
               key = {c.description}
+              className = {switchClass}
               style={{
                 display:'flex',
                 height: 60,
@@ -72,16 +104,17 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
                 alignItems:'center',
                 justifyContent:'center',
                 verticalAlign:'middle',
-                color:divColor,
-                textShadow:`0px 0px 20px ${divColor}`,
+                // color:,
+                width:'100%',
+                // textShadow:`0px 0px 20px ${divColor}`,
                 borderRadius: 0,
                 // borderBottom:'2px solid #f547e1',
                 // boxShadow: '0px 0px 20px 2px #f547e1',
                 
               }}
             > 
-              <div style={{display:'flex',alignItems:'center' ,verticalAlign:'middle', justifyContent:'center', fontSize:'1em', fontWeight:'bold' }}>
-                {testRunning ? <CircularProgress /> : c.description }
+              <div style={{display:'flex',alignItems:'center' ,verticalAlign:'middle', justifyContent:'center', fontSize:'1em', fontWeight:'bold',width:'100%' }}>
+                 {c.description}
               </div>
             </Box>
           );

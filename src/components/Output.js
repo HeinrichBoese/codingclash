@@ -6,17 +6,18 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display:'flex',
     justifyContent:'center', 
-    borderBottom:'2px solid #f547e1',
+    // borderBottom:'2px solid #f547e1',
     fontSize:'1.5em', fontWeight:'bold', 
-    color:'#00bef7', 
+    color: theme.palette.secondary.main, 
     height:60, 
     alignItems:'center',
-    boxShadow: '0px 0px 20px 2px #f547e1',
-    textShadow:'0px 0px 20px #00bef7'
+    // boxShadow: 'inset 0px 0px 20px 2px #f547e1,0px 0px 20px 2px #f547e1',
+    borderRadius:4,
+    textShadow:`0px 0px 20px ${theme.palette.secondary.main}`
   },
   checktrue: {
     display:'flex', 
-    color:"#77ff73", 
+    color:"green", 
     textShadow:'0px 0px 20px #77ff73',
     height: 60, 
     alignItems:'center',
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   checkfalse: {
     display:'flex',
-    color:'#f05841', 
+    color:'red', 
     textShadow:'0px 0px 20px #f05841',
     height: 60,
     alignItems:'center',
@@ -62,7 +63,7 @@ const Output = ({testcases, testError, testPassed, testResults, testRunning, sub
           )
       })}
       <div>
-      {testErr && <div><p style={{color:'#f05841', textShadow:'0px 0px 20px #f05841', fontSize:'1.5em', margin:15, display:'flex', justifyContent:'center'}}>Error: {testErr}</p></div>}
+      {testErr && <div className={classes.checkBox}><p className={classes.checkfalse}>Error: {testErr}</p></div>}
       </div>
       </div>
   )

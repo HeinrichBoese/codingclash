@@ -1,21 +1,18 @@
-body {
-    background: rgb(23,0,45);
-    background: linear-gradient(90deg, rgba(23,0,45,1) 60%, rgba(73,1,69,1) 100%);
- 
-}
+/* 
 html {
     background: rgb(23,0,45);
     background: linear-gradient(90deg, rgba(23,0,45,1) 60%, rgba(73,1,69,1) 100%);
-}
+} */
 
 .CodeMirror {
     height: 100% !important;
     font-size:1.5em !important;
     width:100%;
     background-color: transparent !important;
-    border:2px solid #f547e1 !important;
+    /* border:2px solid #f547e1 !important; */
     box-sizing: border-box;
-    box-shadow: 0px 0px 20px 2px #f547e1 !important;
+    /* box-shadow: inset 0px 0px 20px 2px #f547e1, 0px 0px 20px 2px #f547e1 ; */
+    border-radius:4px  
 }
 
 .CodeMirror-gutters {

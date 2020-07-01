@@ -21,7 +21,8 @@ const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    width:'100%'
   }
 };
 
@@ -33,7 +34,7 @@ export default function SoloMode(props) {
 
   return (
     <div style={styles.container}>
-      {challenge ? <CodeEditAndRun challenge={challenge} /> : <div style={styles.loading}><CircularProgress /></div>}
+      {challenge ? <CodeEditAndRun challenge={challenge} multiplayer={false}/> : <div style={styles.loading}><CircularProgress /></div>}
     </div>
   );
 }

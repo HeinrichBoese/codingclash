@@ -8,7 +8,7 @@ import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     borderRadius: 3,
     border: 0,
     color: "white",
@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
     // background: 'rgb(241,26,255)',
     // background:  "#2a2a2e",
     // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
-    color: "#f547e1",
+    // color: "#f547e1",
+    color:theme.palette.secondary.main,
+
 
       fontSize:'1em',
       fontWeight:'bold',
@@ -31,14 +33,29 @@ const useStyles = makeStyles((theme) => ({
       width:180,
       margin:12,
       // border: '2px solid rgb(241,26,255)',
-      border: '2px solid  #00bef7',
-      boxShadow: '0px 0px 20px 2px #00bef7',
+      border: `2px solid ${theme.palette.secondary.main}`,
+      boxShadow:  `inset 0px 0px 20px 2px ${theme.palette.secondary.main}, 0px 0px 20px 2px ${theme.palette.secondary.main}`,
       transition: 'box-shadow .3s',
-      textShadow:'0px 0px 20px #f547e1',
+      // textShadow:'0px 0px 20px #f547e1',
+      // testShadow: '0px 0px 20px #00bef7',
       // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
       '&:hover': {
-        boxShadow: '0px 0px 20px 10px #00bef7',
+        boxShadow: `inset 0px 0px 20px 10px ${theme.palette.secondary.main}, 0px 0px 20px 10px ${theme.palette.secondary.main}`,
       },
+},
+buttonDisabled: {
+  // background:  "#2a2a2e",
+    // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
+    color: "#039ea6 !important ",
+    fontSize:'1em',
+    fontWeight:'bold',
+    height: '84px',
+    // padding: "0 30px",
+    // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
+    width:'180px',
+    margin:12,
+    // border: '2px solid rgb(241,26,255)',
+    border: '2px solid #039ea6',      
 },
   container: {
     display: "flex",
@@ -60,9 +77,14 @@ const Home = () => {
         Practice Solo
       </Button>
 
-      {currentUser && <Button className={classes.buttons} component={Link} to={"/game"}>
+      {currentUser ? <Button className={classes.buttons} component={Link} to={"/game"}>
         Create Lobby
-      </Button>}
+      </Button> 
+      :
+      <Button className={classes.buttonDisabled} component={Link} to={"/game"}>
+        Create Lobby
+      </Button> 
+      }
     </div>
   );
 };
