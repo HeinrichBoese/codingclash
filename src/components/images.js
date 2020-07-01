@@ -4,6 +4,7 @@ import Female1 from "../heads/headFemw.png"
 import Female2 from "../heads/headFemb.png"
 import Robot from "../heads/headRobot.png"
 import Zombie from "../heads/headZom.png"
+import anonym from "../heads/anonym.png"
 
 export default {
     Male1,
@@ -12,5 +13,6 @@ export default {
     Female2,
     Robot,
     Zombie,
+    anonym,
 };
 

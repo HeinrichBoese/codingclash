@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
-//import PersonIcon from "@material-ui/icons/Person";
+// import PersonIcon from "@material-ui/icons/Person";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import images from "./images";
 
@@ -56,13 +56,13 @@ const Playertable = ({ gamesessionPlayers, playerData }) => {
           <Box p={1} css={{ textAlign: "center" }} key={playerData.userID}>
             <Paper className={classes.paper}>
               <img
-                src={images[playerData.playerImage]}
+                src={images[playerData.playerImage] || images.anonym}
                 height={50}
-                alt="my image"
+                alt="my Face"
               />
               <br />
               <span style={{ fontWeight: "bold", fontSize: 20 }}>
-                {playerData.playerName}
+                {playerData.playerName || 'Anonym'}
               </span>
               <br />
               {playerData.finished && (
