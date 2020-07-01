@@ -133,6 +133,15 @@ const GameMaster = () => {
     db.collection("gamesessions").doc(gameID).update({ gameState: "FINISHED" });
   };
 
+  const userLvlUp = (uid) => {
+    const db = firebase.firestore();
+    if(!currentUser.isAnonymous)
+    {const player = db.collection('User').doc(uid);
+    return player.update({
+      playerLevel: firebase.firestore.FieldValue.increment(0.25)
+    })}
+  };
+
   const leaveLobby = () => {
     const newPlayers = gamesession.players.filter(
       (player) => player.userID !== currentUser.uid
@@ -148,6 +157,7 @@ const GameMaster = () => {
       (player) => player.userID === currentUser.uid
     );
     players[currentPlayerIndex].finished = true;
+    userLvlUp(players[currentPlayerIndex].userID);
     players[currentPlayerIndex].finishTime = firebase.firestore.Timestamp.now();
     const docRef = db.collection("gamesessions").doc(gameID);
     docRef.update({ players });
