@@ -26,14 +26,14 @@ const useStyles = makeStyles((theme) => ({
 const validate = (values) => {
   const errors = {};
   if (!values.email) {
-    errors.email = "Email is mandatory";
+    errors.email = "Email is mandatory!";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
+    errors.email = "Invalid email address!";
   }
   if (!values.password) {
-    errors.password = "Password is mandatory";
+    errors.password = "Password is mandatory!";
   } else if (values.password.length < 6) {
-    errors.password = "Passwort must have 6 characters or more";
+    errors.password = "Passwort must have 6 characters or more!";
   }
   if (!values.name) {
     errors.name = "Name is required";
@@ -57,8 +57,26 @@ export default function Register(props) {
     },
     validate,
     onSubmit: async (values) => {
-      try {
-        await firebase
+      if (currentUser.isAnonymous) {
+        const credential = firebase.auth.EmailAuthProvider.credential(values.email, values.password);
+        firebase
+        .auth()
+        .currentUser.linkWithCredential(credential)
+        .then((resp) => {
+          resp.user.updateProfile({ displayName: values.name });
+          const db = firebase.firestore();
+          db.collection('User').doc(resp.user.uid).set(
+            {
+              playerName: values.name,
+              playerEmail: values.email,
+              playerLevel: 0,
+              playerImage: values.image,
+            }
+          )
+        }).then(() => setTimeout(() => { history.push("/") }, 200))
+        .catch((error) => alert(error))
+      } else {
+        firebase
           .auth()
           .createUserWithEmailAndPassword(values.email, values.password)
           .then((resp) => {
@@ -72,13 +90,11 @@ export default function Register(props) {
                 playerImage: values.image,
               }
             )
-          })
-      } catch (error) {
-        alert(error);
-      };
-      setTimeout(() => { history.push("/") }, 200);
-    }
-  });
+          }).then(() => setTimeout(() => { history.push("/") }, 200))
+          .catch((error) => alert(error))
+      }
+    } // end onSubmit
+  }); // end Use Formik
 
   const formikProps = (name, initialValue = "") => ({
     id: name,
@@ -92,7 +108,7 @@ export default function Register(props) {
 
   return (
     <div>
-      {currentUser && <Redirect to="/" />}
+      {currentUser && !currentUser.isAnonymous && <Redirect to="/" />}
       <Container maxWidth="xs">
         <Paper>
           <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
@@ -107,7 +123,7 @@ export default function Register(props) {
                     label={
                       formik.touched.name && formik.errors.name
                         ? formik.errors.name
-                        : "Player Name"
+                        : "Player name"
                     }
                   />
                 </Grid>

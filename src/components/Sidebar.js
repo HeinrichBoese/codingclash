@@ -92,10 +92,21 @@ const useStyles = makeStyles((theme) => ({
 
   },
 }))
-//import CheckBoxIcon from "@material-ui/icons/CheckBox";
 const Sidebar = () => {
   const { currentUser, userData } = useContext(AuthContext);
   const classes = useStyles();
+
+  const userCheck = () =>{
+    if ( !currentUser ){
+      return true
+    }else if (currentUser.isAnonymous){
+      return true
+    }else{
+      return false
+    }
+  };
+  
+
   return (
     <div className={classes.sidebar}>
       <Card style={{ height: 110, width: 160 }}>
@@ -117,18 +128,18 @@ const Sidebar = () => {
         to={"/InputForm"}
         className={classes.buttons}>Inputform</Button>)}
 
-      {currentUser && (<Button
+      {currentUser && !currentUser.isAnonymous && (<Button
         component={Link}
         to={"/"}
         onClick={() => firebase.auth().signOut()}
         className={classes.buttons}>Log Out</Button>)}
 
-      {!currentUser && (<Button
+      {userCheck() && <Button
         component={Link}
         to={"/login"}
-        className={classes.buttons}>Log In</Button>)}
+        className={classes.buttons}>Log In</Button>}
 
-      {!currentUser && (<Button
+      {userCheck() && (<Button
         component={Link}
         to={"/register"}
         className={classes.buttons}>Sign Up</Button>)}
