@@ -57,7 +57,7 @@ export default function Register(props) {
     },
     validate,
     onSubmit: async (values) => {
-      if (currentUser.isAnonymous) {
+      if (currentUser && currentUser.isAnonymous) {
         const credential = firebase.auth.EmailAuthProvider.credential(values.email, values.password);
         firebase
         .auth()
@@ -90,9 +90,9 @@ export default function Register(props) {
                 playerImage: values.image,
               }
             )
-          }).then(() => setTimeout(() => { history.push("/") }, 200))
+          }).then(() => {setTimeout(() => { history.push("/") }, 200); })
           .catch((error) => alert(error))
-      }
+      } // end Else
     } // end onSubmit
   }); // end Use Formik
 
