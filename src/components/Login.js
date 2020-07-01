@@ -12,8 +12,18 @@ import Box from "@material-ui/core/Box";
 import { AuthContext } from "../Auth";
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    borderRight: `2px solid ${theme.palette.secondary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
+  },
   textField: {
     width: "100%",
+    textShadow: '0px 0px 5px #00bef7',
+    fontSize: '.8em',
+    fontWeight: 'bold',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
+    backgroundColor: '#F5F5F5',
   },
   button: {
     width: "100%",
@@ -71,7 +81,7 @@ export default function Login() {
     <div>
       {currentUser && !currentUser.isAnonymous && <Redirect to="/" />}
       <Container maxWidth="xs">
-        <Paper>
+        <Paper className={classes.paper}>
           <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
             <form onSubmit={formik.handleSubmit}>
               <Grid container spacing={1}>
