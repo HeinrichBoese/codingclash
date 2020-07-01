@@ -60,21 +60,30 @@ export default function Register(props) {
       if (currentUser && currentUser.isAnonymous) {
         const credential = firebase.auth.EmailAuthProvider.credential(values.email, values.password);
         firebase
-        .auth()
-        .currentUser.linkWithCredential(credential)
-        .then((resp) => {
-          resp.user.updateProfile({ displayName: values.name });
-          const db = firebase.firestore();
-          db.collection('User').doc(resp.user.uid).set(
-            {
-              playerName: values.name,
-              playerEmail: values.email,
-              playerLevel: 0,
-              playerImage: values.image,
-            }
-          )
-        }).then(() => setTimeout(() => { history.push("/") }, 200))
-        .catch((error) => alert(error))
+          .auth()
+          .currentUser.linkWithCredential(credential)
+          .then((resp) => {
+            resp.user.updateProfile({ displayName: values.name });
+            const db = firebase.firestore();
+            db.collection('User').doc(resp.user.uid).set(
+              {
+                playerName: values.name,
+                playerEmail: values.email,
+                playerLevel: 0,
+                playerImage: values.image,
+              }
+            )
+          }).then(() => setTimeout(() => {
+            sessionStorage.setItem('UserData', JSON.stringify(
+              {
+                playerName: values.name,
+                playerEmail: values.email,
+                playerLevel: 0,
+                playerImage: values.image,
+              }));
+            history.push("/")
+          }, 200))
+          .catch((error) => alert(error))
       } else {
         firebase
           .auth()
@@ -90,7 +99,7 @@ export default function Register(props) {
                 playerImage: values.image,
               }
             )
-          }).then(() => {setTimeout(() => { history.push("/") }, 200); })
+          }).then(() => { setTimeout(() => { history.push("/") }, 200); })
           .catch((error) => alert(error))
       } // end Else
     } // end onSubmit
