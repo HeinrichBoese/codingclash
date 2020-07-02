@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useHistory, Redirect } from "react-router-dom";
 import firebase from "../firebase";
 import { useFormik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
@@ -81,10 +82,11 @@ const validate = (values) => {
 
 
 export const InputForm = (props) => {
-    const { currentUser, userData } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
     const [testCount, setTestCount] = useState(1);
     const [isAllOk, setIsAllOk] = useState(false);
     const classes = useStyles();
+    const history = useHistory();
     const testCases = [];
     const formik = useFormik({
         initialValues: {
@@ -114,13 +116,11 @@ export const InputForm = (props) => {
             })
                 .then(function (docRef) {
                     console.log("Document written with ID: ", docRef.id);
-                })
+                }).then(() => history.push("/"))
                 .catch(function (error) {
                     console.error("Error adding document: ", error);
                 });
-            // formik.values.price = corPrice(formik.values.price);
-            console.log(values)
-        }, // End onSubmit .then(() => history.push("/"));
+        }, // End onSubmit ;
     });
     const formikProps = (name, initialValue = "") => ({
         id: name,
@@ -183,10 +183,15 @@ export const InputForm = (props) => {
         }
         return tests
     };
-    // console.log(userData)
-    // console.log(currentUser)
+
     return (
         <Container maxWidth="sm">
+            {currentUser
+                ? currentUser.isAnonymous
+                    ? <Redirect to="/" />
+                    : null
+                : <Redirect to="/" />
+            }
             <h2>Neue Aufgabe anlegen</h2>
             <Box >
                 <Paper elevation={2} className={classes.root}>
@@ -290,8 +295,8 @@ export const InputForm = (props) => {
                                             className={classes.button}
                                             variant="outlined"
                                             color="primary"
-                                            // disabled={isAllOk}
-                                            onClick={(e) => { e.preventDefault(); setIsAllOk(true);
+                                            onClick={(e) => {
+                                                e.preventDefault(); setIsAllOk(true);
                                             }}
                                         >
                                             is everythig ok?
@@ -302,8 +307,6 @@ export const InputForm = (props) => {
                                             type="submit"
                                             variant="outlined"
                                             color="primary"
-                                            // onClick={() => setIsAllOk(false)}
-                                            // disabled={formik.isValidating || formik.isSubmitting || !isAllOk}
                                         >
                                             Submit
                                     </Button>
