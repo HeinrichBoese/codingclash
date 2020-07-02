@@ -10,44 +10,47 @@ import ChallengeDescription from "./ChallengeDescription";
 import Output from "./Output";
 import Actions from "./Actions";
 import { makeStyles } from "@material-ui/core/styles";
+import equal from "fast-deep-equal/es6";
+// const equal = require("fast-deep-equal/es6");
 require("codemirror/mode/xml/xml");
 require("codemirror/mode/javascript/javascript");
-const equal = require("fast-deep-equal/es6");
+
+
 
 const useStyles = makeStyles((theme) => ({
   codeMirr: {
     height: '50%',
-    width:'100%',
-    border:`2px solid ${theme.palette.primary.main}`,
-    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main}, 0px 0px 20px 2px ${theme.palette.primary.main}` 
+    width: '100%',
+    border: `2px solid ${theme.palette.primary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main}, 0px 0px 20px 2px ${theme.palette.primary.main}`
   },
   root: {
-      display:'flex', 
-      flexWrap:'wrap', 
-      width: `100%`,
-      height: 'calc(100vh - 123px)',
-      justifyContent:'center',
-      alignContent: 'center',
-      minHeight:'500px',
-      // [theme.breakpoints.down('md')]: {
-      //  display:'block',
-      //  width:'100%',
-      // },
-      // [theme.breakpoints.down('sm')]: {
-      //   display:'block',
-      //   width:'100%',
-      //  },
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: `100%`,
+    height: 'calc(100vh - 123px)',
+    justifyContent: 'center',
+    alignContent: 'center',
+    minHeight: '500px',
+    // [theme.breakpoints.down('md')]: {
+    //  display:'block',
+    //  width:'100%',
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   display:'block',
+    //   width:'100%',
+    //  },
 
   },
   codeMirrContainer: {
 
-    width:'60%', 
-    height:'95%', 
-    marginBottom:0,
-    display:'flex',
-    flexWrap:'wrap',
-    boxSizing:'border-box',
-    minHeight:'455px',
+    width: '60%',
+    height: '95%',
+    marginBottom: 0,
+    display: 'flex',
+    flexWrap: 'wrap',
+    boxSizing: 'border-box',
+    minHeight: '455px',
     // [theme.breakpoints.down('md')]: {
     // width:'100%',
     // height:'100%', 
@@ -65,19 +68,19 @@ const useStyles = makeStyles((theme) => ({
     //   overflowY:'auto', 
     //   border:'none',
     //   boxSizing:'border-box',
- 
+
     //    },
   },
   challengeDescContainer: {
-    width:'36%',
-    height:'95%', 
-    overflowY:'auto', 
-    border:`2px solid ${theme.palette.primary.main}`,
-    borderRight:'none',
-    boxSizing:'border-box',
+    width: '36%',
+    height: '95%',
+    overflowY: 'auto',
+    border: `2px solid ${theme.palette.primary.main}`,
+    borderRight: 'none',
+    boxSizing: 'border-box',
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
-    minHeight:'455px',
-    borderRadius:4,
+    minHeight: '455px',
+    borderRadius: 4,
     // [theme.breakpoints.down('md')]: {
     // width:'100%',
     // height:'95%', 
@@ -89,40 +92,40 @@ const useStyles = makeStyles((theme) => ({
     //  },
   },
   outputContainer: {
-    width:'55% ',
-    height:'calc(50% - 60px)',
-    margin:0,
-    border:`2px solid ${theme.palette.primary.main}`,
+    width: '55% ',
+    height: 'calc(50% - 60px)',
+    margin: 0,
+    border: `2px solid ${theme.palette.primary.main}`,
     borderLeft: 'none',
     overflowY: 'auto',
-    boxSizing:'border-box',
+    boxSizing: 'border-box',
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
-    borderRadius:4
-  
-  },
-  testResultsContainer: {
-    width:'45%',
-    height:'calc(50% - 60px)',
-    margin:0,
-    border:`2px solid ${theme.palette.primary.main}`,
-    overflowY: 'auto',
-    boxSizing:'border-box',
-    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
-    borderRadius:4
+    borderRadius: 4
 
   },
-  actionsContainer:{
-    display:'flex',  
-    width:'100%',
-    height:'60px',
-    margin: 0, 
-    justifyContent:'center',
-    border:`2px solid ${theme.palette.primary.main}`,
-    borderTop:'none',
-    borderBottom: 'none',
-    boxSizing:'border-box',
+  testResultsContainer: {
+    width: '45%',
+    height: 'calc(50% - 60px)',
+    margin: 0,
+    border: `2px solid ${theme.palette.primary.main}`,
+    overflowY: 'auto',
+    boxSizing: 'border-box',
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
-    borderRadius:4
+    borderRadius: 4
+
+  },
+  actionsContainer: {
+    display: 'flex',
+    width: '100%',
+    height: '60px',
+    margin: 0,
+    justifyContent: 'center',
+    border: `2px solid ${theme.palette.primary.main}`,
+    borderTop: 'none',
+    borderBottom: 'none',
+    boxSizing: 'border-box',
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
+    borderRadius: 4
   },
 }));
 
@@ -243,56 +246,56 @@ export default function CodeEditAndRun({
 
   return (
     // <div style={{ marginLeft: "160px" }}>
-    <div style={{width:'100%', height:'100%', minHeight:'500px'}}>
-    <Box className = {classes.root}>
-      <Box className={classes.challengeDescContainer}>
-        <ChallengeDescription challenge={challenge}/>
-      </Box>
-      <Box className={classes.codeMirrContainer}>
-        <Box className={classes.codeMirr}>
-        <CodeMirror
-          value={code}
-          options={{
-            mode: "javascript",
-            theme: "shadowfox",
-            tabSize: 2,
-            lineNumbers: true,
-            screenReaderLabel: "code editor",
-          }}
-          onBeforeChange={(editor, data, value) => setCode(value)}
-        />
-        <iframe
-          ref={iframeRef}
-          title="hidden iframe"
-          style={{ display: "none" }}
-          sandbox="allow-scripts allow-same-origin"
-        />
-     </Box>
-     <Box className={classes.actionsContainer}>
-      <Actions 
-       runTests={runTests}
-       evaluate={evaluate}
-       runButtonDisabled={runButtonDisabled}
-       testButtonDisabled={testButtonDisabled}
-       submit={submit}
-       allChecksDone={allChecksDone}
-       secondsLeft={secondsLeft}
-       multiplayer={multiplayer}
-       />
-       </Box>
-     <Box className={classes.testResultsContainer}>
-        <TestResults
-          testcases={challenge.testcases}
-          testResults={testResults}
-          testError={testErrors}
-          testPassed={testPassed}
-          testRunning={testRunning}
-          submitted={submitted}
-        />
-      </Box>
-         <Box className={classes.outputContainer}> 
-        <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed} />
-         </Box>
+    <div style={{ width: '100%', height: '100%', minHeight: '500px' }}>
+      <Box className={classes.root}>
+        <Box className={classes.challengeDescContainer}>
+          <ChallengeDescription challenge={challenge} />
+        </Box>
+        <Box className={classes.codeMirrContainer}>
+          <Box className={classes.codeMirr}>
+            <CodeMirror
+              value={code}
+              options={{
+                mode: "javascript",
+                theme: "shadowfox",
+                tabSize: 2,
+                lineNumbers: true,
+                screenReaderLabel: "code editor",
+              }}
+              onBeforeChange={(editor, data, value) => setCode(value)}
+            />
+            <iframe
+              ref={iframeRef}
+              title="hidden iframe"
+              style={{ display: "none" }}
+              sandbox="allow-scripts allow-same-origin"
+            />
+          </Box>
+          <Box className={classes.actionsContainer}>
+            <Actions
+              runTests={runTests}
+              evaluate={evaluate}
+              runButtonDisabled={runButtonDisabled}
+              testButtonDisabled={testButtonDisabled}
+              submit={submit}
+              allChecksDone={allChecksDone}
+              secondsLeft={secondsLeft}
+              multiplayer={multiplayer}
+            />
+          </Box>
+          <Box className={classes.testResultsContainer}>
+            <TestResults
+              testcases={challenge.testcases}
+              testResults={testResults}
+              testError={testErrors}
+              testPassed={testPassed}
+              testRunning={testRunning}
+              submitted={submitted}
+            />
+          </Box>
+          <Box className={classes.outputContainer}>
+            <Output testcases={challenge.testcases} testError={testErrors} testResults={testResults} submitted={submitted} testRunning={testRunning} testPassed={testPassed} />
+          </Box>
         </Box>
       </Box>
     </div>

@@ -14,52 +14,68 @@ import { CardHeader, IconButton } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    height: 200,
+    width: "100%",
+    textShadow: '0px 0px 5px #00bef7',
+    fontSize: '.8em',
+    fontWeight: 'bold',
+    border: `2px solid ${theme.palette.primary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
+    backgroundColor: '#F5F5F5',
+  },
   buttons: {
     // background: 'rgb(241,26,255)',
     // background:  "#2a2a2e",
     // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
     color: theme.palette.secondary.main,
-    textShadow:'0px 0px 5px #00bef7',
-      fontSize:'.8em',
-      fontWeight:'bold',
-      height: 84,
-      // padding: "0 30px",
-      // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
-      width: '100px',
-      margin: 8,
-      // border: '2px solid rgb(241,26,255)',
-      border: `2px solid ${theme.palette.secondary.main}`,
-      boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
-      transition: 'box-shadow .3s',
-      // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
-      '&:hover': {
-        boxShadow: `inset 0px 0px 20px 8px ${theme.palette.secondary.main},0px 0px 20px 8px ${theme.palette.secondary.main}`,
-      },
-      // [theme.breakpoints.down('sm')]: {
-      //   color: "#f547e1",
-      //   fontSize:'.8em',
-      //   fontWeight:'bold',
-      //   height: '45px',
-      //   textShadow:'0px 0px 5px #f547e1',
-        // padding: "0 30px",
-        // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
-        // width:'100px',
-        // margin:8,
-        // border: '2px solid rgb(241,26,255)',
-        // border: '2px solid  #00bef7',
+    textShadow: '0px 0px 5px #00bef7',
+    fontSize: '.8em',
+    fontWeight: 'bold',
+    height: 84,
+    // padding: "0 30px",
+    // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
+    width: '100px',
+    margin: 8,
+    // border: '2px solid rgb(241,26,255)',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
+    transition: 'box-shadow .3s',
+    // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
+    '&:hover': {
+      boxShadow: `inset 0px 0px 20px 8px ${theme.palette.secondary.main},0px 0px 20px 8px ${theme.palette.secondary.main}`,
+    },
+    // [theme.breakpoints.down('sm')]: {
+    //   color: "#f547e1",
+    //   fontSize:'.8em',
+    //   fontWeight:'bold',
+    //   height: '45px',
+    //   textShadow:'0px 0px 5px #f547e1',
+    // padding: "0 30px",
+    // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
+    // width:'100px',
+    // margin:8,
+    // border: '2px solid rgb(241,26,255)',
+    // border: '2px solid  #00bef7',
 
-  // },
-},
+    // },
+  },
   sidebar: {
-    height:'100vh',   
-    borderRight:`2px solid ${theme.palette.primary.main}`, 
-    overflowY:'auto',
+    height: '100vh',
+    borderRight: `2px solid ${theme.palette.primary.main}`,
+    overflowY: 'auto',
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
-    width:'160px',
+    width: '160px',
     position: 'fixed',
-    display:'flex',
-    flexWrap:'wrap',
-    justifyContent: 'center'
+
+    // display:'flex',
+    // flexWrap:'wrap',
+    // justifyContent: 'center'
+
+    display: 'grid',
+    justifyItems: 'center',
+    gridTemplateRows: '220px 100px 100px 100px 100px 100px auto'
+
     // [theme.breakpoints.down('sm')]: {
     //   width:'100%',
     //   height:112.4,
@@ -114,13 +130,9 @@ const Sidebar = () => {
 
   return (
     <div className={classes.sidebar}>
+      {/* <Card style={{ height: 200, width: 150 }}> */}
+      <Card className={classes.card}>
 
-      {/* <Card style={{ height: 110, width: 155 }}>
-        <div style={{display:'flex', justifyContent:'center'}}>
-        <CardMedia style={{ width: 100,height: 100, display:'flex', justifyContent:'center'}} image={userData ? images[userData.playerImage]: PersonIcon } />
-        image={PersonIcon}  */}
-
-      <Card style={{ height: 200, width: 150 }}>
         <CardHeader
           avatar={
             <img style={{ width: 50, height: 50 }}
@@ -128,7 +140,6 @@ const Sidebar = () => {
                 ? images.anonym
                 : userData && images[userData.playerImage]}
               alt="Pic? o.O" />
-
           }
           action={
             <IconButton aria-label="settings">

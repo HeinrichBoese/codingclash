@@ -15,8 +15,32 @@ import Avatar from '@material-ui/core/Avatar';
 import images from "./images";
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    borderRight: `2px solid ${theme.palette.secondary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
+  },
   textField: {
     width: "100%",
+    textShadow: '0px 0px 5px #00bef7',
+    fontSize: '.8em',
+    fontWeight: 'bold',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
+    backgroundColor: '#F5F5F5',
+  },
+  selectField: {
+    width: "100%",
+    height: "100%",
+    alignSelf: "right",
+    border: `2px solid ${theme.palette.secondary.main}`,
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
+    backgroundColor: '#F5F5F5',
+  },
+  container: {
+    flexGrow: 1,
+    direction: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
   },
   button: {
     width: "100%",
@@ -73,16 +97,7 @@ export default function Register(props) {
                 playerImage: values.image,
               }
             )
-          }).then(() => setTimeout(() => {
-            sessionStorage.setItem('UserData', JSON.stringify(
-              {
-                playerName: values.name,
-                playerEmail: values.email,
-                playerLevel: 0,
-                playerImage: values.image,
-              }));
-            history.push("/")
-          }, 200))
+          }).then(() => history.push("/"))
           .catch((error) => alert(error))
       } else {
         firebase
@@ -99,7 +114,7 @@ export default function Register(props) {
                 playerImage: values.image,
               }
             )
-          }).then(() => { setTimeout(() => { history.push("/") }, 200); })
+          }).then(() => history.push("/"))
           .catch((error) => alert(error))
       } // end Else
     } // end onSubmit
@@ -119,11 +134,11 @@ export default function Register(props) {
     <div>
       {currentUser && !currentUser.isAnonymous && <Redirect to="/" />}
       <Container maxWidth="xs">
-        <Paper>
+        <Paper className={classes.paper}>
           <Box display="flex" flexDirection="column" flexWrap="wrap" p={2}>
             <form onSubmit={formik.handleSubmit}>
               <Grid container spacing={1}>
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                   <TextField
                     className={classes.textField}
                     {...formikProps("name")}
@@ -136,29 +151,30 @@ export default function Register(props) {
                     }
                   />
                 </Grid>
-                <Grid item xs={12} display={'flex'}>
-                  <Grid item xs={6}>
+                <Grid container item xs={12} className={classes.container} >
+                  <Grid item >
                     <Avatar alt="Avatar" src={images[formik.values.image]} />
                   </Grid>
-                  <NativeSelect
-                    className={classes.textField}
-                    {...formikProps("image")}
-                    type="text"
-                    autoComplete="off"
-                    label={
-                      formik.touched.image && formik.errors.image
-                        ? formik.errors.image
-                        : "Player Avatar"
-                    }
-                  >
-                    <option value={"Male1"}>Male1</option>
-                    <option value={"Male2"}>Male2</option>
-                    <option value={"Robot"}>Robot</option>
-                    <option value={"Female1"}>Female1</option>
-                    <option value={"Female2"}>Female2</option>
-                    <option value={"Zombie"}>Zombie</option>
-                  </NativeSelect>
-
+                  <Grid item xs={6} >
+                    <NativeSelect
+                      className={classes.selectField}
+                      {...formikProps("image")}
+                      type="text"
+                      autoComplete="off"
+                      label={
+                        formik.touched.image && formik.errors.image
+                          ? formik.errors.image
+                          : "Player Avatar"
+                      }
+                    >
+                      <option value={"Male1"}>Male1</option>
+                      <option value={"Male2"}>Male2</option>
+                      <option value={"Robot"}>Robot</option>
+                      <option value={"Female1"}>Female1</option>
+                      <option value={"Female2"}>Female2</option>
+                      <option value={"Zombie"}>Zombie</option>
+                    </NativeSelect>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
