@@ -15,6 +15,8 @@ import { CardHeader, IconButton } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   card: {
     height: 200,
+    background: 'transparent !important',
+    color: theme.palette.secondary.main,
     width: "100%",
     textShadow: '0px 0px 5px #00bef7',
     fontSize: '.8em',
@@ -23,6 +25,19 @@ const useStyles = makeStyles((theme) => ({
     border: `2px solid ${theme.palette.primary.main}`,
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
     backgroundColor: '#F5F5F5',
+     [theme.breakpoints.down('sm')]: {
+      height: '100%',
+      background: 'transparent !important',
+      color: theme.palette.secondary.main,
+      width: "200px",
+      textShadow: '0px 0px 5px #00bef7',
+      fontSize: '.8em',
+      boxSizing:'border-box',
+      fontWeight: 'bold',
+      border: `2px solid ${theme.palette.primary.main}`,
+      boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
+      backgroundColor: '#F5F5F5',
+     }
   },
   buttons: {
     // background: 'rgb(241,26,255)',
@@ -32,10 +47,10 @@ const useStyles = makeStyles((theme) => ({
     textShadow: `0px 0px 5px ${theme.palette.secondary.main}`,
     fontSize: '.8em',
     fontWeight: 'bold',
-    height: 84,
+    height: 60,
     // padding: "0 30px",
     // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
-    width: '100px',
+    width: '150px',
     margin: 8,
     // border: '2px solid rgb(241,26,255)',
     border: `2px solid ${theme.palette.secondary.main}`,
@@ -101,24 +116,24 @@ const useStyles = makeStyles((theme) => ({
     borderRight: `2px solid ${theme.palette.primary.main}`,
     overflowY: 'auto',
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
-    width: '160px',
+    width: '200px',
     position: 'fixed',
 
-    // display:'flex',
-    // flexWrap:'wrap',
-    // justifyContent: 'center'
+    display:'flex',
+    flexWrap:'wrap',
+    justifyContent: 'center',
 
-    display: 'grid',
-    justifyItems: 'center',
-    gridTemplateRows: '220px 100px 100px 100px 100px 100px auto'
+    // display: 'grid',
+    // justifyItems: 'center',
+    // gridTemplateRows: '220px 100px 100px 100px 100px 100px auto'
 
-    // [theme.breakpoints.down('sm')]: {
-    //   width:'100%',
-    //   height:112.4,
-    //   display:'flex',
-    //   borderBottom:'2px solid #00bef7',
-    //   position: 'static'
-    //  },
+    [theme.breakpoints.down('sm')]: {
+      width:'100%',
+      height:200,
+      display:'flex',
+      borderBottom:'2px solid #00bef7',
+      position: 'static'
+     },
 
 
     // fontSize: '.8em',
@@ -148,6 +163,10 @@ const useStyles = makeStyles((theme) => ({
     //   },
 
   },
+  cardname:{
+    color: theme.palette.secondary.main,
+    fontSize:'1em'
+  }
 }))
 const Sidebar = () => {
   const { currentUser, userData } = useContext(AuthContext);
@@ -183,10 +202,10 @@ const Sidebar = () => {
           }
           title={userCheck()
             ? "Anonym"
-            : userData && userData.playerName}
+            : userData && <span style={{fontSize:'1.5em'}}>{userData.playerName}</span>}
           subheader={userCheck()
             ? "No XP, no cookies"
-            : userData && `Level: ${userData.playerLevel}`}
+            : userData && <span className={classes.cardname}>Level: {userData.playerLevel}</span>}
         />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <img style={{ height: 80 }}

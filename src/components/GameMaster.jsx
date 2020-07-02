@@ -11,25 +11,25 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "calc(100vw - 160px)",
     marginLeft: "160px",
-    // [theme.breakpoints.down("sm")]: {
-    //   width: "100vw",
-    //   marginLeft: 0,
-    // },
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      marginLeft: 0,
+    },
   },
   gameContainer: {
     display: "flex",
     width: "100%",
     height: "100%",
-    // [theme.breakpoints.down("sm")]: {
-    //   display: "flex",
-    //   flexWrap: "wrap",
-    // },
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
   },
-  // playertable: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   borderBottom: "2px solid #00bef7",
-  // },
+  playertable: {
+    display: "flex",
+    justifyContent: "center",
+    borderBottom: "2px solid #00bef7",
+  },
 }));
 
 const GameMaster = () => {
@@ -45,7 +45,7 @@ const GameMaster = () => {
   const [challengeLoaded, setChallengeLoaded] = useState(false);
 
   const [secondsLeft, setSecondsLeft] = useState(0);
-  const TIMELIMIT = 120;
+  const TIMELIMIT = 120000;
 
   useEffect(() => {
     let unsubscribe = () => null;

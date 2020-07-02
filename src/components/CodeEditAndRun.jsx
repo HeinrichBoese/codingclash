@@ -33,11 +33,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignContent: 'center',
     minHeight: '500px',
-    // [theme.breakpoints.down('md')]: {
-    //  display:'block',
-    //  width:'100%',
-    // },
+    [theme.breakpoints.down('md')]: {
+      // height: 'calc(100vh - 123px)',
+      // display: 'block',
+      // flexWrap: 'wrap',
+      // marginTop:123,
+      width:'100%',
+    },
     // [theme.breakpoints.down('sm')]: {
+    //   height: 'calc(100vh - 123px)',
     //   display:'block',
     //   width:'100%',
     //  },
@@ -52,25 +56,24 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     boxSizing: 'border-box',
     minHeight: '455px',
-    // [theme.breakpoints.down('md')]: {
-    // width:'100%',
-    // height:'100%', 
-    // overflowY:'auto', 
-    // border:'2px solid #f547e1',
-    // borderRight:'none',
-    // borderTop:'none',
-    // borderBottom: 'none',
-    // boxSizing:'border-box',
+    [theme.breakpoints.down('md')]: {
+    width:'96%',
+    height:'455px', 
+    overflowY:'auto', 
+    border:'2px solid #f547e1',
+    borderRight:'none',
+    borderTop:'none',
+    borderBottom: 'none',
+    boxSizing:'border-box',
+     },
+     [theme.breakpoints.down('sm')]: {
+      width:'96%',
+      height:'100%', 
+      overflowY:'auto', 
+      border:'none',
+      boxSizing:'border-box',
 
-    //  },
-    //  [theme.breakpoints.down('sm')]: {
-    //   width:'100%',
-    //   height:'100%', 
-    //   overflowY:'auto', 
-    //   border:'none',
-    //   boxSizing:'border-box',
-
-    //    },
+       },
   },
   challengeDescContainer: {
     width: '36%',
@@ -82,15 +85,15 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px 2px ${theme.palette.primary.main}`,
     minHeight: '455px',
     borderRadius: 4,
-    // [theme.breakpoints.down('md')]: {
-    // width:'100%',
-    // height:'95%', 
-    // overflowY:'auto', 
-    // borderBottom: 'none',
-    // boxSizing:'border-box',
-    // boxShadow: '0px 0px 20px 2px #f547e1',
+    [theme.breakpoints.down('md')]: {
+    width:'96%',
+    height:'455px', 
+    overflowY:'auto', 
+    borderBottom: 'none',
+    boxSizing:'border-box',
+    boxShadow: '0px 0px 20px 2px #f547e1',
 
-    //  },
+     },
   },
   outputContainer: {
     width: '55% ',
