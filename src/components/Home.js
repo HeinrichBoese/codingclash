@@ -7,6 +7,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
+  head: {
+    marginTop:50,
+    width:'100%',
+    display:'flex',
+    color: theme.palette.secondary.main,
+    justifyContent:'center'
+    
+  },
   root: {
     // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     borderRadius: 3,
@@ -60,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "center",
+    flexWrap:'wrap'
     // height:'100vh',
     // widht:'100vw'
   },
@@ -73,6 +82,10 @@ const Home = () => {
 
   return (
     <div className={classes.container}>
+      <div className={classes.head}>
+        <h1>Welcome to Coding Clash</h1>
+      </div>
+      
       <Button className={classes.buttons} component={Link} to={"/solo"}>
         Practice Solo
       </Button>
