@@ -7,7 +7,6 @@ const db = admin.firestore();
 exports.collectGarbage = functions.pubsub
   .schedule("every 5 minutes")
   .onRun((context) => {
-    console.log("Garbage collector here - just doing my job...");
     const date = new Date();
     const oneHourAgo = date.setHours(date.getHours() - 1);
     db.collection("gamesessions")
