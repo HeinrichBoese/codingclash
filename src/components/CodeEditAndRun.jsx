@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     height: '50%',
     width: '100%',
     border: `2px solid ${theme.palette.primary.main}`,
-    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main}, 0px 0px 20px 2px ${theme.palette.primary.main}`
+    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main}, 0px 0px 20px 2px ${theme.palette.primary.main}`,
+    borderRadius:4
   },
   root: {
     display: 'flex',
