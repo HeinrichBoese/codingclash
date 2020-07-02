@@ -123,24 +123,27 @@ buttonDisabled: {
 }))
 export default function Actions({evaluate, runTests, testButtonDisabled, runButtonDisabled, submit, allChecksDone, secondsLeft, multiplayer}) {
   const classes = useStyles();
+
     return(
 
           <div className={classes.buttonContainer}>
-         {allChecksDone ? 
+         {allChecksDone && multiplayer && 
          <Button
           onClick={submit}
           className={classes.buttons}
         >
           Submit
         </Button>
-        : 
-        <Button
-        disabled={true}
-        className={classes.buttonDisabled}
-      >
-        Submit
-        </Button>
-         }   
+        }
+        {!allChecksDone && multiplayer &&
+          <Button
+          disabled={true}
+          className={classes.buttonDisabled}
+        >
+          Submit
+          </Button>
+           
+        }
          {multiplayer && <span className={classes.seconds}><p> {secondsLeft}s</p></span>}
          {testButtonDisabled ?  
          <Button

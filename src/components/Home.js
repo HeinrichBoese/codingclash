@@ -8,7 +8,7 @@ import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
   head: {
-    marginTop:50,
+    // marginTop:50,
     width:'100%',
     display:'flex',
     color: theme.palette.secondary.main,
@@ -86,7 +86,8 @@ const Home = () => {
   return (
     <div className={classes.container}>
       <div className={classes.head}>
-        <h1>Welcome to Coding Clash</h1>
+      <h1>Welcome to Coding Clash</h1>
+
       </div>
       
       <Button className={classes.buttons} component={Link} to={"/solo"}>
