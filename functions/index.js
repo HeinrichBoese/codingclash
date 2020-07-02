@@ -9,9 +9,8 @@ exports.collectGarbage = functions.pubsub
   .onRun((context) => {
     const dateNow = new Date();
     const dateOneHourAgo = dateNow.setHours(dateNow.getHours() - 1);
-    const timestampOneHourAgo = admin.firestore.Timestamp.fromDate(dateOneHourAgo);
     db.collection("gamesessions")
-      .where("creationTime", "<", timestampOneHourAgo)
+      .where("creationTime", "<", dateOneHourAgo.getTime())
       .get()
       .then((snapshot) => snapshot.forEach((doc) => doc.ref.delete()))
       .catch((err) => console.log(err));
