@@ -10,7 +10,9 @@ const firebaseConfig = {
   messagingSenderId: "905332997539",
   appId: "1:905332997539:web:ed424ca0f6d6edadd22e16",
 };
-
 firebase.initializeApp(firebaseConfig);
+
+export const functions = firebase.app().functions('europe-west3');
+export const db = firebase.firestore();
 
 export default firebase;
