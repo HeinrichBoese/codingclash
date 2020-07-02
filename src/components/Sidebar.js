@@ -2,13 +2,12 @@ import React, { useContext } from "react";
 import firebase from "../firebase";
 import { Link, withRouter } from "react-router-dom";
 import { AuthContext } from "../Auth";
-import Card from "@material-ui/core/Card";
-
-import Button from "@material-ui/core/Button";
-import { makeStyles } from '@material-ui/core/styles';
 import "../App.css";
 import images from "./images";
 import medals from "./medals"
+import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from '@material-ui/core/styles';
 import { CardHeader, IconButton } from "@material-ui/core";
 
 
@@ -130,7 +129,6 @@ const Sidebar = () => {
 
   return (
     <div className={classes.sidebar}>
-      {/* <Card style={{ height: 200, width: 150 }}> */}
       <Card className={classes.card}>
 
         <CardHeader
@@ -154,7 +152,7 @@ const Sidebar = () => {
             : userData && `Level: ${userData.playerLevel}`}
         />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <img style={{ height: 100 }}
+          <img style={{ height: 80 }}
             src={userCheck()
               ? medals.M0
               : userData && medals['M' + Math.floor(userData.playerLevel)]}
@@ -173,6 +171,7 @@ const Sidebar = () => {
       {currentUser && (<Button
         component={Link}
         to={"/InputForm"}
+        disabled={currentUser.isAnonymous}
         className={classes.buttons}>Inputform</Button>)}
 
       {currentUser && !currentUser.isAnonymous && (<Button
@@ -193,7 +192,6 @@ const Sidebar = () => {
 
       {/* <Button className={classes.buttons}>Instructions</Button> */}
 
-      {/* <Button className={classes.buttons}>Hodor</Button> */}
       <Button className={classes.buttons} component={Link} to={'/themes'}>Theme</Button>
 
     </div>
