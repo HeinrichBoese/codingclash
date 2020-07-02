@@ -7,10 +7,10 @@ const db = admin.firestore();
 exports.collectGarbage = functions.pubsub
   .schedule("every 5 minutes")
   .onRun((context) => {
-    const dateNow = new Date();
-    const dateOneHourAgo = dateNow.setHours(dateNow.getHours() - 1);
+    const date = new Date();
+    date.setHours(date.getHours() - 1);
     db.collection("gamesessions")
-      .where("creationTime", "<", dateOneHourAgo.getTime())
+      .where("creationTime", "<", admin.firestore.Timestamp.fromDate(date))
       .get()
       .then((snapshot) => snapshot.forEach((doc) => doc.ref.delete()))
       .catch((err) => console.log(err));
