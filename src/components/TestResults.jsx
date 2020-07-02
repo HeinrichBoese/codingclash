@@ -76,7 +76,7 @@ const TestResults = ({testcases, testResults, submitted, testError, testPassed, 
   if(testRunning) {
     return ( 
     <Box className={classes.loading}>
-    <div className={classes.container}>Testcases</div><span className={classes.loadingContainer}><p><CircularProgress /></p> </span>
+    <div className={classes.container}>Testcases</div><span className={classes.loadingContainer}><span><CircularProgress /></span> </span>
     </Box>
   )}
   return (
