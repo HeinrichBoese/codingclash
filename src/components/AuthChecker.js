@@ -22,7 +22,9 @@ export default function AuthChecker(props) {
         // ...
       });
   }
-  return (    
+
+  return (
+    
     <div style={{ width: '100%', minHeight: '600px' }}>
       {/* Gamemaster erzeugt eine neue Session 
       die beiden Zeilen verhindern den Fall 

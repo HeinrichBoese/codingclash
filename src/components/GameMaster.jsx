@@ -18,18 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
   gameContainer: {
     display: "flex",
+    // justifyContent:'center',
     width: "100%",
     height: "100%",
     // [theme.breakpoints.down("sm")]: {
     //   display: "flex",
     //   flexWrap: "wrap",
     // },
+
   },
-  // playertable: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   borderBottom: "2px solid #00bef7",
-  // },
+  playertable: {
+    display: "flex",
+    justifyContent: "center",
+    borderBottom: "2px solid #00bef7",
+  },
 }));
 
 const GameMaster = () => {
@@ -183,6 +185,7 @@ const GameMaster = () => {
     const challengeID = await getRandomChallengeIDCloudFunction();
     const docRef = db.collection("gamesessions").doc();
     docRef.set({
+      creationTime: firebase.firestore.Timestamp.now(),
       gameState: "LOBBY",
       players: [{ userID: currentUser.uid, finished: false }],
       challengeID: challengeID.data,
@@ -200,7 +203,7 @@ const GameMaster = () => {
     return (
       gamesession && (
 
-        <div style={{minHeight:'600px', display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
+        <div style={{ display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
               <Playertable
                 gamesessionPlayers={gamesession.players}
                 playerData={playerData}

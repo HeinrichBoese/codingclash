@@ -4,21 +4,33 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
-exports.getRandomChallengeID = functions.region('europe-west3').https.onCall(
-  async (data, context) => {
+exports.collectGarbage = functions.pubsub
+  .schedule("every 5 minutes")
+  .onRun((context) => {
+    const date = new Date();
+    date.setHours(date.getHours() - 1);
+    db.collection("gamesessions")
+      .where("creationTime", "<", admin.firestore.Timestamp.fromDate(date))
+      .get()
+      .then((snapshot) => snapshot.forEach((doc) => doc.ref.delete()))
+      .catch((err) => console.log(err));
+    return null;
+  });
+
+exports.getRandomChallengeID = functions
+  .region("europe-west3")
+  .https.onCall(async (data, context) => {
     try {
       const documentRefs = await db.collection("challenges").listDocuments();
       const randIndex = Math.floor(Math.random() * documentRefs.length);
       const randDocumentRef = documentRefs[randIndex];
-      const document = await randDocumentRef.get()
+      const document = await randDocumentRef.get();
       return document.id;
     } catch (err) {
       console.log(err.code);
       throw new functions.https.HttpsError(err.code, err.message);
     }
-  }
-);
-
+  });
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
