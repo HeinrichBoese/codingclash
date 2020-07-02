@@ -11,7 +11,7 @@ exports.collectGarbage = functions.pubsub
     const date = new Date();
     const oneHourAgo = date.setHours(date.getHours() - 1);
     db.collection("gamesessions")
-      .where(creationTime < oneHourAgo)
+      .where("creationTime", "<", oneHourAgo)
       .get()
       .then((snapshot) => snapshot.forEach((doc) => doc.ref.delete()))
       .catch((err) => console.log(err));
