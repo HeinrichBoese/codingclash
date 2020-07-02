@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     // background:  "#2a2a2e",
     // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
     color: theme.palette.secondary.main,
-    textShadow: '0px 0px 5px #00bef7',
+    textShadow: `0px 0px 5px ${theme.palette.secondary.main}`,
     fontSize: '.8em',
     fontWeight: 'bold',
     height: 84,
@@ -63,8 +63,8 @@ const useStyles = makeStyles((theme) => ({
     // background: 'rgb(241,26,255)',
     // background:  "#2a2a2e",
     // background: 'linear-gradient(20deg, rgba(241,26,255,1) 50%, rgba(30,250,255,1) 100%)', 
-    color: theme.palette.secondary.main,
-    textShadow: '0px 0px 5px #00bef7',
+    color: theme.palette.disabled.main,
+    // textShadow: '0px 0px 5px #00bef7',
     fontSize: '.8em',
     fontWeight: 'bold',
     height: 84,
@@ -73,13 +73,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100px',
     margin: 8,
     // border: '2px solid rgb(241,26,255)',
-    border: `2px solid ${theme.palette.secondary.main}`,
-    boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
+    border: `2px solid ${theme.palette.disabled.main}`,
+    // boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
     transition: 'box-shadow .3s',
     // boxShadow: "0px 0px 20px 5px rgb(241,26,255)",
-    '&:hover': {
-      boxShadow: `inset 0px 0px 20px 8px ${theme.palette.secondary.main},0px 0px 20px 8px ${theme.palette.secondary.main}`,
-    },
+    // '&:hover': {
+    //   boxShadow: `inset 0px 0px 20px 8px ${theme.palette.secondary.main},0px 0px 20px 8px ${theme.palette.secondary.main}`,
+    // },
     // [theme.breakpoints.down('sm')]: {
     //   color: "#f547e1",
     //   fontSize:'.8em',
@@ -204,11 +204,18 @@ const Sidebar = () => {
         to={"/"}
         className={classes.buttons}>Home</Button>
 
-      {currentUser && (<Button
+      {userCheck() ? <Button
         component={Link}
         to={"/InputForm"}
-        disabled={currentUser.isAnonymous}
-        className={classes.buttons}>Inputform</Button>)}
+        disabled={true}
+        className={classes.buttonsDisabled}>Inputform</Button>
+        :
+        <Button
+        component={Link}
+        to={"/InputForm"}
+        disabled={false}
+        className={classes.buttons}>Inputform</Button>
+      }
 
       {currentUser && !currentUser.isAnonymous && (<Button
         component={Link}
