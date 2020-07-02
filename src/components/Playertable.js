@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     // marginLeft: '15px',
     // marginRight: '15px',
     justifyContent: "center",
-    overflowx: 'auto',
+    overflowX: 'auto',
     border: `2px solid ${theme.palette.primary.main}`,
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main}, 0px 0px 20px 2px ${theme.palette.primary.main}`,
   },

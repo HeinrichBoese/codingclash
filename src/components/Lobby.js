@@ -70,7 +70,14 @@ import { makeStyles } from '@material-ui/core/styles';
       margin: 25
     },
     container: {
-      alignItems: "center",
+      // width:'calc(100% - 200px)',
+      // marginLeft:'200px',
+      // minWidth:'795px',
+      // display: "flex",
+      // justifyContent: "center",
+      // // flexWrap:'wrap'
+      // // height:'100vh',
+      // // widht:'100vw'
     },
   }));
 
