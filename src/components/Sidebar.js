@@ -25,19 +25,19 @@ const useStyles = makeStyles((theme) => ({
     border: `2px solid ${theme.palette.primary.main}`,
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
     backgroundColor: '#F5F5F5',
-     [theme.breakpoints.down('sm')]: {
-      height: '100%',
-      background: 'transparent !important',
-      color: theme.palette.secondary.main,
-      width: "200px",
-      textShadow: '0px 0px 5px #00bef7',
-      fontSize: '.8em',
-      boxSizing:'border-box',
-      fontWeight: 'bold',
-      border: `2px solid ${theme.palette.primary.main}`,
-      boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
-      backgroundColor: '#F5F5F5',
-     }
+    //  [theme.breakpoints.down('sm')]: {
+    //   height: '100%',
+    //   background: 'transparent !important',
+    //   color: theme.palette.secondary.main,
+    //   width: "200px",
+    //   textShadow: '0px 0px 5px #00bef7',
+    //   fontSize: '.8em',
+    //   boxSizing:'border-box',
+    //   fontWeight: 'bold',
+    //   border: `2px solid ${theme.palette.primary.main}`,
+    //   boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
+    //   backgroundColor: '#F5F5F5',
+    //  }
   },
   buttons: {
     // background: 'rgb(241,26,255)',
@@ -83,10 +83,10 @@ const useStyles = makeStyles((theme) => ({
     // textShadow: '0px 0px 5px #00bef7',
     fontSize: '.8em',
     fontWeight: 'bold',
-    height: 84,
+    height: 60,
     // padding: "0 30px",
     // boxShadow: "0 0px 5px 0px rgba(255, 105, 135, .3)",
-    width: '100px',
+    width: '150px',
     margin: 8,
     // border: '2px solid rgb(241,26,255)',
     border: `2px solid ${theme.palette.disabled.main}`,
@@ -127,13 +127,14 @@ const useStyles = makeStyles((theme) => ({
     // justifyItems: 'center',
     // gridTemplateRows: '220px 100px 100px 100px 100px 100px auto'
 
-    [theme.breakpoints.down('sm')]: {
-      width:'100%',
-      height:200,
-      display:'flex',
-      borderBottom:'2px solid #00bef7',
-      position: 'static'
-     },
+    // [theme.breakpoints.down('sm')]: {
+    //   width:'100%',
+    //   height:200,
+    //   display:'flex',
+    //   flexWrap:'none',
+    //   borderBottom:'2px solid #00bef7',
+    //   position: 'static'
+    //  },
 
 
     // fontSize: '.8em',

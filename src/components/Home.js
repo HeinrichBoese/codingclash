@@ -66,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
     border: `2px solid ${theme.palette.disabled.main}`,
   },
   container: {
+    width:'calc(100% - 200px)',
+    marginLeft:'200px',
+    minWidth:'795px',
     display: "flex",
     justifyContent: "center",
     flexWrap:'wrap'

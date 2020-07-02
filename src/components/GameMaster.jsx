@@ -11,19 +11,21 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "calc(100vw - 160px)",
     marginLeft: "160px",
-    [theme.breakpoints.down("sm")]: {
-      width: "100vw",
-      marginLeft: 0,
-    },
+    // [theme.breakpoints.down("sm")]: {
+    //   width: "100vw",
+    //   marginLeft: 0,
+    // },
   },
   gameContainer: {
     display: "flex",
+    // justifyContent:'center',
     width: "100%",
     height: "100%",
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-      flexWrap: "wrap",
-    },
+    // [theme.breakpoints.down("sm")]: {
+    //   display: "flex",
+    //   flexWrap: "wrap",
+    // },
+
   },
   playertable: {
     display: "flex",
@@ -201,7 +203,7 @@ const GameMaster = () => {
     return (
       gamesession && (
 
-        <div style={{minHeight:'600px', display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
+        <div style={{ display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
               <Playertable
                 gamesessionPlayers={gamesession.players}
                 playerData={playerData}

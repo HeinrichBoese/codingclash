@@ -58,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
     textShadow: `0px 0px 20px ${theme.palette.secondary.main}`
   },
   correct: {
-  color: 'green',
-  textShadow:'0px 0px 20px green'
+  color: '#57eb07',
+  textShadow:'0px 0px 20px #57eb07'
   },
   incorrect: {
     color: 'red',

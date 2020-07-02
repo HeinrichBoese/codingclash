@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
   checktrue: {
     display:'flex', 
-    color:"green", 
-    textShadow:'0px 0px 20px #77ff73',
+    color:"#57eb07", 
+    textShadow:'0px 0px 20px #57eb07',
     height: 60, 
     alignItems:'center',
     width:'100%',

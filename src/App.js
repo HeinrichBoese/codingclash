@@ -23,6 +23,7 @@ const violet = createMuiTheme({
     },
     primary: {
       main: '#f547e1',
+     
     },
     secondary: {
       main: '#00bef7'
@@ -58,10 +59,10 @@ const lightblue = createMuiTheme({
       default: '#14162e ',
     },
     primary: {
-      main: '#ffbb00',
+      main: '#fad016',
     },
     secondary: {
-      main: '#8000ff',
+      main: '#c107eb',
     },
     disabled: {
       main: '#3b2a7d !important'
@@ -70,22 +71,21 @@ const lightblue = createMuiTheme({
 
 })
 const useStyles = makeStyles((theme) => ({
-
   root: {
     width: "calc(100vw - 200px)",
     marginLeft: "200px",
     height: '100vh',
     minHeight: '600px',
-    [theme.breakpoints.down("md")]: {
-      width: "calc(100% - 200px)",
-      marginLeft: "200px",
-      height: '100vh',
-      minHeight: '600px',
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "100vw",
-      marginLeft: 0,
-    },
+    // [theme.breakpoints.down("md")]: {
+    //   width: "calc(100% - 200px)",
+    //   marginLeft: "200px",
+    //   height: '100vh',
+    //   minHeight: '600px',
+    // },
+    // [theme.breakpoints.down("sm")]: {
+    //   width: "100vw",
+    //   marginLeft: 0,
+    // },
   },
   gameContainer: {
     display: "flex",
@@ -93,18 +93,18 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
-    [theme.breakpoints.down("md")]: {
-      display: "flex",
-      flexWrap: "wrap",
-      width:'100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    [theme.breakpoints.down("sm")]: {
-      width:'100%',
-      display: "flex",
-      flexWrap: "wrap",
-    },
+    // [theme.breakpoints.down("md")]: {
+    //   display: "flex",
+    //   flexWrap: "wrap",
+    //   width:'100%',
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    // },
+    // [theme.breakpoints.down("sm")]: {
+    //   width:'100%',
+    //   display: "flex",
+    //   flexWrap: "wrap",
+    // },
   },
 }));
 
