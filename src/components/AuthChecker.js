@@ -23,7 +23,7 @@ export default function AuthChecker(props) {
         // ...
       });
   }
-console.log(history.location, history.action)
+
   return (
     
     <div style={{ width: '100%', minHeight: '600px' }}>

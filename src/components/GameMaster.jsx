@@ -183,6 +183,7 @@ const GameMaster = () => {
     const challengeID = await getRandomChallengeIDCloudFunction();
     const docRef = db.collection("gamesessions").doc();
     docRef.set({
+      creationTime: firebase.firestore.Timestamp.now(),
       gameState: "LOBBY",
       players: [{ userID: currentUser.uid, finished: false }],
       challengeID: challengeID.data,
