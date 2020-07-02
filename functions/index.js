@@ -4,7 +4,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
-exports.getRandomChallengeID = functions.https.onCall(
+exports.getRandomChallengeID = functions.region('europe-west3').https.onCall(
   async (data, context) => {
     try {
       const documentRefs = await db.collection("challenges").listDocuments();

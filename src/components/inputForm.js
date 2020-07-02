@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useHistory, Redirect } from "react-router-dom";
-import firebase from "../firebase";
+import { db } from "../firebase";
 import { useFormik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -100,7 +100,6 @@ export const InputForm = (props) => {
         validate,
         validateOnMount: true,
         onSubmit: async (values) => {
-            const db = firebase.firestore();
             db.collection("challenges").add({
                 creator: currentUser.displayName,
                 title: formik.values.title,

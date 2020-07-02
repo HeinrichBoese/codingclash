@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import firebase from "../firebase";
+import firebase, { db } from "../firebase";
 import { useHistory, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import Container from "@material-ui/core/Container";
@@ -88,7 +88,6 @@ export default function Register(props) {
           .currentUser.linkWithCredential(credential)
           .then((resp) => {
             resp.user.updateProfile({ displayName: values.name });
-            const db = firebase.firestore();
             db.collection('User').doc(resp.user.uid).set(
               {
                 playerName: values.name,
@@ -105,7 +104,6 @@ export default function Register(props) {
           .createUserWithEmailAndPassword(values.email, values.password)
           .then((resp) => {
             resp.user.updateProfile({ displayName: values.name });
-            const db = firebase.firestore();
             db.collection('User').doc(resp.user.uid).set(
               {
                 playerName: values.name,

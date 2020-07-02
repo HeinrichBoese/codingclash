@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import firebase from "../firebase";
+import firebase, { functions, db } from "../firebase";
 import { AuthContext } from "../Auth";
-import Box from "@material-ui/core/Box";
 import Playertable from "./Playertable";
 import Lobby from "./Lobby";
 import CodeEditAndRun from "./CodeEditAndRun";
@@ -35,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 const GameMaster = () => {
   const classes = useStyles();
-  const db = firebase.firestore();
   const gameID = useParams().id;
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
@@ -47,7 +45,7 @@ const GameMaster = () => {
   const [challengeLoaded, setChallengeLoaded] = useState(false);
 
   const [secondsLeft, setSecondsLeft] = useState(0);
-  const TIMELIMIT = 100;
+  const TIMELIMIT = 120;
 
   useEffect(() => {
     let unsubscribe = () => null;
@@ -134,7 +132,6 @@ const GameMaster = () => {
   };
 
   const userLvlUp = (uid) => {
-    const db = firebase.firestore();
     if(!currentUser.isAnonymous)
     {const player = db.collection('User').doc(uid);
     return player.update({
@@ -182,7 +179,7 @@ const GameMaster = () => {
   };
 
   const createNewGameSession = async () => {
-    const getRandomChallengeIDCloudFunction = firebase.functions().httpsCallable("getRandomChallengeID");
+    const getRandomChallengeIDCloudFunction = functions.httpsCallable("getRandomChallengeID");
     const challengeID = await getRandomChallengeIDCloudFunction();
     const docRef = db.collection("gamesessions").doc();
     docRef.set({
@@ -215,18 +212,6 @@ const GameMaster = () => {
               leaveLobby={leaveLobby}
             />
           )}
-          {/* {gamesession.gameState === "INGAME" &&
-            !checkSelfFinished() &&
-            challenge && (
-              // <div style={{ margtinLeft: "160px" }}>
-              <CodeEditAndRun
-                challenge={challenge}
-                secondsLeft={secondsLeft}
-                submit={submit}
-
-              />
-              // </div>
-            )} */}
 
             {gamesession.gameState === "INGAME" &&
               !checkSelfFinished() &&

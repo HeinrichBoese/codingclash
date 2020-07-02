@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import firebase from "../firebase";
+import firebase, {db, functions} from "../firebase";
 import CodeEditAndRun from "./CodeEditAndRun";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -20,9 +20,9 @@ export default function SoloMode() {
   const [challenge, setChallenge] = useState(null);
   
   useEffect(() => {
-      const getRandomChallengeIDCloudFunction = firebase.functions().httpsCallable("getRandomChallengeID");
+      const getRandomChallengeIDCloudFunction = functions.httpsCallable("getRandomChallengeID");
       getRandomChallengeIDCloudFunction()
-      .then(challengeID => firebase.firestore().collection('challenges').doc(challengeID.data).get())
+      .then(challengeID => db.collection('challenges').doc(challengeID.data).get())
       .then(challengeDoc => setChallenge(challengeDoc.data()));
   }, []);
 
