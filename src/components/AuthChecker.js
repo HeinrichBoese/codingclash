@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import firebase from "../firebase";
 import { AuthContext } from "../Auth";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 import GameMaster from "./GameMaster";
+import Home from "./Home";
 
 
 
@@ -22,11 +23,13 @@ export default function AuthChecker(props) {
         // ...
       });
   }
-
-    return (
-<div style={{width:'100%', minHeight: '600px'}}>
- {currentUser && <GameMaster />}
- </div>
-    )
+console.log(history.location, history.action)
+  return (
+    
+    <div style={{ width: '100%', minHeight: '600px' }}>
+      { history.action === "POP" && <Redirect to="/" /> }
+      {currentUser && history.action !== "POP" && <GameMaster />}
+    </div>
+  )
 }
 
