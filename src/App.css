@@ -17,6 +17,7 @@ html {
 
 .CodeMirror-gutters {
     background-color: transparent !important;
+    border: transparent !important
    
 }
 
