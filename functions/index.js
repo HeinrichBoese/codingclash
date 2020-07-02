@@ -13,7 +13,8 @@ exports.collectGarbage = functions.pubsub
     db.collection("gamesessions")
       .where(creationTime < oneHourAgo)
       .get()
-      .then((snapshot) => snapshot.forEach((doc) => doc.ref.delete()));
+      .then((snapshot) => snapshot.forEach((doc) => doc.ref.delete()))
+      .catch((err) => console.log(err));
     return null;
   });
 
