@@ -141,7 +141,7 @@ export default function Actions({evaluate, runTests, testButtonDisabled, runButt
         Submit
         </Button>
          }   
-         {multiplayer && <span className={classes.seconds}>Time:<p> {secondsLeft}</p></span>}
+         {multiplayer && <span className={classes.seconds}><p> {secondsLeft}s</p></span>}
          {testButtonDisabled ?  
          <Button
          disabled={true}
