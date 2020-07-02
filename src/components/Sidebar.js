@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
     width:'160px',
     position: 'fixed',
+    display:'flex',
+    flexWrap:'wrap',
+    justifyContent: 'center'
     // [theme.breakpoints.down('sm')]: {
     //   width:'100%',
     //   height:112.4,
@@ -117,7 +120,7 @@ const Sidebar = () => {
         <CardMedia style={{ width: 100,height: 100, display:'flex', justifyContent:'center'}} image={userData ? images[userData.playerImage]: PersonIcon } />
         image={PersonIcon}  */}
 
-      <Card style={{ height: 200, width: 160 }}>
+      <Card style={{ height: 200, width: 150 }}>
         <CardHeader
           avatar={
             <img style={{ width: 50, height: 50 }}
