@@ -4,7 +4,7 @@ import firebase from './firebase';
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('AuthUser')));
+  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('AuthUser')));
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -13,15 +13,15 @@ export const AuthProvider = ({ children }) => {
       authUser => {
         setCurrentUser(authUser);
         if (authUser) {
-          sessionStorage.setItem('AuthUser', JSON.stringify(authUser))
+          localStorage.setItem('AuthUser', JSON.stringify(authUser))
         } else {
-          sessionStorage.removeItem('AuthUser');
+          localStorage.removeItem('AuthUser');
           setUserData(null);
         };
       },
       // Error handling
       () => {
-        sessionStorage.removeItem('AuthUser');
+        localStorage.removeItem('AuthUser');
         setUserData(null);
       },
     );
