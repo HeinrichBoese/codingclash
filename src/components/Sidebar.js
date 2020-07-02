@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     textShadow: '0px 0px 5px #00bef7',
     fontSize: '.8em',
+    boxSizing:'border-box',
     fontWeight: 'bold',
     border: `2px solid ${theme.palette.primary.main}`,
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.primary.main},0px 0px 20px ${theme.palette.primary.main}`,
