@@ -97,14 +97,8 @@ export default function Register(props) {
           .currentUser.linkWithCredential(credential)
           .then((resp) => {
             resp.user.updateProfile({ displayName: values.name });
-            db.collection('User').doc(resp.user.uid).set(
-              {
-                playerName: values.name,
-                playerEmail: values.email,
-                playerLevel: 0,
-                playerImage: values.image,
-              }
-            )
+            console.log(resp.user.uid);
+            setTimeout(()=>writeDB(resp.user.uid), 200)
           }).then(() => history.push("/"))
           .catch((error) => alert(error))
       } else {
@@ -113,14 +107,8 @@ export default function Register(props) {
           .createUserWithEmailAndPassword(values.email, values.password)
           .then((resp) => {
             resp.user.updateProfile({ displayName: values.name });
-            db.collection('User').doc(resp.user.uid).set(
-              {
-                playerName: values.name,
-                playerEmail: values.email,
-                playerLevel: 0,
-                playerImage: values.image,
-              }
-            )
+            console.log(resp.user.uid);
+            setTimeout(()=>writeDB(resp.user.uid), 50)
           }).then(() => history.push("/"))
           .catch((error) => alert(error))
       } // end Else
@@ -136,6 +124,17 @@ export default function Register(props) {
     onBlur: formik.handleBlur,
     error: Boolean(formik.errors[name] && formik.touched[name]),
   });
+
+  const writeDB = (uid)=>{
+    db.collection('User').doc(uid).set(
+      {
+        playerName: formik.values.name,
+        playerEmail: formik.values.email,
+        playerLevel: 0,
+        playerImage: formik.values.image,
+      }
+    )
+  };
 
   return (
     <div className={classes.rootcontainer}>
