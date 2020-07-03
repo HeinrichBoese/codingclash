@@ -15,7 +15,15 @@ import Avatar from '@material-ui/core/Avatar';
 import images from "./images";
 
 const useStyles = makeStyles((theme) => ({
+  rootcontainer: {
+    height:'100vh',
+    paddingLeft:'200px',
+    display: 'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  },
   paper: {
+    background:'transparent',
     borderRight: `2px solid ${theme.palette.secondary.main}`,
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
   },
@@ -37,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#F5F5F5',
   },
   container: {
+    background:'transparent',
     flexGrow: 1,
     direction: 'row',
     justifyContent: 'space-between',
@@ -129,7 +138,7 @@ export default function Register(props) {
   });
 
   return (
-    <div>
+    <div className={classes.rootcontainer}>
       {currentUser && !currentUser.isAnonymous && <Redirect to="/" />}
       <Container maxWidth="xs">
         <Paper className={classes.paper}>
