@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import firebase from "../firebase";
 import { Link, withRouter } from "react-router-dom";
 import { AuthContext } from "../Auth";
-import "../App.css";
+// import "../App.css";
 import images from "./images";
 import medals from "./medals"
 import Card from "@material-ui/core/Card";
@@ -13,6 +13,9 @@ import { CardHeader, IconButton } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
+  spancolor:{
+    color: theme.palette.secondary.main,
+  },
   card: {
     height: 200,
     background: 'transparent !important',
@@ -112,6 +115,8 @@ const useStyles = makeStyles((theme) => ({
     // },
   },
   sidebar: {
+    background: 'rgb(9,25,115)',
+    background: 'linear-gradient(90deg, rgba(9,25,115,1) 20%, rgba(20,22,46,1) 85%)',
     height: '100vh',
     borderRight: `2px solid ${theme.palette.primary.main}`,
     overflowY: 'auto',
@@ -119,13 +124,13 @@ const useStyles = makeStyles((theme) => ({
     width: '200px',
     position: 'fixed',
 
-    display:'flex',
-    flexWrap:'wrap',
-    justifyContent: 'center',
+    // display:'flex',
+    // flexWrap:'wrap',
+    // justifyContent: 'center',
 
-    // display: 'grid',
-    // justifyItems: 'center',
-    // gridTemplateRows: '220px 100px 100px 100px 100px 100px auto'
+    display: 'grid',
+    justifyItems: 'center',
+    gridTemplateRows: '220px 100px 100px 100px 100px 100px auto'
 
     // [theme.breakpoints.down('sm')]: {
     //   width:'100%',
@@ -205,7 +210,7 @@ const Sidebar = () => {
             ? "Anonym"
             : userData && <span style={{fontSize:'1.5em'}}>{userData.playerName}</span>}
           subheader={userCheck()
-            ? "No XP, no cookies"
+            ? <span className={classes.spancolor}>No XP, no cookies</span>
             : userData && <span className={classes.cardname}>Level: {userData.playerLevel}</span>}
         />
         <div style={{ display: 'flex', justifyContent: 'center' }}>

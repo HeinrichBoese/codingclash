@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Auth";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
-import "../App.css";
+// import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -12,8 +12,11 @@ const useStyles = makeStyles((theme) => ({
     width:'100%',
     display:'flex',
     color: theme.palette.secondary.main,
-    justifyContent:'center'
-    
+    justifyContent:'center' 
+  },
+  pageheader: {
+    textShadow:`0px 0px 20px ${theme.palette.secondary.main}`,
+    fontSize: '3em'
   },
   root: {
     // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -86,8 +89,7 @@ const Home = () => {
   return (
     <div className={classes.container}>
       <div className={classes.head}>
-      <h1>Welcome to Coding Clash</h1>
-
+      <h1 className={classes.pageheader}>Welcome to Coding Clash</h1>
       </div>
       
       <Button className={classes.buttons} component={Link} to={"/solo"}>

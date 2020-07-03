@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+// import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SoloMode from "./components/SoloMode";
 import Home from "./components/Home";
@@ -71,6 +71,36 @@ const lightblue = createMuiTheme({
 
 })
 const useStyles = makeStyles((theme) => ({
+  '@global' : {
+    '.CodeMirror': {
+      height: '100% !important',
+      fontSize:'1.5em !important',
+      width:'100',
+      backgroundColor: 'transparent !important',
+      /* border:2px solid #f547e1 !important; */
+      boxSizing: 'border-box',
+      /* box-shadow: inset 0px 0px 20px 2px #f547e1, 0px 0px 20px 2px #f547e1 ; */
+      borderRadius:'4px'  
+  },
+  
+  '.CodeMirror-gutters': {
+      backgroundColor: 'transparent !important',
+      border: 'transparent !important'
+     
+  },
+  
+  '.CodeMirror-linenumber': {
+      color:'#f547e1 !important'
+  },
+  
+  
+  '.react-codemirror2': {
+      height:'100%',
+      width:'100%'
+  },
+  
+  
+  },
   root: {
     width: "calc(100vw - 200px)",
     marginLeft: "200px",

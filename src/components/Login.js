@@ -12,11 +12,20 @@ import Box from "@material-ui/core/Box";
 import { AuthContext } from "../Auth";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    height:'100vh',
+    paddingLeft:'200px',
+    display: 'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  },
   paper: {
+    background: 'transparent',
     borderRight: `2px solid ${theme.palette.secondary.main}`,
     boxShadow: `inset 0px 0px 20px 2px ${theme.palette.secondary.main},0px 0px 20px ${theme.palette.secondary.main}`,
   },
   textField: {
+    background: 'transparent',
     width: "100%",
     textShadow: '0px 0px 5px #00bef7',
     fontSize: '.8em',
@@ -78,7 +87,7 @@ export default function Login() {
   });
 
   return (
-    <div>
+    <div className={classes.container}>
       {currentUser && !currentUser.isAnonymous && <Redirect to="/" />}
       <Container maxWidth="xs">
         <Paper className={classes.paper}>
