@@ -30,8 +30,9 @@ export default function AuthChecker(props) {
       die beiden Zeilen verhindern den Fall 
       das wenn man mit dem Zurückbutton aus der Lobby geht, 
       Gamemaster eine neue Session erzeugt */}
-      { history.action === "POP" && <Redirect to="/" /> }
-      {currentUser && history.action !== "POP" && <GameMaster />}
+      {/* { history.action === "POP" && <Redirect to="/" /> } */}
+      {/* {currentUser && history.action !== "POP" && <GameMaster />} */}
+      {currentUser  && <GameMaster />}
     </div>
   )
 }
