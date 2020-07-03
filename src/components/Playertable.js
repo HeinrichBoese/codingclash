@@ -11,8 +11,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   paper: {
+    overflow:'hidden',
     padding: theme.spacing(1),
     color: theme.palette.text.secondary,
+    width:160
   },
   playertable: {
     display: "flex",
