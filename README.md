@@ -1,4 +1,15 @@
 
+Willkommen auf dem Repo des Abschlussprojektes von Heinrich Böse, Tristan Kraus und Daniel Schnietz. 
+Wir haben hier unsere Abschlussarbeit zusammen erarbeitet und möchten diese kurz vorstellen.
+
+Das Ziel des Abschlussprojektes war es eine Seite zu erstellen auf der die User die Möglichkeit haben Javascript Übungen durchzuführen und sich mit anderen Usern messen können.
+Das Projekt ist auch online und kann unter https://coding-clash.web.app/ ausprobiert werden.
+
+Wir hatten insgesamt 2 Wochen Zeit für die Planung und Umsetzung des Projektes. Dies ist uns doch recht gut gelungen. 
+Leider haben wir nach Abschluss des Projektes noch offene Punkte die wir noch aufarbeiten müssen aber nicht mehr dazu gekommen sind. 
+
+
+
 component hierarchy:
 
 HOME
@@ -104,7 +115,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-### 'FIGMA LINK'
-
-https://www.figma.com/file/6Acz2qfCIATh4Im76BCO79/Abschlussprojekt?node-id=0%3A1
